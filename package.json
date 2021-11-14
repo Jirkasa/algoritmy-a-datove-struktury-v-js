@@ -1,0 +1,27 @@
+{
+  "name": "algoritmy-a-datove-struktury-v",
+  "version": "1.0.0",
+  "description": "Website about algorithms and data structures in JavaScript.",
+  "main": "index.js",
+  "scripts": {
+    "compile:less": "lessc ./less/main.less ./media/css/style.css",
+    "nodemon:compile:less": "nodemon -e less -x \"npm run compile:less\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jirkasa/algoritmy-a-datove-struktury-v-js.git"
+  },
+  "author": "Jiří Satora",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jirkasa/algoritmy-a-datove-struktury-v-js/issues"
+  },
+  "homepage": "https://github.com/Jirkasa/algoritmy-a-datove-struktury-v-js#readme",
+  "devDependencies": {
+    "autoprefixer": "^10.4.0",
+    "less": "^4.1.2",
+    "nodemon": "^2.0.15",
+    "postcss": "^8.3.11",
+    "postcss-cli": "^9.0.2"
+  }
+}
