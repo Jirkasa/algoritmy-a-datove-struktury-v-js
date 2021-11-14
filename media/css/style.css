@@ -10,7 +10,53 @@ html {
 }
 body {
   box-sizing: border-box;
+  background-color: red;
 }
 body {
   font-family: 'Lato', sans-serif;
+}
+.page {
+  width: 100%;
+  margin: 0 auto;
+  max-width: 180rem;
+}
+.header {
+  height: 9.5rem;
+  background-color: #fff;
+}
+.header__content {
+  width: 100%;
+  margin: 0 auto;
+  max-width: 120rem;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header__heading {
+  flex: 1 0;
+  font-size: 3rem;
+  color: #444;
+}
+.header__navigation {
+  flex: 0 0;
+}
+.header__navigation ul {
+  list-style: none;
+  display: flex;
+}
+.header__navigation li:not(:last-child) {
+  margin-right: 1rem;
+}
+.header__navigation a:link,
+.header__navigation a:visited {
+  font-size: 1.4rem;
+  color: #444;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 1rem;
+}
+.header__navigation a:hover {
+  color: #fff;
+  background-color: #1bbc9b;
 }
