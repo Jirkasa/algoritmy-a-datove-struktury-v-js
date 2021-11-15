@@ -1,3 +1,41 @@
 body {
-    font-family: 'Lato', sans-serif;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.heading-primary {
+    font-size: 3.2rem;
+    font-weight: normal;
+
+    color: @colors[dark-grey];
+}
+
+.heading-secondary {
+    font-size: 2.5rem;
+    font-weight: normal;
+
+    color: @colors[dark-grey];
+}
+
+.heading-tertiary {
+    font-size: 2.1rem;
+    font-weight: normal;
+
+    color: @colors[dark-grey];
+}
+
+.paragraph {
+    font-size: 1.6rem;
+
+    color: @colors[dark-grey];
+    line-height: 1.4;
+}
+
+.unordered-list {
+    font-size: 1.6rem;
+    color: @colors[dark-grey];
+    list-style-position: inside;
+
+    li:not(:last-child) {
+        margin-bottom: .3rem;
+    }
 }

@@ -10,10 +10,184 @@ html {
 }
 body {
   box-sizing: border-box;
-  background-color: red;
 }
 body {
-  font-family: 'Lato', sans-serif;
+  font-family: 'Open Sans', sans-serif;
+}
+.heading-primary {
+  font-size: 3.2rem;
+  font-weight: normal;
+  color: #444;
+}
+.heading-secondary {
+  font-size: 2.5rem;
+  font-weight: normal;
+  color: #444;
+}
+.heading-tertiary {
+  font-size: 2.1rem;
+  font-weight: normal;
+  color: #444;
+}
+.paragraph {
+  font-size: 1.6rem;
+  color: #444;
+  line-height: 1.4;
+}
+.unordered-list {
+  font-size: 1.6rem;
+  color: #444;
+  list-style-position: inside;
+}
+.unordered-list li:not(:last-child) {
+  margin-bottom: 0.3rem;
+}
+.u-mb-tiny {
+  margin-bottom: 0.5rem !important;
+}
+.u-mb-small {
+  margin-bottom: 1rem !important;
+}
+.u-mb-medium {
+  margin-bottom: 2rem !important;
+}
+.u-mb-large {
+  margin-bottom: 3rem !important;
+}
+pre code.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 1rem;
+  height: 100%;
+}
+pre code.hljs::-webkit-scrollbar {
+  width: 1.3rem;
+  height: 1.3rem;
+}
+pre code.hljs::-webkit-scrollbar-track {
+  background: #0b4d3f;
+}
+pre code.hljs::-webkit-scrollbar-thumb {
+  background: #18a689;
+  border-radius: 1px;
+  border: 2px solid #2ae0bb;
+}
+pre code.hljs::-webkit-scrollbar-thumb:hover {
+  background: #16987e;
+}
+code.hljs {
+  padding: 0.3rem 0.5rem;
+}
+/*!
+   Theme: Agate
+   Author: (c) Taufik Nurrohman <hi@taufik-nurrohman.com>
+   Maintainer: @taufik-nurrohman
+   Updated: 2021-04-24
+   #333
+   #62c8f3
+   #7bd694
+   #888
+   #a2fca2
+   #ade5fc
+   #b8d8a2
+   #c6b4f0
+   #d36363
+   #fc9b9b
+   #fcc28c
+   #ffa
+   #fff
+*/
+.hljs {
+  background: #333;
+  color: #fff;
+  border-radius: 0.5rem;
+}
+.hljs-doctag,
+.hljs-meta-keyword,
+.hljs-name,
+.hljs-strong {
+  font-weight: 700;
+}
+.hljs-code,
+.hljs-emphasis {
+  font-style: italic;
+}
+.hljs-section,
+.hljs-tag {
+  color: #62c8f3;
+}
+.hljs-selector-class,
+.hljs-selector-id,
+.hljs-template-variable,
+.hljs-variable {
+  color: #ade5fc;
+}
+.hljs-meta-string,
+.hljs-string {
+  color: #a2fca2;
+}
+.hljs-attr,
+.hljs-quote,
+.hljs-selector-attr {
+  color: #7bd694;
+}
+.hljs-tag .hljs-attr {
+  color: inherit;
+}
+.hljs-attribute,
+.hljs-title,
+.hljs-type {
+  color: #ffa;
+}
+.hljs-number,
+.hljs-symbol {
+  color: #d36363;
+}
+.hljs-bullet,
+.hljs-template-tag {
+  color: #b8d8a2;
+}
+.hljs-built_in,
+.hljs-keyword,
+.hljs-literal,
+.hljs-selector-tag {
+  color: #fcc28c;
+}
+.hljs-code,
+.hljs-comment,
+.hljs-formula {
+  color: #888;
+}
+.hljs-link,
+.hljs-regexp,
+.hljs-selector-pseudo {
+  color: #c6b4f0;
+}
+.hljs-meta {
+  color: #fc9b9b;
+}
+.hljs-deletion {
+  background: #fc9b9b;
+  color: #333;
+}
+.hljs-addition {
+  background: #a2fca2;
+  color: #333;
+}
+.hljs-subst {
+  color: #fff;
+}
+.hljs a {
+  color: inherit;
+}
+.hljs a:focus,
+.hljs a:hover {
+  color: inherit;
+  text-decoration: underline;
+}
+.hljs mark {
+  background: #555;
+  color: inherit;
 }
 .page {
   width: 100%;
@@ -59,4 +233,150 @@ body {
 .header__navigation a:hover {
   color: #fff;
   background-color: #1bbc9b;
+}
+.heading-section {
+  background-image: linear-gradient(rgba(58, 56, 53, 0.3), rgba(58, 56, 53, 0.3)), url("../../media/img/CodeBackground.jpg");
+  background-size: cover;
+  font-size: 4rem;
+  color: #fff;
+  text-align: center;
+  padding: 3.5rem 3rem;
+}
+.navigation {
+  border: 0.2rem solid #1bbc9b;
+  background-color: #1bbc9b;
+}
+.navigation ul {
+  list-style: none;
+}
+.navigation li:not(:last-child) {
+  border-bottom: 0.2rem solid #1bbc9b;
+}
+.navigation a:link,
+.navigation a:visited {
+  display: block;
+  font-size: 1.5rem;
+  color: #444;
+  background-color: #fff;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+}
+.navigation a:hover {
+  color: #fff;
+  background-color: #1bbc9b;
+}
+.horizontal-rule {
+  border: none;
+  height: 0.2rem;
+  background-color: #1bbc9b;
+}
+.image {
+  border: 0.2rem solid #1bbc9b;
+  background-color: #1bbc9b;
+  width: 100%;
+}
+.code-box {
+  border: 0.3rem solid #1bbc9b;
+  background-color: #1bbc9b;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+.code-box__header {
+  background-color: #0b4d3f;
+  border-bottom: 0.3rem solid #1bbc9b;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+.code-box__icon {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+.code-box__icon svg {
+  width: 100%;
+  height: 100%;
+  fill: #97cb6f;
+}
+.code-box__buttons-container *:not(:last-child) {
+  margin-right: 0.5rem;
+}
+.code-box__button {
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: #97cb6f;
+  border: 0.2rem solid #c0dfa7;
+  border-radius: 0.2rem;
+  cursor: pointer;
+  position: relative;
+}
+.code-box__button:hover {
+  background-color: #84c255;
+}
+.code-box__button:active {
+  background-color: #6fae3f;
+}
+.code-box__button svg {
+  width: 90%;
+  height: 90%;
+  fill: #444;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.code-box__button--reset {
+  background-color: #cbb26f;
+  border-color: #dfd0a7;
+}
+.code-box__button--reset:hover {
+  background-color: #c2a455;
+}
+.code-box__button--reset:active {
+  background-color: #ae903f;
+}
+.code-box__button--reset svg {
+  width: 80%;
+  height: 80%;
+}
+.code-box__code {
+  font-size: 1.6rem;
+}
+.code-box__console {
+  font-size: 1.6rem;
+  background-color: #0b4d3f;
+  border-top: 0.3rem solid #1bbc9b;
+  color: #fff;
+  padding: 0.5rem;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+.code-box__console::-webkit-scrollbar {
+  width: 1.3rem;
+  height: 1.3rem;
+}
+.code-box__console::-webkit-scrollbar-track {
+  background: #0b4d3f;
+}
+.code-box__console::-webkit-scrollbar-thumb {
+  background: #18a689;
+  border-radius: 1px;
+  border: 2px solid #2ae0bb;
+}
+.code-box__console::-webkit-scrollbar-thumb:hover {
+  background: #16987e;
+}
+.article-page__content {
+  width: 100%;
+  margin: 0 auto;
+  max-width: 120rem;
+  padding: 5rem 0;
+  display: flex;
+}
+.article-page__main-side {
+  flex: 1;
+  overflow: hidden;
+}
+.article-page__lateral-side {
+  flex: 0 0 40rem;
+  padding-left: 5rem;
 }

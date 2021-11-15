@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=yes maximum-scale=2.2 minimum-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../media/css/style.css">
+
+    <script src="../media/js/libraries/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    <title>Algoritmy a Datové Struktury v JS - Big O Notation</title>
+</head>
+<body>
+    <div class="page">
+        <header class="header">
+            <div class="header__content">
+                <h2 class="header__heading">Algoritmy a Datové Struktury v JS</h2>
+                <nav class="header__navigation">
+                    <ul>
+                        <li><a href="#">something</a></li>
+                        <li><a href="#">something</a></li>
+                        <li><a href="#">something</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <div class="heading-section">
+            Big O Notation
+        </div>
+        <div class="article-page">
+            <div class="article-page__content">
+                <main class="article-page__main-side">
+                    <h1 class="heading-primary u-mb-medium">Big O Notation</h1>
+                    <hr class="horizontal-rule u-mb-medium">
+                    <p class="paragraph u-mb-medium">V první části tohoto tutoriálu se podíváme, co je to Big O Notation.</p>
+                    <h2 class="heading-secondary u-mb-tiny">Co je to Big O Notation</h2>
+                    <p class="paragraph u-mb-small">I když je tento tutoriál o algoritmech a datových strukturách, Big O Notation mezi ně nepatří. Big O Notation představuje jen takový způsob, pomocí kterého můžeme zapsat, jakou má nějaký kód časovou nebo paměťovou náročnost. Slouží tedy jen jako taková informace na kterou se můžeme podívat a zjistit, jak náročný je nějaký kód.</p>
+                    <p class="paragraph u-mb-tiny">Pomocí Big O Notation zjišťujeme tyto dvě vlastnosti:</p>
+                    <ul class="unordered-list u-mb-medium">
+                        <li><b>časová náročnost</b> - jak dlouho provedení kódu trvá</li>
+                        <li><b>paměťová náročnost</b> - jak velkou část paměti kód zabere</li>
+                    </ul>
+                    <h2 class="heading-secondary u-mb-tiny">Testování rychlosti kódu</h2>
+                    <p class="paragraph u-mb-small">Občas si můžeme chtít zjistit, jakou dobu zhruba trvá provedení nějakého kódu, který jsme napsali. K tomu můžeme použít funkci performance.now, která vrací čas v milisekundách od otevření webové stránky. Nejprve ji zavoláme před provedením nějakého kódu, u kterého chceme změřit jak dlouho bude trvat a podruhé tuto funkci zavoláme po jeho provedení. Čas, který tato funkce vrací si uložíme do proměnných, které od sebe po dokončení kódu odečteme. Tím získáme, jak dlouho provedení nějakého kódu trvá.</p>
+                    <div class="code-box u-mb-small" data-interactive-example-id="1">
+                        <div class="code-box__header">
+                            <div class="code-box__icon">
+                                <svg>
+                                    <use xlink:href="../media/img/icon-sprite.svg#icon-cogs"></use>
+                                </svg>
+                            </div>
+                            <div class="code-box__buttons-container">
+                                <button class="code-box__button" data-interactive-example-play-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-play3"></use>
+                                    </svg>
+                                </button>
+                                <button class="code-box__button code-box__button--reset" data-interactive-example-reset-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-loop2"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <pre class="code-box__code"><code>// zjištění času před provedením kódu
+let cas1 = performance.now();
+
+let pocet = 0;
+for (let i = 0; i &lt; 5000000; i++) {
+    pocet++;
+}
+
+// zjištění času po provedení kódu
+let cas2 = performance.now();
+console.log(`Provedení kódu trvalo ${cas2 - cas1} milisekund.`);</code></pre>
+                        <div class="code-box__console" id="console-1">&gt;</div>
+                    </div>
+                    <p class="paragraph u-mb-medium">Čas, který tímto způsobem získáme ale není vůbec přesný. Pokud budeme dobu běhu stejného kódu měřit vícekrát, tak nám vždy vyjde jiný čas. Navíc se doba běhu kódu na různých zařízeních bude lišit. I když ale tento způsob měření není přesný, tak to neznamená že bychom jej nemohli používat. Občas se může hodit si jen tak změřit, jakou dobu zhruba trvá provedení nějakého kódu. Je to ale jen taková informace pro nás. Pokud bychom chtěli časovou náročnost kódu stanovit v nezávislosti na tom, na jakém zařízení a za jakých podmínek se bude kód spouštět, můžeme to stanovit pomocí Big O Notation.</p>
+                    <h2 class="heading-secondary u-mb-tiny">Zápis Big O Notation</h2>
+                    <p class="paragraph u-mb-small">Big O Notation píšeme takto: O(nějaký výraz). Uvnitř závorek specifikujeme jakou časovou nebo paměťovou náročnost kód má. Tu nemusíme specifikovat přesně. Pokud má kód časovou náročnost O(10n), tak stačí napsat jen O(n).</p>
+                    <p class="paragraph u-mb-tiny">Zde jsou popsány tři Big O výrazy, které se často používají:</p>
+                    <ul class="unordered-list u-mb-small">
+                        <li><b>O(1)</b> - nezáleží na tom jaký je vstup (např. parametr funkce), kód poběží vždy stejně rychle</li>
+                        <li><b>O(n)</b> - čím větší číslo bude na vstupu, tím pomaleji kód poběží</li>
+                        <li><b>O(n<sup>2</sup>)</b> - čím větší číslo bude na vstupu, tím pomaleji kód poběží (velké rozdíly se objeví i při malé změně čísla)</li>
+                    </ul>
+                    <p class="paragraph u-mb-small">Kromě těchto jednoduchých výrazů se občas také používají nějaké složitější. Používají se například také logaritmy. Pokud jste ale stejně jako já už zapomněli, co to vlastně ty logaritmy jsou, nebo jste se o nich nikdy neučili, vůbec to nevadí. Na následujícím obrázku je graf, který ukazuje různé Big O náročnosti. Pokud v dalších částech tutoriálu narazíte na nějakou Big O Notation, u které nebudete vědět jak náročná je, tak se na tento graf můžete podívat. Nemusíme být na Big O Notation experti, jen potřebujeme vědět co to je a popřípadě si na tomto grafu najít, jak náročný nějaký algoritmus je.</p>
+                    <img src="../media//img/BigOComplexityChart.jpeg" alt="Graf Big O náročnosti" class="image u-mb-medium u-mb-medium">
+                    <h2 class="heading-secondary u-mb-tiny">Big O Notation objektů a polí</h2>
+                    <p class="paragraph u-mb-small">Jen tak pro zajímavost bychom si zde mohli uvést Big O Notation týkající se operací s objekty a poli.</p>
+                    <h3 class="heading-tertiary u-mb-tiny">Objekty</h3>
+                    <ul class="unordered-list u-mb-small">
+                        <li><b>přidávání hodnot</b> - O(1)</li>
+                        <li><b>odstraňování hodnot</b> - O(1)</li>
+                        <li><b>hledání hodnoty</b> - O(n) - nehledáme klíč, ale hledáme jestli je hodnota pod nějakým klíčem</li>
+                        <li><b>přistupování k hodnotám</b> - O(1)</li>
+                    </ul>
+                    <h3 class="heading-tertiary u-mb-tiny">Pole</h3>
+                    <ul class="unordered-list u-mb-medium">
+                        <li><b>přidávání hodnot</b> - záleží na tom kde (při přidání hodnoty do pole se mění indexy - pokud přidáme hodnotu na konec pole, nemění se žádné indexy, pokud ji přidáme na začátek pole, mění se všechny indexy)</li>
+                        <li><b>odstraňování hodnot</b> - záleží na tom kde (při odstraňování hodnoty se mění indexy - pokud odstraňujeme hodnotu ze začátku pole, mění se všechny indexy, pokud ji odstraňujeme z konce pole, nemění se žádné indexy)</li>
+                        <li><b>hledání hodnoty</b> - O(n)</li>
+                        <li><b>přistupování k hodnotám</b> - O(1)</li>
+                    </ul>
+                    <p class="paragraph">To by bylo pro tuto část vše. Po přečtení této části byste měli hlavně vědět co to Big O Notation je, že vyjadřuje časovou nebo paměťovou náročnost a jak se píše. Určovat ji umět nemusíte a ani jsme si to zde nezkoušeli. V podstatě si jen občas v dalších částech tutoriálu řekneme, jaké má nějaký algoritmus Big O a to bude vše.</p>
+                </main>
+                <div class="article-page__lateral-side">
+                    <nav class="navigation">
+                        <ul>
+                            <li><a href="#">Something</a></li>
+                            <li><a href="#">Anything</a></li>
+                            <li><a href="#">Something too</a></li>
+                            <li><a href="#">And another one</a></li>
+                            <li><a href="#">Some things</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="../media/js/parts/bigONotation.js"></script>
+</body>
+</html>
