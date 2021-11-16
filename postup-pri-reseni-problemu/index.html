@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=yes maximum-scale=2.2 minimum-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../media/css/style.css">
+
+    <script src="../media/js/libraries/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    <title>Algoritmy a Datové Struktury v JS - Big O Notation</title>
+</head>
+<body>
+    <div class="page">
+        <header class="header">
+            <div class="header__content">
+                <h2 class="header__heading">Algoritmy a Datové Struktury v JS</h2>
+                <nav class="header__navigation">
+                    <ul>
+                        <li><a href="#">something</a></li>
+                        <li><a href="#">something</a></li>
+                        <li><a href="#">something</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <div class="heading-section">
+            Postup při řešení problému
+        </div>
+        <div class="article-page">
+            <div class="article-page__content">
+                <main class="article-page__main-side">
+                    <h1 class="heading-primary u-mb-medium">Postup při řešení problému</h1>
+                    <hr class="horizontal-rule u-mb-medium">
+                    <p class="paragraph u-mb-medium">V této části se dozvíte, jak postupovat při řešení problému. Také se dozvíte, že pro řešení problémů existují různé vzory a některé si zde ukážeme. Na začátek bych tu nejdřív chtěl ještě krátce popsat, co je to algoritmus.</p>
+                    <h2 class="heading-secondary u-mb-tiny">Co je to algoritmus</h2>
+                    <p class="paragraph u-mb-medium">Algoritmus je přesný návod či postup, kterým lze vyřešit nějakou úlohu. Nemusí se to týkat přímo programování, algoritmem může být například i nějaký recept, ve kterém je popsáno jak postupovat, když něco vaříme. Prostě je to nějaký návod, pomocí kterého dosáhneme požadovaného výsledku.</p>
+                    <h2 class="heading-secondary u-mb-tiny">Kroky při řešení problému</h2>
+                    <p class="paragraph u-mb-small">Existuje pět kroků, pomocí kterých se můžeme při řešení problému řídit:</p>
+                    <ol class="ordered-list u-mb-small">
+                        <li>Porozumění problému</li>
+                        <li>Prozkoumání konkrétních příkladů</li>
+                        <li>Rozdělení problému na menší části</li>
+                        <li>Vyřešení problému</li>
+                        <li>Refaktorizace</li>
+                    </ol>
+                    <h3 class="heading-tertiary u-mb-tiny">1. Porozumění problému</h3>
+                    <p class="paragraph u-mb-small">Než se pustíme do řešení nějakého problému, tak mu musíme dobře rozumět. Bez toho bychom problém jen těžko řešili. Zde je pár bodů, které bychom měli před řešením problému vědět nebo umět:</p>
+                    <ul class="unordered-list u-mb-small">
+                        <li>problém, který řešíme, bychom měli být schopni vysvětlit vlastními slovy</li>
+                        <li>měli bychom vědět jaké jsou vstupy, které se problému týkají (budeme pracovat s čísly, řetězci, nebo s něčím jiným?)</li>
+                        <li>měli bychom vědět jaký by měl být výstup vyřešení problému (měli bychom vypočítat nějakou hodnotu? zjistit jestli je něco pravda?)</li>
+                        <li>měli bychom se zamyslet nad tím, jestli jde vůbec ze vstupu určit výstup (máme dostatek informací k vyřešení problému?)</li>
+                        <li>jak bychom měli pojmenovat důležité kousky dat, které se problému týkají (např. jak se jmenuje výsledek nějaké matematické operace, kterou v kódu počítáme, abychom mohli proměnnou, která tento výsledek uchovává nějak srozumitelně pojmenovat)</li>
+                    </ul>
+                    <h3 class="heading-tertiary u-mb-tiny">2. Prozkoumání konkrétních příkladů</h3>
+                    <p class="paragraph u-mb-small">Předtím, než se pustíme do řešení problému, tak není špatné prozkoumat konkrétní příklady. To nám může pomoct problému ještě více porozumět a také můžeme přijít na nějaké detaily, které nás předtím nenapadli. Zde je pár kroků, kterých se při zkoumání konkrétních příkladů můžete držet:</p>
+                    <ol class="ordered-list u-mb-small">
+                        <li>začneme s jednoduchými příklady</li>
+                        <li>postupně zkoumáme složitější příklady</li>
+                        <li>pokud problém obsahuje nějaké vstupy, tak zjistíme nebo určíme co by se mělo stát když je nepředáme</li>
+                        <li>zjistíme nebo určíme co se má stát, když předáme špatné vstupy</li>
+                    </ol>
+                    <h3 class="heading-tertiary u-mb-tiny">3. Rozdělení problému na menší části</h3>
+                    <p class="paragraph u-mb-small">Pokud řešíme nějaký složitější problém, tak nám může hodně pomoct, když si jej rozdělíme na menší části. Můžeme si sepsat seznam kroků, které musíme udělat a tyto kroky postupně vyřešit.</p>
+                    <h3 class="heading-tertiary u-mb-tiny">4. Vyřešení problému</h3>
+                    <p class="paragraph u-mb-small">Po splnění předchozích bodů se můžeme pustit do řešení problému. Některé problémy ale mohou být opravdu hodně složité a nemusí se nám je dařit vyřešit. V takovém případě můžeme zkusit složitou část problému ignorovat a vytvořit řešení bez ní. Poté co toto jednodušší řešení máme hotové, můžeme se do něj pokusit ignorovanou část přidat. Možná tato strategie může občas pomoct, ale těžko říct.</p>
+                    <h3 class="heading-tertiary u-mb-tiny">5. Refaktorizace</h3>
+                    <p class="paragraph u-mb-small">Poté co problém vyřešíme, tak náš kód nemusí vypadat moc čitelně. Proto je potřeba jej refaktorizovat (udělat jej čitelnějším). Zde je pár otázek, na které si při refaktorizování vašeho kódu můžete odpovědět:</p>
+                    <ul class="unordered-list u-mb-medium">
+                        <li>Nemůžeme k výsledku dojít nějakou jinou a lepší cestou?</li>
+                        <li>Dává naše řešení smysl, když se něj díváme?</li>
+                        <li>Můžeme toto řešení použít i na nějaký jiný problém? Šlo by trochu poupravit aby šlo použít i na jiný problém?</li>
+                        <li>Můžeme zvýšit efektivitu našeho řešení?</li>
+                        <li>Existují nějaké další věci, podle kterých bychom měli náš kód refaktorizovat? Je kód napsaný stejným stylem, jako ostatní kód projektu?</li>
+                        <li>U některých problémů se můžeme podívat na internet, jak je ostatní lidé vyřešili. Je jejich řešení lepší?</li>
+                    </ul>
+                    <h2 class="heading-secondary u-mb-tiny">Vzory pro řešení problémů</h2>
+                    <p class="paragraph u-mb-small">Pro řešení problémů existují různé vzory, které lidé vymysleli a používají. Je jich hodně a zde jich je pár vypsaných:</p>
+                    <ul class="unordered-list u-mb-small">
+                        <li>frequency counter</li>
+                        <li>multiple pointers</li>
+                        <li>sliding window</li>
+                        <li>divide and conquer</li>
+                        <li>dynamic programming</li>
+                        <li>greedy algorithms</li>
+                        <li>backtracking</li>
+                        <li>a mnoho dalších...</li>
+                    </ul>
+                    <p class="paragraph u-mb-small">My se v tomto tutoriálu podíváme jen na čtyři z nich: frequency counter, multiple pointers, sliding window a divide and conquer.</p>
+                    <h3 class="heading-tertiary u-mb-tiny">Frequency Counter</h3>
+                    <p class="paragraph u-mb-small">Použitím tohoto vzoru pro řešení problému můžeme většinou nahradit vnořené cykly. To nám v některých případech může výrazně urychlit náš program.</p>
+                    <p class="paragraph u-mb-small">Jako příklad budeme chtít napsat funkci, která zjistí, jestli jsou dvě slova validní anagram. Budeme chtít zjistit, jestli dvě slova obsahují stejný počet stejných znaků. Například toto je anagram: kotel – loket, a toto není anagram: ovoce - kloub. Tuto funkci bychom mohli napsat například takto:</p>
+                    <div class="code-box u-mb-small">
+                        <pre class="code-box__code"><code>const jeAnagram = function(text1, text2) {
+    // aby mohli být dva řetězce validní anagram, musí mít stejnou délku
+    if (text1.length !== text2.length) return false;
+
+    // postupně se projedou znaky v textu 1
+    for (let i = 0; i < text1.length; i++) {
+        // spočítá se počet aktuálního znaku v prvním textu
+        let pocetAktualnihoZnakuVText1 = 0;
+        for (let j = 0; j < text1.length; j++) {
+            if (text1[i] === text1[j]) pocetAktualnihoZnakuVText1++;
+        }
+        // spočítá se počet aktuálního znaku v druhém textu
+        let pocetAktualnihoZnakuVText2 = 0;
+        for (let j = 0; j < text1.length; j++) {
+            if (text1[i] === text2[j]) pocetAktualnihoZnakuVText2++;
+        }
+        // pokud se počty znaků neshodují, nejedná se o anagram
+        if (pocetAktualnihoZnakuVText1 !== pocetAktualnihoZnakuVText2) return false;
+    }
+
+    // pokud se došlo až sem, jedná se o validní anagram
+    return true;
+}
+
+const vysledek = jeAnagram("pekařství", "přístavek");
+console.log("Výsledek: " + vysledek);</code></pre>
+                        <div class="code-box__console">&gt; Výsledek: true</div>
+                    </div>
+                    <p class="paragraph u-mb-small">V ukázce používáme vnořené cykly, což není moc efektivní. Časová náročnost takového kódu je O(n<sup>2</sup>). Pokud bychom na vyřešení tohoto problému namísto vnořování cyklů použili Frequency Counter vzor, tak můžeme časovou náročnost snížit na O(n). Také by náš kód byl o dost čitelnější.</p>
+                    <p class="paragraph u-mb-small">Frequency Counter vzor namísto vnořování cyklů upřednostňuje objekty. Můžeme si pro oba texty, které do funkce předáváme vytvořit objekty, do kterých budeme ukládat počet znaků stejného druhu, které v textech najdeme. Následující ukázka přepisuje funkci z minulé ukázky s použitím Frequncy Counter vzoru:</p>
+                    <div class="code-box u-mb-small">
+                        <pre class="code-box__code"><code>const jeAnagram = function(text1, text2) {
+    // aby mohli být dva řetězce validní anagram, musí mít stejnou délku
+    if (text1.length !== text2.length) return false;
+
+    const pocitadloZnaku1 = {};
+    const pocitadloZnaku2 = {};
+
+    // spočítání znaků v prvním textu
+    // (to 'pocitadloZnaku1[char] || 0' znamená že pokud je vlastnost objektu undefined, použije se 0 - říká se tomu short circuiting)
+    for (let char of text1)
+        pocitadloZnaku1[char] = (pocitadloZnaku1[char] || 0) + 1;
+    // spočítání znaků v druhém textu
+    for (let char of text2)
+        pocitadloZnaku2[char] = (pocitadloZnaku2[char] || 0) + 1;
+
+    // pokud je počet jakéhokoliv znaku v počítadlech odlišný, nejedná se o anagram
+    for (let char of text1)
+        if (pocitadloZnaku1[char] !== pocitadloZnaku2[char]) return false;
+
+    // pokud se došlo až sem, jedná se o validní anagram
+    return true;
+}
+
+const vysledek = jeAnagram("pekařství", "přístavek");
+console.log("Výsledek: " + vysledek);</code></pre>
+                        <div class="code-box__console">&gt; Výsledek: true</div>
+                    </div>
+                    <h3 class="heading-tertiary u-mb-tiny">Multiple Pointers</h3>
+                    <p class="paragraph u-mb-small">Další vzor pro řešení problémů, který si zde ukážeme, je Multiple Pointers. Používá se hlavně se seřazenými poli. Většinou si vytvoříme proměnné, které slouží jako ukazatelé na konkrétní indexy v poli a tyto ukazatele pak různě posouváme v závislosti na tom, čeho chceme docílit.</p>
+                    <p class="paragraph u-mb-small">Jako příklad si pojďme napsat funkci, která vrátí dvě čísla v seřazeném poli, jejichž sečtením dostaneme nulu. Mohli bychom ji napsat například takto:</p>
+                    <div class="code-box u-mb-small">
+                        <pre class="code-box__code"><code>// tato funkce vrátí dvě čísla ze seřazeného pole, jejichž sečtením získáme nulu
+function soucetNula(pole){
+    // pole se celé projede od začátku do konce
+    for(let i = 0; i &lt; pole.length; i++){
+        // pole se projede od indexu i po konec
+        for(let j = i+1; j &lt; pole.length; j++){
+            // pokud se hodnota na indexu i + hodnota na indexu j rovná 0, tak jsme našli výsledek
+            if(pole[i] + pole[j] === 0){
+                return [pole[i], pole[j]];
+            }
+        }
+    }
+}
+
+const vysledek = soucetNula([-4,-3,-2,-1,0,1,2,5]);
+console.log("První číslo: " + vysledek[0]);
+console.log("Druhé číslo: " + vysledek[1]);</code></pre>
+                        <div class="code-box__console">&gt; První číslo: -2<br>&gt; Druhé číslo: 2</div>
+                    </div>
+                    <p class="paragraph u-mb-small">Toto řešení není ideální a plně nevyužívá toho, že je předávané pole seřazené. Následující řešení, které používá Multiple Pointers vzor je mnohem efektivnější:</p>
+                    <div class="code-box u-mb-small">
+                        <pre class="code-box__code"><code>// tato funkce vrátí dvě čísla ze seřazeného pole, jejichž sečtením získáme nulu
+function soucetNula(pole) {
+    // vytvoření dvou ukazatelů, kteří ukazují na konce pole
+    let left = 0;
+    let right = pole.length - 1;
+
+    // tento kód se bude opakovat tak dlouho, dokud je levý ukazatel menší než pravý
+    while (left &lt; right) {
+        // určení součtu hodnot, na které momentálně ukazatelé ukazují
+        let soucet = pole[left] + pole[right];
+        // pokud je součet 0, tak jsme našli výsledek
+        if (soucet === 0) {
+            return [pole[left], pole[right]];
+        } else if (soucet &gt; 0) {
+            // pokud je součet větší než nula, tak posuneme pravý ukazatel doleva
+            right--;
+        } else {
+            // pokud je součet menší než nula, tak posuneme levý ukazatel doprava
+            left++;
+        }
+    }
+}
+
+const vysledek = soucetNula([-4,-3,-2,-1,0,1,2,5]);
+console.log("První číslo: " + vysledek[0]);
+console.log("Druhé číslo: " + vysledek[1]);</code></pre>
+                        <div class="code-box__console" id="console-1">&gt; První číslo: -2<br>&gt; Druhé číslo: 2</div>
+                    </div>
+                    <p class="paragraph u-mb-small">Po zhlédnutí předchozí ukázky kódu už asi víte o čem Multiple Pointers vzor je. Používáme ukazatele odkazující na nějaké místo v poli a různě s nimi manipulujeme podle toho, čeho chceme dosáhnout.</p>
+                    <h3 class="heading-tertiary u-mb-tiny">Sliding Window</h3>
+                    <p class="paragraph u-mb-small">Nevím jak bych tento vzor popsal v textu. Proto se podíváme na následující ukázku kódu. V této ukázce se nachází funkce, která vrací nejvyšší součet nějakého počtu po sobě jdoucích položek v poli. Jako parametr jí předáváme pole a délku podpole (kolik po sobě jdoucích položek se má sčítat). Pokud tedy předáme jako délku například 5, tak se vždy sečte 5 položek vedle sebe a nejvyšší součet 5 po sobě jdoucích položek funkce vrátí. Snad jste to pochopili.</p>
+                    <div class="code-box u-mb-small">
+                        <pre class="code-box__code"><code>// tato funkce vrací nejvyšší součet nějakého počtu po sobě jdoucích položek v poli
+function maxSoucetPodpole(pole, delka) {
+    // pokud je délka podpole větší než samotné pole, tak se maximální součet podpole počítat nedá
+    if (delka &gt; pole.length) return null;
+
+    // tato proměnná bude uchovávat nejvyšší součet podpole
+    let max = -Infinity;
+    // postupně se pole projede
+    for (let i = 0; i &lt; pole.length - delka + 1; i++) {
+        // v této proměnné se bude ukládat dočasný (temporary) součet
+        let temp = 0;
+        // spočítá se součet nějakého počtu po sobě jdoucích položek od indexu i
+        for (let j = 0; j &lt; delka; j++){
+            temp += pole[i + j];
+        }
+        // pokud je dočasný součet vyšší než nejvyšší součet, tak se nastaví jako nejvyšší
+        if (temp &gt; max) max = temp;
+    }
+    return max;
+}
+
+const vysledek = maxSoucetPodpole([2,6,9,2,1,8,5,6,3], 3);
+console.log("Výsledek: " + vysledek);</code></pre>
+                        <div class="code-box__console" id="console-1">&gt; Výsledek: 19</div>
+                    </div>
+                    <p class="paragraph u-mb-small">Jak jste si v předchozí ukázce kódu mohli všimnout, index i se vždy posune v poli o jednu položku. Poté se od tohoto místa pomocí for cyklu spočítá součet nějakého počtu položek a porovná se jestli je tento součet vyšší než nejvyšší součet. Možná vás napadlo že tento for cyklus nepotřebujeme a že stačí vždy jen odečíst první položku a přidat do součtu další. A to je právě Sliding Window vzor. Následující ukázka jej ukazuje a přepisuje funkci z předchozí ukázky.</p>
+                    <div class="code-box u-mb-small">
+                        <pre class="code-box__code"><code>// tato funkce vrací nejvyšší součet nějakého počtu po sobě jdoucích položek v poli
+function maxSoucetPodpole(pole, delka){
+    let maxSoucet = 0; // nejvyšší součet
+    let tempSoucet = 0; // dočasný součet
+
+    // pokud je délka podpole větší než samotné pole, tak se maximální součet podpole počítat nedá
+    if (pole.length &lt; delka) return null;
+
+    // spočítá se součet nějakého počtu prvních po sobě jdoucích položek v poli a nastaví se jako nejvyšší součet
+    for (let i = 0; i &lt; delka; i++) {
+        maxSoucet += pole[i];
+    }
+    // nastavíme dočasný součet na hodnotu nejvyššího součtu
+    tempSoucet = maxSoucet;
+    // projedeme pole
+    for (let i = delka; i &lt; pole.length; i++) {
+        // od dočasného součtu vždy odečteme první položku a přičteme další
+        tempSoucet = tempSoucet - pole[i - delka] + pole[i];
+        // pokud je dočasný součet větší než nejvyšší součet, tak se dočasný součet nastaví jako nejvyšší součet
+        if (tempSoucet &gt; maxSoucet) maxSoucet = tempSoucet;
+    }
+    return maxSoucet;
+}
+
+const vysledek = maxSoucetPodpole([2,6,9,2,1,8,5,6,3], 3);
+console.log("Výsledek: " + vysledek);</code></pre>
+                        <div class="code-box__console" id="console-1">&gt; Výsledek: 19</div>
+                    </div>
+                    <h3 class="heading-tertiary u-mb-tiny">Divide and Conquer</h3>
+                    <p class="paragraph u-mb-small">Poslední vzor pro řešení problémů, který si ukážeme je Divide and Conquer. Tuto techniku používají seřazující algoritmy jako je třeba Quick Sort a Merge Sort. Tento vzor může nesmírně snížit časovou náročnost.</p>
+                    <p class="paragraph u-mb-small">Pro ukázku Divide and Conquer vzoru si vytvoříme funkci pro hledání hodnoty v seřazeném poli. Nejprve si ukážeme jednoduchou neefektivní cestu hledání hodnoty v seřazeném poli:</p>
+                    <div class="code-box u-mb-small">
+                        <pre class="code-box__code"><code>// tato funkce vrací index položky v poli, která obsahuje předanou hodnotu
+function vyhledatVSerazenemPoli(pole, hodnota) {
+    // projetí celého pole for cyklem
+    for (let i = 0; i &lt; pole.length; i++) {
+        // pokud se našla položka, která obsahuje hledanou hodnotu, vrátí se její index
+        if (pole[i] === hodnota) return i;
+    }
+    // pokud se položka nenašla, vrátí se -1
+    return -1;
+}
+
+let index = vyhledatVSerazenemPoli([1, 3, 4, 6, 7, 9], 6);
+console.log("Vyhledaný index: " + index);</code></pre>
+                        <div class="code-box__console" id="console-1">&gt; Vyhledaný index: 3</div>
+                    </div>
+                    <p class="paragraph u-mb-small">Protože hledáme hodnotu v seřazeném poli, tak není potřeba projíždět celé pole for cyklem, jak to ukazuje předchozí ukázka. Můžeme se zeptat, jestli je hledaná položka nižší nebo vyšší než prostřední položka pole a podle toho se přesunou doprostřed levé části pole nebo pravé části pole. Tuto operaci můžeme několikrát opakovat a dostaneme se k hledané položce mnohem rychleji. Jedná se vlastně o Binary Search algoritmus. Následující ukázka jej ukazuje.</p>
+                    <div class="code-box u-mb-small">
+                        <pre class="code-box__code"><code>// tato funkce vrací index položky v poli, která obsahuje předanou hodnotu
+function vyhledatVSerazenemPoli(pole, hodnota) {
+    // v těchto proměnných se budou ukládat hranice, které vymezují místo, které rozdělíme
+    // na dvě části a vybereme si jednu, ve které se nachází hledaná položka
+    let min = 0;
+    let max = pole.length - 1;
+
+    // tento kód se bude opakovat tak dlouho, dokud hledanou položku nenajdeme
+    // (nebo dojdeme k závěru, že hledaná položka v poli není)
+    while (min &lt;= max) {
+        // získání prostřední položky v části pole, které vymezují proměnné min a max
+        let middle = Math.trunc((min + max) / 2);
+
+        // pokud je hodnota prostřední položky menší než hledaná hodnota
+        // tak se posune proměnná min na místo prostřední položky
+        if (pole[middle] &lt; hodnota) {
+            min = middle + 1;
+        }
+        // pokud je hodnota prostřední položky větší než hledaná položka
+        // tak se posune proměnná max na místo prostřední položky
+        else if (pole[middle] &gt; hodnota) {
+            max = middle - 1;
+        }
+        // pokud se hledaná položka v poli našla, tak se vrátí její index
+        else {
+            return middle;
+        }
+    }
+
+    // pokud se hledaná položka v poli nenašla, tak se vrátí -1
+    return -1;
+}
+
+let index = vyhledatVSerazenemPoli([1, 3, 4, 6, 7, 9], 6);
+console.log("Vyhledaný index: " + index);</code></pre>
+                        <div class="code-box__console" id="console-1">&gt; Vyhledaný index: 3</div>
+                    </div>
+                </main>
+                <div class="article-page__lateral-side">
+                    <nav class="navigation">
+                        <ul>
+                            <li><a href="#">Something</a></li>
+                            <li><a href="#">Anything</a></li>
+                            <li><a href="#">Something too</a></li>
+                            <li><a href="#">And another one</a></li>
+                            <li><a href="#">Some things</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

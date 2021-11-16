@@ -34,12 +34,14 @@ body {
   color: #444;
   line-height: 1.4;
 }
-.unordered-list {
+.unordered-list,
+.ordered-list {
   font-size: 1.6rem;
   color: #444;
   list-style-position: inside;
 }
-.unordered-list li:not(:last-child) {
+.unordered-list li:not(:last-child),
+.ordered-list li:not(:last-child) {
   margin-bottom: 0.3rem;
 }
 .u-mb-tiny {
