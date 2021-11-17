@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=yes maximum-scale=2.2 minimum-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../media/css/style.css">
+
+    <script src="../media/js/libraries/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    <title>Algoritmy a Datové Struktury v JS - Vyhledávací algoritmy</title>
+</head>
+<body>
+    <div class="page">
+        <header class="header">
+            <div class="header__content">
+                <h2 class="header__heading">Algoritmy a Datové Struktury v JS</h2>
+                <nav class="header__navigation">
+                    <ul>
+                        <li><a href="#">something</a></li>
+                        <li><a href="#">something</a></li>
+                        <li><a href="#">something</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <div class="heading-section">
+            Vyhledávací algoritmy
+        </div>
+        <div class="article-page">
+            <div class="article-page__content">
+                <main class="article-page__main-side">
+                    <h1 class="heading-primary u-mb-medium">Vyhledávací algoritmy</h1>
+                    <hr class="horizontal-rule u-mb-medium">
+                    <p class="paragraph u-mb-medium">V této části si ukážeme dva vyhledávací algoritmy, které můžeme použít při hledání hodnot v poli. Jeden z nich pravděpodobně znáte a ten druhý byl už vlastně ukázaný v části 'Postup při řešení problému'.</p>
+                    <h2 class="heading-secondary u-mb-tiny">Linear Search</h2>
+                    <p class="paragraph u-mb-small">Asi nejjednodušší způsob hledání položky v poli je celé pole projet for cyklem a ptát se jestli se nějaká položka rovná hledané hodnotě. Tento způsob ukazuje následující ukázka:</p>
+                    <div class="code-box u-mb-small">
+                        <pre class="code-box__code"><code>function linearSearch(pole, hodnota){
+    for(let i = 0; i &lt; pole.length; i++){
+        // pokud se hledaná hodnota nachází na tomto indexu pole,
+        // tak jsme hodnotu našli a vrátíme její index
+        if(pole[i] === hodnota) return i;
+    }
+    // pokud jsme hledanou hodnotu v poli nenašli, vrátíme -1
+    return -1
+}
+
+const index = linearSearch([5, 1, 3, 8, 6], 3);
+console.log("Hledaná položka se nachází na indexu: " + index);</code></pre>
+                        <div class="code-box__console">&gt; Hledaná položka se nachází na indexu: 2</div>
+                    </div>
+                    <p class="paragraph u-mb-medium">Časová náročnost tohoto způsobu je O(n), protože čím více má pole položek, tím více může (ale nemusí) proběhnout cyklů. Pokud pole, ve kterém vyhledáváme není seřazené, tak pravděpodobně neexistuje lepší způsob jak vyhledávat, pokud ale je tak ano.</p>
+                    <h2 class="heading-secondary u-mb-tiny">Binary Search</h2>
+                    <p class="paragraph u-mb-small">Tento algoritmus slouží pro vyhledávání položky v seřazeném poli. Díky tomu, že hledáme hodnotu v seřazeném poli, tak nemusíme celé pole projíždět for cyklem jako u předchozího algoritmu. Můžeme se zeptat, jestli je hledaná položka nižší nebo vyšší než prostřední položka pole a podle toho se přesunout doprostřed levé části pole nebo pravé části pole. Tuto operaci můžeme několikrát opakovat a nakonec se k hledané položce dostaneme nebo dojdeme k závěru že hledaná položka v poli není.</p>
+                    <p class="paragraph u-mb-small">Binary Search algoritmus byl již ukázan v části <a href="../postup-pri-reseni-problemu/index.html#divide-and-conquer" class="anchor">postup při řešení problému</a>, ale rozhodl jsem se ho v této části ukázat ještě jednou a přidat k němu menší vizualizaci, která vám možná pomůže jej lépe pochopit.</p>
+                    <div data-interactive-example-id="1" class="code-box u-mb-small">
+                        <div class="code-box__header">
+                            <div class="code-box__icon">
+                                <svg>
+                                    <use xlink:href="../media/img/icon-sprite.svg#icon-cogs"></use>
+                                </svg>
+                            </div>
+                            <div class="code-box__buttons-container">
+                                <button class="code-box__button code-box__button--move" data-interactive-example-move-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-forward3"></use>
+                                    </svg>
+                                </button>
+                                <select class="code-box__speed-input" data-interactive-example-speed-input="true">
+                                    <option value="0.25">0.25</option>
+                                    <option value="0.5">0.5</option>
+                                    <option value="0.75">0.75</option>
+                                    <option selected value="1">1</option>
+                                    <option value="1.25">1.25</option>
+                                    <option value="1.5">1.5</option>
+                                    <option value="1.75">1.75</option>
+                                </select>
+                                <button class="code-box__button" data-interactive-example-play-button="true">
+                                    <span>
+                                        <svg>
+                                            <use xlink:href="../media/img/icon-sprite.svg#icon-play3"></use>
+                                        </svg>
+                                    </span>
+                                </button>
+                                <button class="code-box__button code-box__button--reset" data-interactive-example-reset-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-loop2"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <pre id="code-1" class="code-box__code"><code>const binarySearch = (pole, hodnota) => {
+    let min = 0;
+    let max = pole.length - 1;
+    let middle = Math.trunc((min + max) / 2);
+
+    while(pole[middle] !== hodnota && min &lt;= max) {
+        // zmenšení místa, které vymezují proměnné min a max
+        // o polovinu, podle toho, kde se položka nachází
+        if (hodnota &lt; pole[middle]) {
+            max = middle - 1;
+        } else {
+            min = middle + 1;
+        }
+
+        // získání prostřední položky mezi proměnnými min a max
+        middle = Math.trunc((min + max) / 2);
+    }
+    // pokud se položka našla, tak se vrátí její index,
+    // pokud ne, tak se vrátí -1
+    return pole[middle] === hodnota ? middle : -1;
+}
+
+const index = binarySearch([2,5,6,9,13,15,28,30], 13);
+console.log("Hledaná položka se nachází na indexu: " + index);</code></pre>
+                        <div class="code-box__array">
+                            <div id="visual-array-1" class="array">
+                                <div class="array__bracket array__bracket--first">[</div><div class="array__item">2</div><div class="array__item">5</div><div class="array__item">6</div><div class="array__item">9</div><div class="array__item">13</div><div class="array__item">15</div><div class="array__item">28</div><div class="array__item">30</div><div class="array__bracket array__bracket--last">]</div>
+                                <div class="array__range-pointer">
+                                    <div class="array__range-label array__range-label--left">min</div>
+                                    <div class="array__range-label array__range-label--right">max</div>
+                                </div>
+                                <div id="array-pointer-1" class="array__pointer">
+                                    <div class="array__pointer-label">middle</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="console-1" class="code-box__console">&gt; </div>
+                    </div>
+                    <p class="paragraph">Časová náročnost Binary Search algoritmu je O(log n), což není vůbec špatné. Samozřejmě záleží také na tom jaké máme štěstí, občas můžeme položku třeba najít hned a časová náročnost by tak byla O(1).</p>
+                </main>
+                <div class="article-page__lateral-side">
+                    <nav class="navigation">
+                        <ul>
+                            <li><a href="#">Something</a></li>
+                            <li><a href="#">Anything</a></li>
+                            <li><a href="#">Something too</a></li>
+                            <li><a href="#">And another one</a></li>
+                            <li><a href="#">Some things</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="../media/js/parts/vyhledavaci-algoritmy.js"></script>
+</body>
+</html>

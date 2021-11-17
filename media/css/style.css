@@ -44,6 +44,15 @@ body {
 .ordered-list li:not(:last-child) {
   margin-bottom: 0.3rem;
 }
+.anchor:link,
+.anchor:visited {
+  font-weight: 700;
+  color: #1bbc9b;
+  text-decoration: none;
+}
+.anchor:hover {
+  color: #18a689;
+}
 .u-mb-tiny {
   margin-bottom: 0.5rem !important;
 }
@@ -387,6 +396,12 @@ code.hljs {
   display: flex;
   flex-direction: column-reverse;
 }
+.code-box__array {
+  background-color: #0e6351;
+  border-top: 0.3rem solid #1bbc9b;
+  text-align: center;
+  padding: 0.5rem;
+}
 .code-box__console {
   font-size: 1.6rem;
   background-color: #0b4d3f;
@@ -445,6 +460,83 @@ code.hljs {
   fill: #1bbc9b;
   stroke: #444;
   stroke-width: 0.2rem;
+}
+.array {
+  display: inline-block;
+  font-size: 1.5rem;
+  user-select: none;
+  position: relative;
+  padding-bottom: 2rem;
+  padding-top: 2rem;
+}
+.array__bracket {
+  display: inline-block;
+  color: #444;
+  background-color: #cbb26f;
+  border: 0.2rem solid #dfd0a7;
+  padding: 0.2rem 0.3rem;
+  width: 2.4rem;
+}
+.array__bracket--first {
+  border-top-left-radius: 0.3rem;
+  border-bottom-left-radius: 0.3rem;
+  border-right-width: 0.1rem;
+}
+.array__bracket--last {
+  border-top-right-radius: 0.3rem;
+  border-bottom-right-radius: 0.3rem;
+  border-left-width: 0.1rem;
+}
+.array__item {
+  display: inline-block;
+  color: #444;
+  background-color: #97cb6f;
+  border: 0.2rem solid #c0dfa7;
+  border-right-width: 0.1rem;
+  border-left-width: 0.1rem;
+  padding: 0.2rem 0.3rem;
+  width: 2.4rem;
+}
+.array__range-pointer {
+  position: absolute;
+  bottom: 1rem;
+  left: 2.4rem;
+  width: 2.4rem;
+  height: 1rem;
+  border: 0.2rem solid #c5cb6f;
+  border-top: none;
+  border-bottom-left-radius: 0.3rem;
+  border-bottom-right-radius: 0.3rem;
+}
+.array__range-label {
+  position: absolute;
+  bottom: 0;
+  font-size: 0.9rem;
+  color: #dcdfa7;
+}
+.array__range-label--left {
+  left: 0;
+  transform: translateY(100%) translateX(-50%);
+}
+.array__range-label--right {
+  right: 0;
+  transform: translateY(100%) translateX(50%);
+}
+.array__pointer {
+  position: absolute;
+  top: 1rem;
+  left: 2.4rem;
+  width: 0.2rem;
+  height: 1rem;
+  background-color: #c5cb6f;
+}
+.array__pointer-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateY(-100%) translateX(-50%);
+  font-size: 0.9rem;
+  color: #dcdfa7;
 }
 .article-page__content {
   width: 100%;

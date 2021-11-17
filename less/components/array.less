@@ -1,0 +1,94 @@
+.array {
+    display: inline-block;
+    font-size: 1.5rem;
+
+    user-select: none;
+
+    position: relative;
+    padding-bottom: 2rem;
+    padding-top: 2rem;
+
+    &__bracket {
+        display: inline-block;
+
+        color: @colors[dark-grey];
+        background-color: @colors[light-orange];
+        border: .2rem solid lighten(@colors[light-orange], 15%);
+
+        padding: .2rem .3rem;
+
+        width: 2.4rem;
+
+        &--first {
+            border-top-left-radius: .3rem;
+            border-bottom-left-radius: .3rem;
+            border-right-width: .1rem;
+        }
+        &--last {
+            border-top-right-radius: .3rem;
+            border-bottom-right-radius: .3rem;
+            border-left-width: .1rem;
+        }
+    }
+    &__item {
+        display: inline-block;
+
+        color: @colors[dark-grey];
+        background-color: @colors[light-green];
+        border: .2rem solid lighten(@colors[light-green], 15%);
+        border-right-width: .1rem;
+        border-left-width: .1rem;
+
+        padding: .2rem .3rem;
+
+        width: 2.4rem;
+    }
+    &__range-pointer {
+        position: absolute;
+        bottom: 1rem;
+        left: 2.4rem;
+        width: 2.4rem;
+        height: 1rem;
+
+        border: .2rem solid @colors[light-yellow];
+        border-top: none;
+        border-bottom-left-radius: .3rem;
+        border-bottom-right-radius: .3rem;
+    }
+    &__range-label {
+        position: absolute;
+        bottom: 0;
+
+        font-size: .9rem;
+        color: lighten(@colors[light-yellow], 15%);
+
+        &--left {
+            left: 0;
+            transform: translateY(100%) translateX(-50%);
+        }
+        &--right {
+            right: 0;
+            transform: translateY(100%) translateX(50%);
+        }
+    }
+
+    &__pointer {
+        position: absolute;
+        top: 1rem;
+        left: 2.4rem;
+        width: .2rem;
+        height: 1rem;
+
+        background-color: @colors[light-yellow];
+    }
+
+    &__pointer-label {
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: translateY(-100%) translateX(-50%);
+
+        font-size: .9rem;
+        color: lighten(@colors[light-yellow], 15%);
+    }
+}

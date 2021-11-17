@@ -268,7 +268,7 @@ const vysledek = maxSoucetPodpole([2,6,9,2,1,8,5,6,3], 3);
 console.log("Výsledek: " + vysledek);</code></pre>
                         <div class="code-box__console" id="console-1">&gt; Výsledek: 19</div>
                     </div>
-                    <h3 class="heading-tertiary u-mb-tiny">Divide and Conquer</h3>
+                    <h3 id="divide-and-conquer" class="heading-tertiary u-mb-tiny">Divide and Conquer</h3>
                     <p class="paragraph u-mb-small">Poslední vzor pro řešení problémů, který si ukážeme je Divide and Conquer. Tuto techniku používají seřazující algoritmy jako je třeba Quick Sort a Merge Sort. Tento vzor může nesmírně snížit časovou náročnost.</p>
                     <p class="paragraph u-mb-small">Pro ukázku Divide and Conquer vzoru si vytvoříme funkci pro hledání hodnoty v seřazeném poli. Nejprve si ukážeme jednoduchou neefektivní cestu hledání hodnoty v seřazeném poli:</p>
                     <div class="code-box u-mb-small">
@@ -287,7 +287,7 @@ let index = vyhledatVSerazenemPoli([1, 3, 4, 6, 7, 9], 6);
 console.log("Vyhledaný index: " + index);</code></pre>
                         <div class="code-box__console" id="console-1">&gt; Vyhledaný index: 3</div>
                     </div>
-                    <p class="paragraph u-mb-small">Protože hledáme hodnotu v seřazeném poli, tak není potřeba projíždět celé pole for cyklem, jak to ukazuje předchozí ukázka. Můžeme se zeptat, jestli je hledaná položka nižší nebo vyšší než prostřední položka pole a podle toho se přesunou doprostřed levé části pole nebo pravé části pole. Tuto operaci můžeme několikrát opakovat a dostaneme se k hledané položce mnohem rychleji. Jedná se vlastně o Binary Search algoritmus. Následující ukázka jej ukazuje.</p>
+                    <p class="paragraph u-mb-small">Protože hledáme hodnotu v seřazeném poli, tak není potřeba projíždět celé pole for cyklem, jak to ukazuje předchozí ukázka. Můžeme se zeptat, jestli je hledaná položka nižší nebo vyšší než prostřední položka pole a podle toho se přesunout doprostřed levé části pole nebo pravé části pole. Tuto operaci můžeme několikrát opakovat a dostaneme se k hledané položce mnohem rychleji. Jedná se vlastně o Binary Search algoritmus. Následující ukázka jej ukazuje.</p>
                     <div class="code-box u-mb-small">
                         <pre class="code-box__code"><code>// tato funkce vrací index položky v poli, která obsahuje předanou hodnotu
 function vyhledatVSerazenemPoli(pole, hodnota) {

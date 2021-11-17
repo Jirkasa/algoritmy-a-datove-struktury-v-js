@@ -39,3 +39,14 @@ body {
         margin-bottom: .3rem;
     }
 }
+
+.anchor {
+    &:link, &:visited {
+        font-weight: 700;
+        color: @colors[primary];
+        text-decoration: none;
+    }
+    &:hover {
+        color: darken(@colors[primary], 5%);
+    }
+}

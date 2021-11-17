@@ -10,6 +10,7 @@ function initExamples(config) {
         const lineHighlighter = example.lineHighlighter;
         const timer = example.timer;
         const callStack = example.callStack;
+        const visualArray = example.visualArray;
         const playButton = codeBox.querySelector('button[data-interactive-example-play-button]');
         const resetButton = codeBox.querySelector('button[data-interactive-example-reset-button]');
         const speedInput = codeBox.querySelector('select[data-interactive-example-speed-input]');
@@ -72,6 +73,7 @@ function initExamples(config) {
             if (lineHighlighter) lineHighlighter.clear();
             if (timer) timer.reset();
             if (callStack) callStack.reset();
+            if (visualArray) visualArray.reset();
 
             // update play button icon
             playIcon.style.display = "none";
@@ -91,6 +93,7 @@ function initExamples(config) {
             if (lineHighlighter) lineHighlighter.clear();
             if (timer) timer.reset();
             if (callStack) callStack.reset();
+            if (visualArray) visualArray.reset();
 
             // update play button icon
             if (playButton) {
