@@ -76,10 +76,68 @@
                 height: 80%;
             }
         }
+
+        &--move {
+            background-color: @colors[light-yellow];
+            border-color: lighten(@colors[light-yellow], 15%);
+
+            &:hover {
+                background-color: darken(@colors[light-yellow], 7%);
+            }
+
+            &:active {
+                background-color: darken(@colors[light-yellow], 15%);
+            }
+        }
+    }
+
+    &__speed-input {
+        vertical-align: bottom;
+        height: 2.5rem;
+
+        color: @colors[dark-grey];
+        background-color: lighten(@colors[light-green], 30%);
+        border: .2rem solid lighten(@colors[light-green], 15%);
+        border-radius: .2rem;
+
+        &:focus {
+            outline: none;
+            border-color: @colors[light-green];
+        }
     }
 
     &__code {
         font-size: 1.6rem;
+        position: relative;
+    }
+
+    &__container {
+        display: flex;
+        align-items: stretch;
+
+        > div:first-child {
+            overflow: hidden;
+            flex: 1;
+            
+            pre {
+                height: 100% !important;
+            }
+        }
+    }
+
+    &__call-stack {
+        flex: 0 0 12rem;
+
+        border-left: .3rem solid @colors[primary];
+        background-color: darken(@colors[primary], 25%);
+        border-radius: .5rem;
+
+        padding: .3rem;
+
+        overflow-x: hidden;
+
+        display: flex;
+        flex-direction: column-reverse;
     }
 
     &__console {

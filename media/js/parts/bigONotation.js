@@ -15,6 +15,8 @@ const config = [
 
             let cas2 = performance.now();
             this.console.log(`Provedení kódu trvalo ${cas2 - cas1} milisekund.`);
+
+            this.finish();
         }
     }
 ];

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=yes maximum-scale=2.2 minimum-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../media/css/style.css">
+
+    <script src="../media/js/libraries/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    <title>Algoritmy a Datové Struktury v JS - Rekurze</title>
+</head>
+<body>
+    <div class="page">
+        <header class="header">
+            <div class="header__content">
+                <h2 class="header__heading">Algoritmy a Datové Struktury v JS</h2>
+                <nav class="header__navigation">
+                    <ul>
+                        <li><a href="#">something</a></li>
+                        <li><a href="#">something</a></li>
+                        <li><a href="#">something</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <div class="heading-section">
+            Rekurze
+        </div>
+        <div class="article-page">
+            <div class="article-page__content">
+                <main class="article-page__main-side">
+                    <h1 class="heading-primary u-mb-medium">Rekurze</h1>
+                    <hr class="horizontal-rule u-mb-medium">
+                    <p class="paragraph u-mb-medium">V této části se podíváme na to, co je to rekurze. Je to věc, která vám ze začátku možná může přijít trochu složitější a matoucí, obzvlášť u složitějších algoritmů. Ale občas si jejím použitím můžeme ušetřit práci.</p>
+                    <h2 class="heading-secondary u-mb-tiny">Co je to rekurze</h2>
+                    <p class="paragraph u-mb-small">Rekurze je proces, při kterém funkce volá sama sebe. Nevím co bych k tomu dodal. Následující ukázka ji ukazuje:</p>
+                    <div data-interactive-example-id="1" class="code-box u-mb-medium">
+                        <div class="code-box__header">
+                            <div class="code-box__icon">
+                                <svg>
+                                    <use xlink:href="../media/img/icon-sprite.svg#icon-cogs"></use>
+                                </svg>
+                            </div>
+                            <div class="code-box__buttons-container">
+                                <button class="code-box__button code-box__button--move" data-interactive-example-move-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-forward3"></use>
+                                    </svg>
+                                </button>
+                                <select class="code-box__speed-input" data-interactive-example-speed-input="true">
+                                    <option value="0.25">0.25</option>
+                                    <option value="0.5">0.5</option>
+                                    <option value="0.75">0.75</option>
+                                    <option selected value="1">1</option>
+                                    <option value="1.25">1.25</option>
+                                    <option value="1.5">1.5</option>
+                                    <option value="1.75">1.75</option>
+                                </select>
+                                <button class="code-box__button" data-interactive-example-play-button="true">
+                                    <span>
+                                        <svg>
+                                            <use xlink:href="../media/img/icon-sprite.svg#icon-play3"></use>
+                                        </svg>
+                                    </span>
+                                </button>
+                                <button class="code-box__button code-box__button--reset" data-interactive-example-reset-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-loop2"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="code-box__container">
+                            <div>
+                                <pre id="code-1" class="code-box__code"><code>const pozdrav = function(pocet) {
+    // pokud se proměnná pocet rovná 0, tak se provádění funkce ukončí
+    if (pocet &lt;= 0) return;
+    console.log("ahoj");
+
+    // funkce volá sama sebe
+    pozdrav(pocet-1);
+}
+
+pozdrav(3);</code></pre>
+                            </div>
+                            <div id="call-stack-1" class="code-box__call-stack"></div>
+                        </div>
+                        <div id="console-1" class="code-box__console">&gt; </div>
+                    </div>
+                    <h2 class="heading-secondary u-mb-tiny">Call Stack</h2>
+                    <p class="paragraph u-mb-small">Důvod proč rekurze funguje je ten, že JavaScript má v sobě zabudovaný mechanismus, kterému se říká Call Stack. Je to takové místo, kam si JavaScript ukládá na jakém místě se zrovna nachází. Pokud zavoláme nějakou funkci, tak si JavaScript musí nějakým způsobem pamatovat, kde předtím skončil aby se tam po vykonání funkce mohl vrátit. Když nějakou funkci zavoláme, tak si ji JavaScript přidá na Call Stack. Ten si můžeme představit jako na sobě naskládané papíry v nějaké krabici. Pokud do krabice přidáme papír, musíme jej přidat na ostatní papíry v krabici, které se tam už nacházejí. A pokud si budeme chtít z krabice papír vzít, tak si můžeme vzít jen ten, který jsme tam vložili naposled. Takže když JavaScript narazí na příkaz, který mu říká že má jít vykonat nějakou funkci, přidá si ji na Call Stack. A když JavaScript dokončí provádění funkce, tak z Call Stacku odstraní poslední funkci, kterou do něj vložil.</p>
+                    <p class="paragraph u-mb-small">Následující ukázka Call Stack vizuálně ukazuje. Napravo od ukázky kódu se nachází box, ve kterém si můžete při spuštění ukázky prohlédnou, jak se Call Stack zaplňuje. V ukázce se volá funkce, která vypíše průměr dvou předaných čísel. Tato funkce volá jinou funkci, která zase volá ještě jinou funkci. Díky tomu si můžete prohlédnout, jak se Call Stack postupně zaplňuje.</p>
+                    <div data-interactive-example-id="2" class="code-box u-mb-medium">
+                        <div class="code-box__header">
+                            <div class="code-box__icon">
+                                <svg>
+                                    <use xlink:href="../media/img/icon-sprite.svg#icon-cogs"></use>
+                                </svg>
+                            </div>
+                            <div class="code-box__buttons-container">
+                                <button class="code-box__button code-box__button--move" data-interactive-example-move-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-forward3"></use>
+                                    </svg>
+                                </button>
+                                <select class="code-box__speed-input" data-interactive-example-speed-input="true">
+                                    <option value="0.25">0.25</option>
+                                    <option value="0.5">0.5</option>
+                                    <option value="0.75">0.75</option>
+                                    <option selected value="1">1</option>
+                                    <option value="1.25">1.25</option>
+                                    <option value="1.5">1.5</option>
+                                    <option value="1.75">1.75</option>
+                                </select>
+                                <button class="code-box__button" data-interactive-example-play-button="true">
+                                    <span>
+                                        <svg>
+                                            <use xlink:href="../media/img/icon-sprite.svg#icon-play3"></use>
+                                        </svg>
+                                    </span>
+                                </button>
+                                <button class="code-box__button code-box__button--reset" data-interactive-example-reset-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-loop2"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="code-box__container">
+                            <div>
+                                <pre id="code-2" class="code-box__code"><code>function soucet(cislo1, cislo2) {
+    return cislo1 + cislo2;
+}
+function prumer(cislo1, cislo2) {
+    return soucet(cislo1, cislo2) / 2;
+}
+function vypisPrumer(cislo1, cislo2) {
+    const vysledek = prumer(cislo1, cislo2);
+    console.log("Průměr: " + vysledek);
+}
+
+vypisPrumer(3, 5);</code></pre>
+                            </div>
+                            <div id="call-stack-2" class="code-box__call-stack"></div>
+                        </div>
+                        <div id="console-2" class="code-box__console">&gt; </div>
+                    </div>
+                    <h2 class="heading-secondary u-mb-tiny">Příklad použití rekurze</h2>
+                    <p class="paragraph u-mb-small">Jako příklad použití rekurze bychom si mohli zkusit vytvořit funkci, která vypočítá faktoriál (např. faktoriál 5 je 1 * 2 * 3 * 4 * 5). Pro tuto operaci by namísto rekurze bylo lepší použít cyklus, ale pro ukázku rekurze se výpočet faktoriálu hodí.</p>
+                    <div data-interactive-example-id="3" class="code-box u-mb-medium">
+                        <div class="code-box__header">
+                            <div class="code-box__icon">
+                                <svg>
+                                    <use xlink:href="../media/img/icon-sprite.svg#icon-cogs"></use>
+                                </svg>
+                            </div>
+                            <div class="code-box__buttons-container">
+                                <button class="code-box__button code-box__button--move" data-interactive-example-move-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-forward3"></use>
+                                    </svg>
+                                </button>
+                                <select class="code-box__speed-input" data-interactive-example-speed-input="true">
+                                    <option value="0.25">0.25</option>
+                                    <option value="0.5">0.5</option>
+                                    <option value="0.75">0.75</option>
+                                    <option selected value="1">1</option>
+                                    <option value="1.25">1.25</option>
+                                    <option value="1.5">1.5</option>
+                                    <option value="1.75">1.75</option>
+                                </select>
+                                <button class="code-box__button" data-interactive-example-play-button="true">
+                                    <span>
+                                        <svg>
+                                            <use xlink:href="../media/img/icon-sprite.svg#icon-play3"></use>
+                                        </svg>
+                                    </span>
+                                </button>
+                                <button class="code-box__button code-box__button--reset" data-interactive-example-reset-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-loop2"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="code-box__container">
+                            <div>
+                                <pre id="code-3" class="code-box__code"><code>function factorial(n) {
+    if (n === 0 || n === 1){
+        // pokud je n 0 nebo 1, tak se vrátí 1
+        return 1;
+    } else {
+        // vrátí se n * hodnota vrácená funkcí factorial,
+        // které předáváme jako parametr n - 1
+        return n * factorial(n-1);
+    }
+}
+
+const vysledek = factorial(5);
+console.log("Faktoriál 5 je: " + vysledek);</code></pre>
+                            </div>
+                            <div id="call-stack-3" class="code-box__call-stack"></div>
+                        </div>
+                        <div id="console-3" class="code-box__console">&gt; </div>
+                    </div>
+                    <p class="paragraph">Doufám že jste díky interaktivním ukázkám, které jsou ná této stránce rekurzy pochopili. Jak už jsem psal na začátku této části, ze začátku pro vás možná bude rekurze dost matoucí a budete se obtížněji orientovat v kódu, který ji používá. Myslím že je to normální. Když jsem se snažil pochopit některé algoritmy, které rekurzy používají, tak jsem si občas musel na papíře algoritmus rozepsat abych pochopil co se vlastně v kódu děje.</p>
+                </main>
+                <div class="article-page__lateral-side">
+                    <nav class="navigation">
+                        <ul>
+                            <li><a href="#">Something</a></li>
+                            <li><a href="#">Anything</a></li>
+                            <li><a href="#">Something too</a></li>
+                            <li><a href="#">And another one</a></li>
+                            <li><a href="#">Some things</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="../media/js/parts/rekurze.js"></script>
+</body>
+</html>

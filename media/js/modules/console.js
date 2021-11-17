@@ -4,7 +4,7 @@ class Console {
     }
 
     log(output) {
-        this._consoleEl.innerHTML = this._consoleEl.innerHTML + output + "<br>&gt;";
+        this._consoleEl.innerHTML = this._consoleEl.innerHTML + output + "<br>&gt; ";
     }
 
     clear() {
