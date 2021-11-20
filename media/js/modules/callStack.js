@@ -18,6 +18,7 @@ class CallStack {
             funcBox = this._availableFunctionBoxes.pop();
             funcBox.show();
             funcBox.showIcon();
+            funcBox.changeName(funcName);
         } else {
             funcBox = new FunctionBox(funcName, this._element);
         }

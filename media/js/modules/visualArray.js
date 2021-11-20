@@ -1,11 +1,15 @@
 const ARRAY_ITEM_WIDTH = 2.4; // in rem units
 
 class VisualArray {
-    constructor(arrayElementId, arrayLength, hideRangeAtBeginning = false, toMiddle = false, pointers = []) {
+    constructor(arrayElementId, arrayLength, hideRangeAtBeginning = false, toMiddle = false, pointers = [], hideAtBeginning = false) {
         // array element
         this._element = document.getElementById(arrayElementId);
         // range element
         this._rangeEl = this._element.querySelector(".array__range-pointer");
+
+        // determines whether array should be hidden at start
+        this._hideArrayAtBeginning = hideAtBeginning;
+        if (hideAtBeginning) this.hide();
 
         // determines whether to display pointers to the middle of item
         this._toMiddle = toMiddle;
@@ -34,6 +38,15 @@ class VisualArray {
         // init range
         if (hideRangeAtBeginning) this.hideRange();
         this._updateRange();
+
+        // get item container if there is one
+        this._itemContainer = this._element.querySelector(".array__item-container");
+        // get elements from item container if there is one
+        this._itemElements = Array.from(this._element.querySelectorAll(".array__item-container div"));
+        this._defaultItemValues = [];
+        for (let itemEl of this._itemElements) {
+            this._defaultItemValues.push(itemEl.innerText);
+        }
     }
 
     /**
@@ -79,6 +92,41 @@ class VisualArray {
         } else {
             pointer.style.transform = `translateX(${ARRAY_ITEM_WIDTH * index}rem)`;
         }
+    }
+
+    pushItem(value) {
+        const itemEl = document.createElement("div");
+        itemEl.classList.add("array__item");
+        itemEl.innerText = value;
+
+        this._itemContainer.appendChild(itemEl);
+        this._itemElements.push(itemEl);
+    }
+
+    addItem(index, value) {
+        const itemEl = document.createElement("div");
+        itemEl.classList.add("array__item");
+        itemEl.innerText = value;
+        
+        if (this._itemElements[index]) {
+            this._itemElements[index].insertAdjacentElement("beforebegin", itemEl);
+        } else {
+            this._itemContainer.appendChild(itemEl);
+        }
+        this._itemElements.splice(index, 0, itemEl);
+    }
+
+    removeItem(index) {
+        const removedItemEl = this._itemElements.splice(index, 1)[0];
+        removedItemEl.remove();
+    }
+
+    show() {
+        this._element.style.display = "inline-block";
+    }
+
+    hide() {
+        this._element.style.display = "none";
     }
 
     /**
@@ -141,6 +189,51 @@ class VisualArray {
         } else {
             this.showRange();
         }
+
+        // set visibility of array
+        if (this._hideArrayAtBeginning) this.hide();
+        else this.show();
+
+        // reset items
+        if (this._itemContainer) {
+            for (let i = 0; i < this._defaultItemValues.length; i++) {
+                if (this._itemElements[i]) this._itemElements[i].innerText = this._defaultItemValues[i];
+                else {
+                    const itemEl = document.createElement("div");
+                    itemEl.classList.add("array__item");
+                    itemEl.innerText = this._defaultItemValues[i];
+                    this._itemContainer.appendChild(itemEl);
+                    this._itemElements.push(itemEl);
+                }
+            }
+
+            while (this._itemElements.length !== this._defaultItemValues.length) {
+                const removedEl = this._itemElements.pop();
+                removedEl.remove();
+            }
+        }
+    }
+
+    setItems(values) {
+        for (let i = 0; i < values.length; i++) {
+            if (this._itemElements[i]) this._itemElements[i].innerText = values[i];
+            else {
+                const itemEl = document.createElement("div");
+                itemEl.classList.add("array__item");
+                itemEl.innerText = values[i];
+                this._itemContainer.appendChild(itemEl);
+                this._itemElements.push(itemEl);
+            }
+        }
+
+        while (this._itemElements.length !== values.length) {
+            const removedEl = this._itemElements.pop();
+            removedEl.remove();
+        }
+    }
+
+    setValueOfItem(index, value) {
+        if (this._itemElements[index]) this._itemElements[index].innerText = value;
     }
 }
 

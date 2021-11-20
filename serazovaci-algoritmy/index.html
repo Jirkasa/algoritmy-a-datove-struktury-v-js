@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=yes maximum-scale=2.2 minimum-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../media/css/style.css">
+
+    <script src="../media/js/libraries/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    <title>Algoritmy a Datové Struktury v JS - Seřazovací algoritmy</title>
+</head>
+<body>
+    <div class="page">
+        <header class="header">
+            <div class="header__content">
+                <h2 class="header__heading">Algoritmy a Datové Struktury v JS</h2>
+                <nav class="header__navigation">
+                    <ul>
+                        <li><a href="#">something</a></li>
+                        <li><a href="#">something</a></li>
+                        <li><a href="#">something</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <div class="heading-section">
+            Seřazovací algoritmy
+        </div>
+        <div class="article-page">
+            <div class="article-page__content">
+                <main class="article-page__main-side">
+                    <h1 class="heading-primary u-mb-medium">Seřazovací algoritmy</h1>
+                    <hr class="horizontal-rule u-mb-medium">
+                    <p class="paragraph u-mb-medium">V této části si ukážeme algoritmy, které slouží k seřazování. V JavaScriptu máme pro seřazování polí k dispozici metodu sort, občas se nám ale může hodit napsat si svoji vlastní a efektivnější. Podíváme se tu celkem na 6 seřazovacích algoritmů: bubble, selection, insertion, merge, quick a radix sort.</p>
+                    <h2 class="heading-secondary u-mb-tiny">Bubble Sort</h2>
+                    <p class="paragraph u-mb-small">První seřazovací algoritmus, který si ukážeme je Bubble Sort. Tento algoritmus spočívá v tom, že se postupně projíždí celé pole a vždy se porovnávají dvě položky vedle sebe, které se podle podmínky prohodí nebo zůstanou tak jak jsou. Takto se pole projíždí tak dlouho, dokud se celé neseřadí.</p>
+                    <div data-interactive-example-id="1" class="code-box u-mb-small">
+                        <div class="code-box__header">
+                            <div class="code-box__icon">
+                                <svg>
+                                    <use xlink:href="../media/img/icon-sprite.svg#icon-cogs"></use>
+                                </svg>
+                            </div>
+                            <div class="code-box__buttons-container">
+                                <button class="code-box__button code-box__button--move" data-interactive-example-move-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-forward3"></use>
+                                    </svg>
+                                </button>
+                                <select class="code-box__speed-input" data-interactive-example-speed-input="true">
+                                    <option value="0.25">0.25</option>
+                                    <option value="0.5">0.5</option>
+                                    <option value="0.75">0.75</option>
+                                    <option selected value="1">1</option>
+                                    <option value="1.25">1.25</option>
+                                    <option value="1.5">1.5</option>
+                                    <option value="1.75">1.75</option>
+                                </select>
+                                <button class="code-box__button" data-interactive-example-play-button="true">
+                                    <span>
+                                        <svg>
+                                            <use xlink:href="../media/img/icon-sprite.svg#icon-play3"></use>
+                                        </svg>
+                                    </span>
+                                </button>
+                                <button class="code-box__button code-box__button--reset" data-interactive-example-reset-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-loop2"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <pre id="code-1" class="code-box__code"><code>function bubbleSort(pole) {
+    // tato proměnná bude určovat, jestli při posledním projíždění pole proběhly nějaké výměny
+    let noSwaps;
+    // pole se bude opakovaně projíždět od začátku po index i, který se bude postupně snižovat
+    for (let i = pole.length; i &gt; 0; i--) {
+        noSwaps = true;
+        // pole se projede od začátku po index i
+        for (let j = 0; j &lt; i - 1; j++) {
+            // tuto podmínku můžeme změnit podle toho, jak chceme položky v poli seřadit
+            if (pole[j] &gt; pole[j+1]) {
+                // pokud je hodnota nalevo větší než hodnota napravo, tak se hodnoty vymění
+                let temp = pole[j];
+                pole[j] = pole[j+1];
+                pole[j+1] = temp;
+                // nastavíme, že jsme při tomto projíždění pole alespoň jednou změnili hodnoty
+                noSwaps = false;
+            }
+        }
+        // pokud při posledním projíždění pole neproběhly žádné výměny hodnot, pole je seřazené
+        if (noSwaps) break;
+    }
+    return pole;
+}
+
+const serazenePole = bubbleSort([25,5,30,24,10,8,40,28]);
+console.log("Seřazené pole:");
+console.log(serazenePole);</code></pre>
+                        <div class="code-box__array">
+                            <div id="visual-array-1" class="array array--no-top-padding">
+                                <div class="array__bracket array__bracket--first">[</div><div class="array__item-container"><div class="array__item">25</div><div class="array__item">5</div><div class="array__item">30</div><div class="array__item">24</div><div class="array__item">10</div><div class="array__item">8</div><div class="array__item">40</div><div class="array__item">28</div></div><div class="array__bracket array__bracket--last">]</div>
+                                <div id="array-pointer-bubble-sort-1" class="array__pointer array__pointer--bottom">
+                                    <div class="array__pointer-label array__pointer-label--bigger">i</div>
+                                </div>
+                                <div id="array-pointer-bubble-sort-2" class="array__pointer array__pointer--bottom">
+                                    <div class="array__pointer-label array__pointer-label--bigger">j</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="console-1" class="code-box__console">&gt; </div>
+                    </div>
+                    <p class="paragraph u-mb-medium">Časová náročnost Bubble Sort algoritmu je O(n<sup>2</sup>). Samozřejmě záleží na tom, jak moc je seřazované pole již seřazené. U některých polí může proběhnout méně cyklů, u některých více.</p>
+                    <h2 class="heading-secondary u-mb-tiny">Selection Sort</h2>
+                    <p class="paragraph u-mb-small">Teď si ukážeme Selection Sort. Tento algoritmus funguje tak, že se seřazené položky hromadí na začátku pole a při procházení pole se vždy najde nejmenší položka, která se k seřazeným položkám na konci cyklu přidá.</p>
+                    <div data-interactive-example-id="2" class="code-box u-mb-small">
+                        <div class="code-box__header">
+                            <div class="code-box__icon">
+                                <svg>
+                                    <use xlink:href="../media/img/icon-sprite.svg#icon-cogs"></use>
+                                </svg>
+                            </div>
+                            <div class="code-box__buttons-container">
+                                <button class="code-box__button code-box__button--move" data-interactive-example-move-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-forward3"></use>
+                                    </svg>
+                                </button>
+                                <select class="code-box__speed-input" data-interactive-example-speed-input="true">
+                                    <option value="0.25">0.25</option>
+                                    <option value="0.5">0.5</option>
+                                    <option value="0.75">0.75</option>
+                                    <option selected value="1">1</option>
+                                    <option value="1.25">1.25</option>
+                                    <option value="1.5">1.5</option>
+                                    <option value="1.75">1.75</option>
+                                </select>
+                                <button class="code-box__button" data-interactive-example-play-button="true">
+                                    <span>
+                                        <svg>
+                                            <use xlink:href="../media/img/icon-sprite.svg#icon-play3"></use>
+                                        </svg>
+                                    </span>
+                                </button>
+                                <button class="code-box__button code-box__button--reset" data-interactive-example-reset-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-loop2"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <pre id="code-2" class="code-box__code"><code>function selectionSort(pole) {
+    // tato proměnná bude uchovávat index na nejmenší položku pole v jednom cyklu
+    let nejmensi;
+    // pole se postupně projede od začátku po konec (index i bude ukončovat část pole, která je již seřazená)
+    for (let i = 0; i &lt; pole.length; i++) {
+        // nastavení nejmenší hodnoty na index i
+        nejmensi = i;
+        // pole se projede od indexu i po konec pole
+        for (let j = i+1; j &lt; pole.length; j++){
+            // pokud je položka menší než dosud nejmenší položka v tomto cyklu, tak se nastaví jako nejmenší
+            if (pole[j] &lt; pole[nejmensi]) {
+                nejmensi = j;
+            }
+        }
+        // pokud byla nalezena položka, která je menší než položka na indexu i, tak se s ní prohodí
+        if (i !== nejmensi) {
+            // prohození hodnoty na indexu i s hodnotou na indexu nejmensi
+            let temp = pole[i];
+            pole[i] = pole[nejmensi];
+            pole[nejmensi] = temp;
+        }
+    }
+    return pole;
+}
+
+const serazenePole = selectionSort([25,5,30,24,10,8,40,28]);
+console.log("Seřazené pole:");
+console.log(serazenePole);</code></pre>
+                        <div class="code-box__array">
+                            <div id="visual-array-2" class="array">
+                                <div class="array__bracket array__bracket--first">[</div><div class="array__item-container"><div class="array__item">25</div><div class="array__item">5</div><div class="array__item">30</div><div class="array__item">24</div><div class="array__item">10</div><div class="array__item">8</div><div class="array__item">40</div><div class="array__item">28</div></div><div class="array__bracket array__bracket--last">]</div>
+                                <div id="array-pointer-selection-sort-middle" class="array__pointer">
+                                    <div class="array__pointer-label">nejmensi</div>
+                                </div>
+                                <div id="array-pointer-selection-sort-i" class="array__pointer array__pointer--bottom">
+                                    <div class="array__pointer-label array__pointer-label--bigger">i</div>
+                                </div>
+                                <div id="array-pointer-selection-sort-j" class="array__pointer array__pointer--bottom">
+                                    <div class="array__pointer-label array__pointer-label--bigger">j</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="console-2" class="code-box__console">&gt; </div>
+                    </div>
+                    <p class="paragraph u-mb-medium">Časová náročnost Selection Sort algoritmu je O(n<sup>2</sup>), ale narozdíl od Bubble Sort, který má časovou náročnost také O(n<sup>2</sup>), se položky přehazují jen po projetí pole.</p>
+                    <h2 class="heading-secondary u-mb-tiny">Insertion Sort</h2>
+                    <p class="paragraph u-mb-small">Jako další seřazovací algoritmus si ukážeme Insertion Sort. Tento algoritmus funguje tak, že se prochází celé pole a vždy se každá položka zařadí směrem na začátek, kde se nachází již dříve seřazené položky.</p>
+                    <div data-interactive-example-id="3" class="code-box u-mb-small">
+                        <div class="code-box__header">
+                            <div class="code-box__icon">
+                                <svg>
+                                    <use xlink:href="../media/img/icon-sprite.svg#icon-cogs"></use>
+                                </svg>
+                            </div>
+                            <div class="code-box__buttons-container">
+                                <button class="code-box__button code-box__button--move" data-interactive-example-move-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-forward3"></use>
+                                    </svg>
+                                </button>
+                                <select class="code-box__speed-input" data-interactive-example-speed-input="true">
+                                    <option value="0.25">0.25</option>
+                                    <option value="0.5">0.5</option>
+                                    <option value="0.75">0.75</option>
+                                    <option selected value="1">1</option>
+                                    <option value="1.25">1.25</option>
+                                    <option value="1.5">1.5</option>
+                                    <option value="1.75">1.75</option>
+                                </select>
+                                <button class="code-box__button" data-interactive-example-play-button="true">
+                                    <span>
+                                        <svg>
+                                            <use xlink:href="../media/img/icon-sprite.svg#icon-play3"></use>
+                                        </svg>
+                                    </span>
+                                </button>
+                                <button class="code-box__button code-box__button--reset" data-interactive-example-reset-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-loop2"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <pre id="code-3" class="code-box__code"><code>function insertionSort(pole) {
+    // tato proměnná bude uchovávat hodnotu, která se bude zařazovat směrem na začátek pole
+    let aktualniHodnota;
+    // tento cyklus postupně projede všechny položky pole a zařadí je směrem na začátek
+    for (let i = 1; i &lt; pole.length; i++) {
+        // uložení hodnoty, která se má zařadit směrem na začátek
+        aktualniHodnota = pole[i];
+        // proměnnou j pro následující cyklus deklarujeme již zde, abychom ji mohli použít i za cyklem
+        let j = i-1;
+        // následující cyklus se bude opakovat tak dlouho, dokud proměnná j nedojede na začátek pole,
+        // nebo nenajede na položku, která je menší nebo rovna hodnotě, která se zařazuje
+        for (; j &gt;= 0 && pole[j] &gt; aktualniHodnota; j--) {
+            // položka na kterou odkazuje proměnná j se posune o jednu položku doprava
+            pole[j+1] = pole[j];
+        }
+        // zařazovaná hodnota se umístí před posunuté položky
+        pole[j+1] = aktualniHodnota;
+    }
+    return pole;
+}
+
+const serazenePole = insertionSort([25,5,30,24,10,8,40,28]);
+console.log("Seřazené pole:");
+console.log(serazenePole);</code></pre>
+                        <div class="code-box__array">
+                            <div id="visual-array-3" class="array">
+                                <div class="array__variables"><div id="variable-insertion-sort-current" class="array__variable"><span>aktualniHodnota: </span><span>0</span></div></div>
+                                <div class="array__bracket array__bracket--first">[</div><div class="array__item-container"><div class="array__item">25</div><div class="array__item">5</div><div class="array__item">30</div><div class="array__item">24</div><div class="array__item">10</div><div class="array__item">8</div><div class="array__item">40</div><div class="array__item">28</div></div><div class="array__bracket array__bracket--last">]</div>
+                                <div id="array-pointer-insertion-sort-i" class="array__pointer array__pointer--bottom">
+                                    <div class="array__pointer-label array__pointer-label--bigger">i</div>
+                                </div>
+                                <div id="array-pointer-insertion-sort-j" class="array__pointer array__pointer--bottom">
+                                    <div class="array__pointer-label array__pointer-label--bigger">j</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="console-3" class="code-box__console">&gt; </div>
+                    </div>
+                    <p class="paragraph u-mb-medium">Časová náročnost Insertion Sort algoritmu je O(n<sup>2</sup>). Je vhodné jej použít na seřazování polí, která jsou již skoro seřazená.</p>
+                    <h2 class="heading-secondary u-mb-tiny">Merge Sort</h2>
+                    <p class="paragraph u-mb-small">Tento algoritmus funguje tak, že se pole postupně dělí dokud nevzniknou pole o jedné položce, a ty se poté zase seskládají dohromady a pole se tak seřadí. Nebudu to tu v textu rozebírat, myslím že v interaktivní ukázce to pochopíte mnohem lépe. Nejdříve bych tu chtěl ale ještě ukázat funkci, která slouží ke spojení dvou seřazených polí, a zároveň zajišťuje aby byla pole i nadále seřazená. Samotná funkce provádějící Merge Sort algoritmus je docela krátká, ale využívá právě tuto funkci.</p>
+                    <div data-interactive-example-id="4" class="code-box u-mb-small">
+                        <div class="code-box__header">
+                            <div class="code-box__icon">
+                                <svg>
+                                    <use xlink:href="../media/img/icon-sprite.svg#icon-cogs"></use>
+                                </svg>
+                            </div>
+                            <div class="code-box__buttons-container">
+                                <button class="code-box__button code-box__button--move" data-interactive-example-move-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-forward3"></use>
+                                    </svg>
+                                </button>
+                                <select class="code-box__speed-input" data-interactive-example-speed-input="true">
+                                    <option value="0.25">0.25</option>
+                                    <option value="0.5">0.5</option>
+                                    <option value="0.75">0.75</option>
+                                    <option selected value="1">1</option>
+                                    <option value="1.25">1.25</option>
+                                    <option value="1.5">1.5</option>
+                                    <option value="1.75">1.75</option>
+                                </select>
+                                <button class="code-box__button" data-interactive-example-play-button="true">
+                                    <span>
+                                        <svg>
+                                            <use xlink:href="../media/img/icon-sprite.svg#icon-play3"></use>
+                                        </svg>
+                                    </span>
+                                </button>
+                                <button class="code-box__button code-box__button--reset" data-interactive-example-reset-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-loop2"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <pre id="code-4" class="code-box__code"><code>// tato funkce spojí dvě seřazená pole (vytvořené pole bude také seřazené)
+function merge(pole1, pole2) {
+    // vytvoření pole, do kterého se předaná pole spojí
+    let vysledek = [];
+    let i = 0; // proměnná pro index pole1
+    let j = 0; // proměnná pro index pole2
+    // tento cyklus bude probíhat tak dlouho, dokud se jedno z polí celé neprojede
+    while (i &lt; pole1.length && j &lt; pole2.length) {
+        if (pole2[j] &gt; pole1[i]) {
+            // pokud je položka v pole1 menší než v pole2, tak se přidá do pole vysledek
+            vysledek.push(pole1[i]);
+            // posunutí indexu i, který ukazuje na položky v pole1
+            i++;
+        } else {
+            // pokud je položka v pole2 menší než v pole1, tak se přidá do pole vysledek
+            vysledek.push(pole2[j]);
+            // posunutí indexu j, který ukazuje na položky v pole2
+            j++;
+        }
+    }
+    // pokud v pole1 zbyly nějaké položky, tak se přidají do pole vysledek
+    while (i &lt; pole1.length) {
+        vysledek.push(pole1[i]);
+        i++;
+    }
+    // pokud naopak v pole2 zbyly nějaké položky, tak se přidají do pole vysledek
+    while (j &lt; pole2.length) {
+        vysledek.push(pole2[j]);
+        j++;
+    }
+    return vysledek;
+}
+
+const pole = merge([6, 9, 51, 63, 70], [5, 8, 50, 52]);
+console.log("spojená pole:");
+console.log(pole);</code></pre>
+                        <div class="code-box__array">
+                            <div class="array-container">
+                                <div id="visual-array-merge-1" class="array">
+                                    <div class="array__label">pole1</div>
+                                    <div class="array__bracket array__bracket--first">[</div><div class="array__item-container"><div class="array__item">6</div><div class="array__item">9</div><div class="array__item">51</div><div class="array__item">63</div><div class="array__item">70</div></div><div class="array__bracket array__bracket--last">]</div>
+                                    <div id="array-pointer-merge-i" class="array__pointer array__pointer--bottom">
+                                        <div class="array__pointer-label array__pointer-label--bigger">i</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="array-container">
+                                <div id="visual-array-merge-2" class="array">
+                                    <div class="array__label">pole2</div>
+                                    <div class="array__bracket array__bracket--first">[</div><div class="array__item-container"><div class="array__item">5</div><div class="array__item">8</div><div class="array__item">50</div><div class="array__item">52</div></div><div class="array__bracket array__bracket--last">]</div>
+                                    <div id="array-pointer-merge-j" class="array__pointer array__pointer--bottom">
+                                        <div class="array__pointer-label array__pointer-label--bigger">j</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="array-container">
+                                <div id="visual-array-merge-vysledek" class="array">
+                                    <div class="array__label">vysledek</div>
+                                    <div class="array__bracket array__bracket--first">[</div><div class="array__item-container"></div><div class="array__bracket array__bracket--last">]</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="console-4" class="code-box__console">&gt; </div>
+                    </div>
+                    <p class="paragraph u-mb-small">V přechozí ukázce jste mohli vidět funkci na sloučení dvou seřazených polí do jednoho seřazeného pole. Jak jsem již psal výše, Merge Sort algoritmus postupně dělí celé pole na pole o jedné položce. Dělá to, protože využívá toho, že pole o jedné položce je již seřazené. Na tato pole se tedy může postupně použít funkce, která je spojí dohromady a na konci nám vznikne seřazené pole.</p>
+                    <p class="paragraph u-mb-small">Funkce provádějící Merge Sort používá rekurzy a může pro vás být obtížnější ji pochopit. Když jsem se ji učil já, tak jsem si tento algoritmus musel rozepsat na papír. Myslím ale, že následující ukázka vám může pochopení Merge Sort algoritmu dost usnadnit. Pod ukázku jsem přidal vizualizaci polí, takže při přehrávání ukázky víte, kde se co nachází a nemusíte si to někam psát, jako jsem to dělal já.</p>
+                    <div data-interactive-example-id="5" class="code-box u-mb-small">
+                        <div class="code-box__header">
+                            <div class="code-box__icon">
+                                <svg>
+                                    <use xlink:href="../media/img/icon-sprite.svg#icon-cogs"></use>
+                                </svg>
+                            </div>
+                            <div class="code-box__buttons-container">
+                                <button class="code-box__button code-box__button--move" data-interactive-example-move-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-forward3"></use>
+                                    </svg>
+                                </button>
+                                <select class="code-box__speed-input" data-interactive-example-speed-input="true">
+                                    <option value="0.25">0.25</option>
+                                    <option value="0.5">0.5</option>
+                                    <option value="0.75">0.75</option>
+                                    <option selected value="1">1</option>
+                                    <option value="1.25">1.25</option>
+                                    <option value="1.5">1.5</option>
+                                    <option value="1.75">1.75</option>
+                                </select>
+                                <button class="code-box__button" data-interactive-example-play-button="true">
+                                    <span>
+                                        <svg>
+                                            <use xlink:href="../media/img/icon-sprite.svg#icon-play3"></use>
+                                        </svg>
+                                    </span>
+                                </button>
+                                <button class="code-box__button code-box__button--reset" data-interactive-example-reset-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-loop2"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="code-box__container">
+                            <div>
+                                <pre id="code-5" class="code-box__code"><code>function merge(pole1, pole2) {
+    let vysledek = [];
+    let i = 0;
+    let j = 0;
+    while (i &lt; pole1.length && j &lt; pole2.length) {
+        if (pole2[j] &gt; pole1[i]) {
+            vysledek.push(pole1[i]);
+            i++;
+        } else {
+            vysledek.push(pole2[j]);
+            j++;
+        }
+    }
+    while (i &lt; pole1.length) {
+        vysledek.push(pole1[i]);
+        i++;
+    }
+    while (j &lt; pole2.length) {
+        vysledek.push(pole2[j]);
+        j++;
+    }
+    return vysledek;
+}
+
+function mergeSort(pole) {
+    // pokud má pole jen jednu položku, tak jej funkce vrátí
+    if (pole.length &lt;= 1) return pole;
+    // získání prostředního indexu pole
+    let middle = Math.trunc(pole.length/2);
+    // zavolání funkce mergeSort s levou částí pole
+    let left = mergeSort(pole.slice(0,middle)); // pole se zkopíruje od začátku po index middle
+    // zavolání funkce mergeSort s pravou částí pole
+    let right = mergeSort(pole.slice(middle)); // pole se zkopíruje od indexu middle po konec
+    // sloučení levé a pravé části pole pomocí funkce merge
+    return merge(left, right);
+}
+
+const serazenePole = mergeSort([25,5,30,24,10,8,40,28]);
+console.log("Seřazené pole:");
+console.log(serazenePole);</code></pre>
+                            </div>
+                            <div id="call-stack-1" class="code-box__call-stack"></div>
+                        </div>
+                        <div class="code-box__array">
+                            <div class="array-container">
+                                <div id="visual-array-merge-sort-1" class="array">
+                                    <div class="array__label">pole1</div>
+                                    <div class="array__bracket array__bracket--first">[</div><div class="array__item-container"></div><div class="array__bracket array__bracket--last">]</div>
+                                    <div id="array-pointer-merge-sort-i" class="array__pointer array__pointer--bottom">
+                                        <div class="array__pointer-label array__pointer-label--bigger">i</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="array-container">
+                                <div id="visual-array-merge-sort-2" class="array">
+                                    <div class="array__label">pole2</div>
+                                    <div class="array__bracket array__bracket--first">[</div><div class="array__item-container"></div><div class="array__bracket array__bracket--last">]</div>
+                                    <div id="array-pointer-merge-sort-j" class="array__pointer array__pointer--bottom">
+                                        <div class="array__pointer-label array__pointer-label--bigger">j</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="array-container">
+                                <div id="visual-array-merge-sort-vysledek" class="array">
+                                    <div class="array__label">vysledek</div>
+                                    <div class="array__bracket array__bracket--first">[</div><div class="array__item-container"></div><div class="array__bracket array__bracket--last">]</div>
+                                </div>
+                            </div>
+                            <div class="array-container">
+                                <div id="visual-array-merge-sort-pole" class="array">
+                                    <div class="array__label">pole</div>
+                                    <div class="array__bracket array__bracket--first">[</div><div class="array__item-container"><div class="array__item">25</div><div class="array__item">5</div><div class="array__item">30</div><div class="array__item">24</div><div class="array__item">10</div><div class="array__item">8</div><div class="array__item">40</div><div class="array__item">28</div></div><div class="array__bracket array__bracket--last">]</div>
+                                    <div id="array-pointer-merge-sort-middle" class="array__pointer array__pointer--bottom">
+                                        <div class="array__pointer-label">middle</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="array-container">
+                                <div id="visual-array-merge-sort-left" class="array">
+                                    <div class="array__label">left</div>
+                                    <div class="array__bracket array__bracket--first">[</div><div class="array__item-container"></div><div class="array__bracket array__bracket--last">]</div>
+                                </div>
+                            </div>
+                            <div class="array-container">
+                                <div id="visual-array-merge-sort-right" class="array">
+                                    <div class="array__label">right</div>
+                                    <div class="array__bracket array__bracket--first">[</div><div class="array__item-container"></div><div class="array__bracket array__bracket--last">]</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="console-5" class="code-box__console">&gt; </div>
+                    </div>
+                    <p class="paragraph u-mb-medium">Časová náročnost Merge Sort algoritmu je O(n log n). Narozdíl od předchozí algoritmů, to jak je pole již seřazené nemá žádný vliv, protože Merge Sort stejně celé pole rozdělí na více polí o jedné položce. U předchozích algoritmů jsme si ani neuváděli paměťovou náročnost, protože byla O(1). U Merge Sort to tak není, protože vytváříme nová pole a paměťová náročnost je tak O(n).</p>
+                    <h2 class="heading-secondary u-mb-tiny">Quick Sort</h2>
+                    <p class="paragraph u-mb-small">Jako další seřazovací algortimus si ukážeme Quick Sort. Stejně jako Merge Sort používá pomocnou funkci. Jejím úkolem je v předaném poli (nebo jeho části) určit položku, před kterou se umístí ostatní položky pole, které jsou menší než tato položka. Index této položky se na konci funkce vrátí, říká se mu pivot. Funkce tedy uřčí pivot, před něj umístí menší položky, za ním zůstanou větší položky a pivot vrátí. Jako pivot se vždy vybere první položka předaného pole (nebo jeho části). Existuje také Random Quick Sort algoritmus, který pivot vybere náhodně, ale ten si tu ukazovat nebudeme.</p>
+                    <p class="paragraph u-mb-small">Stejně jako u Merge Sort se pojďme nejprve podívat na pomocnou funkci pivot:</p>
+                    <div data-interactive-example-id="6" class="code-box u-mb-small">
+                        <div class="code-box__header">
+                            <div class="code-box__icon">
+                                <svg>
+                                    <use xlink:href="../media/img/icon-sprite.svg#icon-cogs"></use>
+                                </svg>
+                            </div>
+                            <div class="code-box__buttons-container">
+                                <button class="code-box__button code-box__button--move" data-interactive-example-move-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-forward3"></use>
+                                    </svg>
+                                </button>
+                                <select class="code-box__speed-input" data-interactive-example-speed-input="true">
+                                    <option value="0.25">0.25</option>
+                                    <option value="0.5">0.5</option>
+                                    <option value="0.75">0.75</option>
+                                    <option selected value="1">1</option>
+                                    <option value="1.25">1.25</option>
+                                    <option value="1.5">1.5</option>
+                                    <option value="1.75">1.75</option>
+                                </select>
+                                <button class="code-box__button" data-interactive-example-play-button="true">
+                                    <span>
+                                        <svg>
+                                            <use xlink:href="../media/img/icon-sprite.svg#icon-play3"></use>
+                                        </svg>
+                                    </span>
+                                </button>
+                                <button class="code-box__button code-box__button--reset" data-interactive-example-reset-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-loop2"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <pre id="code-6" class="code-box__code"><code>// pomocná funkce pro prohození dvou položek v poli
+function swap(pole, index1, index2) {
+    const temp = pole[index1];
+    pole[index1] = pole[index2];
+    pole[index2] = temp;
+};
+
+// tato funkce uřčí pivot, před něj umístí menší položky a pivot vrátí
+// funkce přijímá volitelné parametry start a konec, které určují, v jaké části pole má funkce pracovat
+function pivot(pole, start = 0, konec = pole.length - 1) {
+    // jako pivot hodnotu nastavíme položku na indexu start (na začátku pole)
+    let pivot = pole[start];
+    // vytvoření swap indexu, který bude sloužit k výměně menších položek než je pivot hodnota
+    let swapIdx = start;
+    
+    // pole se projede od začátku po konec (od indexu start po index konec)
+    for (let i = start + 1; i &lt;= konec; i++) {
+        // pokud je pivot hodnota větší než porovnávaná položka pole, tak se zvýší
+        // swap index a položka na kterou ukazuje se prohodí s porovnávanou položkou
+        if (pivot &gt; pole[i]) {
+            swapIdx++;
+            swap(pole, swapIdx, i);
+        }
+    }
+    
+    // vyměnění pivot položky s položkou, na kterou ukazuje swap index
+    swap(pole, start, swapIdx);
+    // funkce vrátí pivot index
+    return swapIdx;
+}
+
+const pole = [4,8,2,1,5,7,6,3];
+console.log("Pole před zavoláním funkce pivot:");
+console.log(pole);
+
+// funkce pivot sice vrací index, ale pole, které jí předáváme modifikuje (protože pole jsou objekty a předávají se adresou)
+const pivotIndex = pivot(pole);
+
+console.log(`Pivot: ${pivotIndex} (první položka se přesunula na index ${pivotIndex} a před ni se umístili ostatní menší položky)`);
+
+console.log("Pole po zavolání funkce pivot:");
+console.log(pole);</code></pre>
+                        <div class="code-box__array">
+                            <div class="variables">
+                                <div id="variable-pivot" class="variables__var"><span>pivot: </span><span>0</span></div>
+                            </div>
+                            <div id="visual-array-pivot" class="array">
+                                <div class="array__bracket array__bracket--first">[</div><div class="array__item-container"><div class="array__item">4</div><div class="array__item">8</div><div class="array__item">2</div><div class="array__item">1</div><div class="array__item">5</div><div class="array__item">7</div><div class="array__item">6</div><div class="array__item">3</div></div><div class="array__bracket array__bracket--last">]</div>
+                                <div id="array-pointer-pivot-i" class="array__pointer array__pointer--bottom">
+                                    <div class="array__pointer-label array__pointer-label--bigger">i</div>
+                                </div>
+                                <div id="array-pointer-pivot-swapIdx" class="array__pointer array__pointer--bottom">
+                                    <div class="array__pointer-label">swapIdx</div>
+                                </div>
+                                <div id="array-pointer-pivot-start" class="array__pointer">
+                                    <div class="array__pointer-label">start</div>
+                                </div>
+                                <div id="array-pointer-pivot-konec" class="array__pointer">
+                                    <div class="array__pointer-label">konec</div>
+                                </div>
+                                <div id="array-pointer-pivot-pivotIndex" class="array__pointer array__pointer--bottom">
+                                    <div class="array__pointer-label">pivotIndex</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="console-6" class="code-box__console">&gt; </div>
+                    </div>
+                    <p class="paragraph u-mb-small">Když už jsme si ukázali funkci pivot, kterou Quick Sort používá, tak se můžeme podívat na samotný Quick Sort algoritmus. Stejně jako Merge Sort používá rekurzy, takže pro vás může být trochu těžší na pochopení. Funguje tak, že se postupně volá funkce pivot se stále menší částí pole až se nakonec pole seřadí. Na začátku se pole rozdělí na dvě poloviny. Jedna polovina bude obsahovat menší položky a druhá větší. Poté se první polovina opět rozdělí na dvě části, a první část opět bude obsahovat menší hodnoty. Tak se to stále opakuje až se mergeSort funkce nakonec zavolá s částí, která neobsahuje žádné položky a začne stejný proces postupně pro dříve rozdělené pravé části pole. Z tohoto textu toho asi nic moc nechápete, spíš vám to pomůže pochopit následující ukázka.</p>
+                    <div data-interactive-example-id="7" class="code-box u-mb-small">
+                        <div class="code-box__header">
+                            <div class="code-box__icon">
+                                <svg>
+                                    <use xlink:href="../media/img/icon-sprite.svg#icon-cogs"></use>
+                                </svg>
+                            </div>
+                            <div class="code-box__buttons-container">
+                                <button class="code-box__button code-box__button--move" data-interactive-example-move-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-forward3"></use>
+                                    </svg>
+                                </button>
+                                <select class="code-box__speed-input" data-interactive-example-speed-input="true">
+                                    <option value="0.25">0.25</option>
+                                    <option value="0.5">0.5</option>
+                                    <option value="0.75">0.75</option>
+                                    <option selected value="1">1</option>
+                                    <option value="1.25">1.25</option>
+                                    <option value="1.5">1.5</option>
+                                    <option value="1.75">1.75</option>
+                                </select>
+                                <button class="code-box__button" data-interactive-example-play-button="true">
+                                    <span>
+                                        <svg>
+                                            <use xlink:href="../media/img/icon-sprite.svg#icon-play3"></use>
+                                        </svg>
+                                    </span>
+                                </button>
+                                <button class="code-box__button code-box__button--reset" data-interactive-example-reset-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-loop2"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="code-box__container">
+                            <div>
+                                <pre id="code-7" class="code-box__code"><code>function swap(pole, index1, index2) {
+    const temp = pole[index1];
+    pole[index1] = pole[index2];
+    pole[index2] = temp;
+};
+
+function pivot(pole, start = 0, konec = pole.length - 1) {
+    let pivot = pole[start];
+    let swapIdx = start;
+    
+    for (let i = start + 1; i &lt;= konec; i++) {
+        if (pivot &gt; pole[i]) {
+            swapIdx++;
+            swap(pole, swapIdx, i);
+        }
+    }
+    
+    swap(pole, start, swapIdx);
+    return swapIdx;
+}
+
+function quickSort(pole, left = 0, right = pole.length -1) {
+    // pokud je v části pole určená proměnnými left a right nějaká hodnota, tak bude funkce quickSort pokračovat
+    if (left &lt; right) {
+        // zavolání funkce pivot, která část pole rozdělí (spíš předělá) na dvě části a vrátí pivot index
+        // (v levé části pole budou menší položky než pivot a na pravé části budou větší položky než pivot)
+        let pivotIndex = pivot(pole, left, right);
+        // zavolání funkce quickSort s levou částí pole (nebo levou částí části pole)
+        quickSort(pole, left, pivotIndex-1); // (parametr left bude left a parametr right bude pivotIndex-1)
+        // zavolání funkce quickSort s pravou částí pole (nebo pravou částí části pole)
+        quickSort(pole, pivotIndex+1, right); // (parametr left bude pivotIndex+1 a parametr right bude right)
+    }
+    return pole;
+}
+
+const serazenePole = quickSort([25,5,30,24,10,8,40,28]);
+console.log("Seřazené pole:");
+console.log(serazenePole);</code></pre>
+                            </div>
+                            <div id="call-stack-2" class="code-box__call-stack"></div>
+                        </div>
+                        <div class="code-box__array">
+                            <div class="variables">
+                                <div id="variable-quick-sort-pivot" class="variables__var"><span>pivot: </span><span>0</span></div>
+                            </div>
+                            <div id="visual-array-quick-sort" class="array">
+                                <div class="array__bracket array__bracket--first">[</div><div class="array__item-container"><div class="array__item">25</div><div class="array__item">5</div><div class="array__item">30</div><div class="array__item">24</div><div class="array__item">10</div><div class="array__item">8</div><div class="array__item">40</div><div class="array__item">28</div></div><div class="array__bracket array__bracket--last">]</div>
+                                <div id="array-pointer-quick-sort-i" class="array__pointer array__pointer--bottom">
+                                    <div class="array__pointer-label array__pointer-label--bigger">i</div>
+                                </div>
+                                <div id="array-pointer-quick-sort-swapIdx" class="array__pointer array__pointer--bottom">
+                                    <div class="array__pointer-label">swapIdx</div>
+                                </div>
+                                <div id="array-pointer-quick-sort-start" class="array__pointer">
+                                    <div class="array__pointer-label">start</div>
+                                </div>
+                                <div id="array-pointer-quick-sort-konec" class="array__pointer">
+                                    <div class="array__pointer-label">konec</div>
+                                </div>
+                                <div id="array-pointer-quick-sort-left" class="array__pointer">
+                                    <div class="array__pointer-label">left</div>
+                                </div>
+                                <div id="array-pointer-quick-sort-right" class="array__pointer">
+                                    <div class="array__pointer-label">right</div>
+                                </div>
+                                <div id="array-pointer-quick-sort-pivotIndex" class="array__pointer array__pointer--bottom">
+                                    <div class="array__pointer-label">pivotIndex</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="console-7" class="code-box__console">&gt; </div>
+                    </div>
+                    <p class="paragraph u-mb-small">Doufám že vám předchozí interaktivní ukázka pomohla Quick Sort algortimus pochopit. Je to podle mě asi nejtěžší seřazovací algoritmus, který je v této části ukázaný.</p>
+                    <p class="paragraph u-mb-medium">Čásová náročnost Quick Sort algoritmu je O(n log n). Ale záleží na seřazovaném poli, pokud nám bude funkce pivot například pořád vracet index 0, tak je to O(n<sup>2</sup>). Quick Sort sice pracuje jen s polem, který mu předáme, ale jeho paměťová náročnost je kvůli rekurzy O(log n).</p>
+                    <h2 class="heading-secondary u-mb-tiny">Radix Sort</h2>
+                    <p class="paragraph u-mb-small">Jako poslední seřazující algoritmus si ukážeme Radix Sort. Jde o speciální algoritmus, který nikdy neporovnává hodnoty mezi položkami pole. Využívá faktu, že větší číslo je zapsáno s více číslicemi.</p>
+                    <p class="paragraph u-mb-small">Pro vytvoření Radix Sort algoritmu potřebujeme pár pomocných funkcí. Potřebujeme funkci, pomocí které získáme potřebnou číslici z předaného čísla a funkci na získání největšího počtu číslic nějakého čísla v poli. Funkce, které potřebujeme ukazuje následující ukázka. Vůbec nemusíte zkoumat jak fungují, kdybyste je potřebovali, tak si je můžete najít na Stack Overflow nebo někde jinde. Důležité je jen abyste věděli k čemu slouží.</p>
+                    <div class="code-box u-mb-small">
+                        <pre class="code-box__code"><code>// tato funkce vrací požadovanou číslici z předaného čísla
+function ziskatCislici(cislo, i) {
+    return Math.floor(Math.abs(cislo) / Math.pow(10, i)) % 10;
+}
+
+// pomocná funkce pro funkci nejviceCislic
+function pocetCislic(cislo) {
+    if (cislo === 0) return 1;
+    return Math.floor(Math.log10(Math.abs(cislo))) + 1;
+}
+
+// tato funkce vrací největší počet číslic čísla v předaném poli
+function nejviceCislic(cisla) {
+    let nejvice = 0;
+    // pole cisla se postupně projede a zjistí se největší počet číslic nějakého čísla v poli
+    for (let i = 0; i &lt; cisla.length; i++) {
+        // metoda Math.max vrátí největší číslo z předaných čísel
+        nejvice = Math.max(nejvice, pocetCislic(cisla[i]));
+    }
+    return nejvice;
+}
+
+console.log("První číslice čísla 321: " + ziskatCislici(321, 2));
+console.log("Druhá číslice čísla 321: " + ziskatCislici(321, 1));
+console.log("Třetí číslice čísla 321: " + ziskatCislici(321, 0));
+console.log("Nejvíce číslic čísla v poli [2,43,1,348]: " + nejviceCislic([2,43,1,348]));</code></pre>
+                        <div class="code-box__console">&gt; První číslice čísla 321: 3<br>&gt; Druhá číslice čísla 321: 2<br>&gt; Třetí číslice čísla 321: 1<br>&gt; Nejvíce číslic čísla v poli [2,43,1,348]: 3<br>&gt; </div>
+                    </div>
+                    <p class="paragraph u-mb-small">Pro Radix Sort jsem interaktivní ukázku nevytvořil. Pokud chcete tento algoritmus vizuálně vidět, tak doporučuji stránku <a href="https://visualgo.net/en/sorting" target="_blank" class="anchor">VisuAlgo</a>. Zde vám jen ukážu okomentovaný kód:</p>
+                    <div class="code-box u-mb-small">
+                        <pre class="code-box__code"><code>function radixSort(cisla) {
+    // získání maximálního počtu číslic
+    let maxPocetCislic = nejviceCislic(cisla);
+    // postupně se pole bude procházet pro každou číslici (pozici číslice určuje k)
+    for (let k = 0; k &lt; maxPocetCislic; k++) {
+        // vytvoření pole o 10 polích (každé pole bude ukládat čísla pro jednu číslici na určitém místě čísla)
+        let digitBuckets = Array.from({length: 10}, () => []);
+        // postupně se projede celé pole cisla
+        for (let i = 0; i &lt; cisla.length; i++) {
+            // získání číslice na pozici k
+            let cislice = ziskatCislici(cisla[i], k);
+            // vložení čísla do pole podle číslice
+            digitBuckets[cislice].push(cisla[i]);
+        }
+        // sloučení polí v digitalBuckets do jednoho pole pomocí metody concat
+        // (pole s čísly s číslicemi 0 se sloučí na začátek a pole s čísly s číslicemi 9 se sloučí na konec);
+        cisla = [].concat(...digitBuckets); // použití spread operátoru na digitalBuckets (jednotlivá pole se rozmístí jako argumenty funkce)
+    }
+    return cisla;
+}
+
+const serazenePole = radixSort([25,5,30,24,10,8,40,28]);
+this.console.log("Seřazené pole:");
+this.console.log(serazenePole);</code></pre>
+                        <div class="code-box__console">&gt; Seřazené pole:<br>&gt; [5,8,10,24,25,28,30,40]<br>&gt; </div>
+                    </div>
+                    <p class="paragraph u-mb-medium">Časová náročnost Radix Sort algoritmu je O(nk) a paměťová náročnost je O(n+k).</p>
+                    <p class="paragraph">V této části jsme si ukázali 6 různých seřazovacích algoritmů. Možná teď ale nevíte, který se kdy hodí použít. S tím vám může pomoct <a href="https://www.toptal.com/developers/sorting-algorithms" target="_blank" class="anchor">tato stránka</a>, na které si můžete otestovat rychlost různých seřazovacích algoritmů na různá pole. Můžete si tam například zvolit, že chcete vidět jak rychle algoritmy seřadí skoro seřazené pole, obráceně seřazené pole, a tak podobně.</p>
+                </main>
+                <div class="article-page__lateral-side">
+                    <nav class="navigation">
+                        <ul>
+                            <li><a href="#">Something</a></li>
+                            <li><a href="#">Anything</a></li>
+                            <li><a href="#">Something too</a></li>
+                            <li><a href="#">And another one</a></li>
+                            <li><a href="#">Some things</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="../media/js/parts/serazovaci-algoritmy.js"></script>
+</body>
+</html>
