@@ -109,6 +109,52 @@
     &__code {
         font-size: 1.6rem;
         position: relative;
+
+        &--max-height {
+            max-height: 40rem;
+            overflow: auto;
+
+            background-color: #333;
+
+            // width
+            &::-webkit-scrollbar {
+                width: 1.3rem;
+                height: 1.3rem;
+            }
+
+            // track
+            &::-webkit-scrollbar-track {
+                background: darken(@colors[primary], 25%);
+            }
+
+            // handle
+            &::-webkit-scrollbar-thumb {
+                background: darken(@colors[primary], 5%);
+                border-radius: 1px;
+                border: 2px solid lighten(@colors[primary], 10%);
+
+                &:hover {
+                    background: darken(@colors[primary], 8%);
+                }
+            }
+
+            // corner
+            &::-webkit-scrollbar-corner {
+                background: darken(@colors[primary], 5%);
+                border-radius: 1px;
+                border: 2px solid lighten(@colors[primary], 10%);
+            }
+
+
+            code {
+                overflow: visible !important;
+            }
+
+        }
+
+        &--max-height-bigger {
+            max-height: 55rem;
+        }
     }
 
     &__container {
@@ -146,6 +192,15 @@
 
         text-align: center;
         padding: .5rem;
+    }
+
+    &__linked-list {
+        background-color: darken(@colors[primary], 20%);
+        border-top: .3rem solid @colors[primary];
+
+        padding: .5rem;
+
+        min-height: 5rem;
     }
 
     &__console {
