@@ -682,6 +682,9 @@ code.hljs {
   color: #444;
   position: relative;
 }
+.node__property-name--left-padding {
+  padding-left: 1.5rem;
+}
 .node__property-value {
   font-weight: 700;
 }
@@ -705,6 +708,10 @@ code.hljs {
   border: 0.2rem solid #e6e6e6;
   background-color: #cb7a6f;
 }
+.node__dot--left {
+  right: unset;
+  left: 0;
+}
 .node__arrow {
   position: absolute;
   left: 50%;
@@ -722,8 +729,14 @@ code.hljs {
   opacity: 1;
   width: 3rem;
 }
+.node__arrow--to-left {
+  transform: translateY(-50%) rotate(20deg) scaleX(-1);
+}
 .node__arrow--no-rotation {
   transform: translateY(-50%);
+}
+.node__arrow--no-rotation-left {
+  transform: translateY(-50%) scaleX(-1);
 }
 .node__arrow::before,
 .node__arrow::after {

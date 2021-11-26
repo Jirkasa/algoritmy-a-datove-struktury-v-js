@@ -54,7 +54,9 @@
         position: relative;
     }
     &__property-name {
-
+        &--left-padding {
+            padding-left: 1.5rem;
+        }
     }
     &__property-value {
         font-weight: 700;
@@ -82,6 +84,11 @@
         
         border: .2rem solid darken(@colors[white], 10%);
         background-color: @colors[light-red];
+
+        &--left {
+            right: unset;
+            left: 0;
+        }
     }
 
     &__arrow {
@@ -105,8 +112,16 @@
             width: 3rem;
         }
 
+        &--to-left {
+            transform: translateY(-50%) rotate(20deg) scaleX(-1);
+        }
+
         &--no-rotation {
             transform: translateY(-50%);
+        }
+
+        &--no-rotation-left {
+            transform: translateY(-50%) scaleX(-1);
         }
 
         &::before, &::after {

@@ -14,7 +14,7 @@
     <script src="../media/js/libraries/highlight.min.js"></script>
     <script>hljs.highlightAll();</script>
 
-    <title>Algoritmy a Datové Struktury v JS - Singly Linked List</title>
+    <title>Algoritmy a Datové Struktury v JS - Doubly Linked List</title>
 </head>
 <body>
     <div class="page">
@@ -31,84 +31,76 @@
             </div>
         </header>
         <div class="heading-section">
-            Singly Linked List
+            Doubly Linked List
         </div>
         <div class="article-page">
             <div class="article-page__content">
                 <main class="article-page__main-side">
-                    <h1 class="heading-primary u-mb-medium">Singly Linked List</h1>
+                    <h1 class="heading-primary u-mb-medium">Doubly Linked List</h1>
                     <hr class="horizontal-rule u-mb-medium">
-                    <p class="paragraph u-mb-medium">V této části se podíváme na Singly Linked List. Ukážeme si jaké má výhody a nevýhody oproti poli a vytvoříme si jej.</p>
-                    <h2 class="heading-secondary u-mb-tiny">Co je to Linked List</h2>
-                    <p class="paragraph u-mb-medium">Linked List je datová struktura skládající se z nodes, které jsou spolu jedním nebo oběma směry propojeny. Node je objekt, který uchovává hodnotu a odkaz na další položku v linked listu. Popřípadě i předchozí, pokud se jedná o Doubly Linked List. Linked List obsahuje vlastnosti jako je head, tail a length. Head ukazuje na první objekt v linked listu a tail ukazuje na poslední položku v linked listu. Vlastnost length udává počet položek v linked listu. Linked List představuje základ pro jiné datové struktury jako jsou stacky nebo queues.</p>
-                    <h2 class="heading-secondary u-mb-tiny">Porovnání Linked Listu s polem</h2>
-                    <p class="paragraph">Předtím než začneme linked list vytvářet, tak bychom se mohli podívat v čem je jiný oproti poli.</p>
-                    <h3 class="heading-tertiary u-mb-tiny">Linked List</h3>
-                    <ul class="unordered-list u-mb-small">
-                        <li>Nemá indexy.</li>
-                        <li>Spojený pomocí nodes, které obsahují ukazatel na další položku (popřípadě i na předchozí pokud jde o Doubly Linked List).</li>
-                        <li>Nemůžeme jen tak vzít jakoukoliv hodnotu z linked listu, aniž bychom linked list procházeli.</li>
-                    </ul>
-                    <h3 class="heading-tertiary u-mb-tiny">Pole</h3>
-                    <ul class="unordered-list u-mb-medium">
-                        <li>Má indexy.</li>
-                        <li>Vkládání a odstraňování položek je více náročné na výkon, protože se musí posouvat indexy.</li>
-                        <li>Můžeme se rychle dostat k jakékoliv hodnotě pomocí indexu.</li>
-                    </ul>
-                    <h2 class="heading-secondary u-mb-tiny">Vytvoření základu Singly Linked Listu</h2>
-                    <p class="paragraph u-mb-small">Pro Singly Linked List si vytvoříme třídu, kterou budeme používat k jeho vytvoření. Tato třída bude obsahovat vlastnosti head, tail a length. Vlastnost head bude uchovávat první node v linked listu a vlastnost tail bude uchovávat poslední node v linked listu. Vlastnost length bude uchovávat počet nodes v linked listu.</p>
-                    <p class="paragraph u-mb-small">Protože se linked list skládá z nodes, tak si pro ně musíme také vytvořit třídu. Node bude obsahovat vlastnost uchovávající hodnotu a odkaz na další node v linked listu.</p>
+                    <p class="paragraph u-mb-medium">V minulé části jsme si ukázali Singly Linked List. V této části se podíváme na Doubly Linked List, který má narozdíl od Singly Linked Listu propojené nodes oběma směry.</p>
+                    <h2 class="heading-secondary u-mb-tiny">Co je to Doubly Linked List</h2>
+                    <p class="paragraph u-mb-medium">Doubly Linked List je stejná datová struktura jako Singly Linked List. Narozdíl od něj je ale Doubly Linked List složen z nodes, které jsou propojeny oběma směry. Takže každá node obsahuje vlastnosti, které odkazují na další i předchozí node v linked listu. Díky tomu může doubly linked list provádět některé operace rychleji, ale zabere více paměti, protože se v nodes musí ukládat také odkaz na jejich předchozí node.</p>
+                    <h2 class="heading-secondary u-mb-tiny">Vytvoření základu Doubly Linked Listu</h2>
+                    <p class="paragraph u-mb-small">Stejně jako pro Singly Linked List si vytvoříme třídu i pro Doubly Linked List. Konstruktor Doubly Linked Listu bude úplně stejný jako ten pro Singly Linked List. Změna bude jen v tom, že node bude uchovávat také vlastnost prev, ve které se bude ukládat odkaz na předchozí node.</p>
                     <div class="code-box u-mb-small">
                         <pre class="code-box__code"><code>// třída pro node
 class Node {
     constructor(value) {
-        // node uchovává hodnotu
         this.value = value;
-        // také uchovává odkaz na další položku v linked listu
         this.next = null;
+        // v Doubly Linked Listu node uchovává odkaz
+        // také na předchozí node v linked listu
+        this.prev = null;
     }
 }
 
-// třída pro Singly Linked List
-class SinglyLinkedList {
+// třída pro Doubly Linked List
+class DoublyLinkedList {
     constructor() {
-        // vlastnost head uchovává první položku v linked listu
         this.head = null;
-        // vlastnost tail uchovává poslední položku v linked listu
         this.tail = null;
-        // vlastnost length uchovává počet položek v linked listu
         this.length = 0;
     }
 }
 
-// vytvoření singly linked listu
-const list = new SinglyLinkedList();
-// přidání položek do linked listu (později si na to vytvoříme metodu)
-list.head = new Node(5); // první položka linked listu
-list.head.next = new Node(true); // druhá položka linked listu
-list.head.next.next = new Node("list"); // třetí položka linked listu
-list.tail = list.head.next.next; // poslední položka linked listu je jeho třetí položka
-list.length = 3; // linked list obsahuje 3 položky</code></pre>
+// vytvoření doubly linked listu
+const list = new DoublyLinkedList();
+// PŘIDÁNÍ POLOŽEK (později si na to vytvoříme metodu)
+// přidání první položky
+list.head = new Node(5);
+// přidání druhé položky
+list.head.next = new Node(true);
+list.head.next.prev = list.head;
+// přidání třetí položky
+list.tail = new Node("list");
+list.head.next.next = list.tail;
+list.tail.prev = list.head.next;
+// linked list obsahuje 3 položky
+list.length = 3;</code></pre>
                         <div class="code-box__linked-list">
                             <div class="linked-list">
                                 <div class="node node--head">
                                     <div class="node__property"><span class="node__property-name">value: </span><span class="node__property-value node__property-value--number">5</span></div>
                                     <div class="node__property"><span class="node__property-name">next:</span><div class="node__dot"><div class="node__arrow node__arrow--visible"></div></div></div>
+                                    <div class="node__property"><div class="node__dot node__dot--left"></div><span class="node__property-name node__property-name--left-padding">:prev</span></div>
                                 </div>
                                 <div class="node">
                                     <div class="node__property"><span class="node__property-name">value: </span><span class="node__property-value node__property-value--boolean">true</span></div>
                                     <div class="node__property"><span class="node__property-name">next:</span><div class="node__dot"><div class="node__arrow node__arrow--visible"></div></div></div>
+                                    <div class="node__property"><div class="node__dot node__dot--left"><div class="node__arrow node__arrow--to-left node__arrow--visible"></div></div><span class="node__property-name node__property-name--left-padding">:prev</span></div>
                                 </div>
                                 <div class="node node--tail">
                                     <div class="node__property"><span class="node__property-name">value: </span><span class="node__property-value node__property-value--string">"list"</span></div>
                                     <div class="node__property"><span class="node__property-name">next:</span><div class="node__dot"></div></div>
+                                    <div class="node__property"><div class="node__dot node__dot--left"><div class="node__arrow node__arrow--to-left node__arrow--visible"></div></div><span class="node__property-name node__property-name--left-padding">:prev</span></div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <p class="paragraph u-mb-medium">Předchozí ukázka ukazuje vytvoření linked listu a přidání položek (zatím složitější cestou). Na tuto operaci si později vytvoříme metodu. Také si vytvoříme metodu na odstraňování položek, získávání položek a tak dále. Ve zbytku této části si do naší SinglyLinkedList třídy přidáme různé metody. Ukázky budou vždy ukazovat hlavně jen samotnou metodu bez dalšího kódu kolem.</p>
+                    <p class="paragraph u-mb-medium">Stejně jako v minulé části, předchozí ukázka ukazuje vytvoření linked listu a přidání položek zatím složitější cestou. Později si na to vytvoříme metodu. Ve zbytku části si do naší Doubly Linked List třídy postupně přidáme stejné metody, které jsme si vytvářeli pro Singly Linked List.</p>
                     <h2 class="heading-secondary u-mb-tiny">Metoda push</h2>
-                    <p class="paragraph u-mb-small">Pole nám nabízejí metodu push, která slouží k přidání položky na konec pole. Stejnou metodu si vytvoříme i pro singly linked list. Bude sloužit k přidání položky na konec linked listu.</p>
+                    <p class="paragraph u-mb-small">Jako první si do naší DoublyLinkedList třídy přidáme metodu push. S její pomocí budeme na konec linked listu moci přidat novou hodnotu. Bude stejná jako ta pro Singly Linked List, akorát bude mít jeden řádek navíc, který bude nastavovat vlastnost prev nově přidané node na předchozí node.</p>
                     <div data-interactive-example-id="1" class="code-box u-mb-medium">
                         <div class="code-box__header">
                             <div class="code-box__icon">
@@ -145,7 +137,7 @@ list.length = 3; // linked list obsahuje 3 položky</code></pre>
                                 </button>
                             </div>
                         </div>
-                        <pre id="code-1" class="code-box__code code-box__code--max-height code-box__code--max-height-bigger"><code>class SinglyLinkedList {
+                        <pre id="code-1" class="code-box__code code-box__code--max-height code-box__code--max-height-bigger"><code>class DoublyLinkedList {
     /* ... */
 
     // metoda pro přidání položky na konec linked listu
@@ -156,9 +148,11 @@ list.length = 3; // linked list obsahuje 3 položky</code></pre>
             // pokud je linked list prázdný, tak se nová node nastaví jako head
             this.head = newNode;
             // protože má linked list jen jednu položku, tail bude odkazovat na stejnou node jako head
-            this.tail = this.head;
+            this.tail = newNode;
         } else {
-            // pokud linked list není prázdný, tak se pro node na kterou ukazuje tail nastaví vlastnost next na novou node
+            // pokud linked list není prázdný, tak se nastaví vlastnost prev nové node na tail linked listu
+            newNode.prev = this.tail;
+            // pro node na kterou ukazuje tail se nastaví vlastnost next na novou node
             this.tail.next = newNode;
             // nová node se nastaví jako tail
             this.tail = newNode;
@@ -170,7 +164,7 @@ list.length = 3; // linked list obsahuje 3 položky</code></pre>
     }
 }
 
-const list = new SinglyLinkedList();
+const list = new DoublyLinkedList();
 // přidání položek na konec linked listu pomocí metody push
 list.push(3);
 list.push(true);
@@ -180,8 +174,7 @@ list.push(12);</code></pre>
                         </div>
                     </div>
                     <h2 class="heading-secondary u-mb-tiny">Metoda pop</h2>
-                    <p class="paragraph u-mb-small">Další metodu, kterou si do našeho Singly Linked Listu přidáme, bude metoda pop. U polí tato metoda slouží k odstranění a získání poslední položky pole. U linked listu bude metoda pop fungovat stejně. Odstraní poslední položku linked listu a vrátí ji.</p>
-                    <p class="paragraph u-mb-small">U singly linked listu je odstraňování poslední položky trochu těžší, protože jsou jeho nodes propojeny jen jedním směrem. Musíme najít jeho předposlední node, nastavit ji jako tail a nastavit její vlastnost next na null.</p>
+                    <p class="paragraph u-mb-small">Jako další metodu si pro náš Doubly Linked List vytvoříme metodu pop, která bude sloužit k odstranění a získání poslední položky v linked listu. Narozdíl od Singly Linked Listu bude jednodušší, protože máme u každé node přístup k předchozí node. Díky tomu můžeme jen nastavit tail na předchozí node aktuálního tailu namísto procházení celého linked listu a hledání předposlední položky.</p>
                     <div data-interactive-example-id="2" class="code-box u-mb-medium">
                         <div class="code-box__header">
                             <div class="code-box__icon">
@@ -218,40 +211,38 @@ list.push(12);</code></pre>
                                 </button>
                             </div>
                         </div>
-                        <pre id="code-2" class="code-box__code code-box__code--max-height code-box__code--max-height-bigger"><code>class SinglyLinkedList {
+                        <pre id="code-2" class="code-box__code code-box__code--max-height code-box__code--max-height-bigger"><code>class DoublyLinkedList {
     /* ... */
 
-    // metoda pro odstranění a získání poslední položky z linked listu
+    // metoda pro odstranění a získání poslední položky linked listu
     pop() {
         // pokud linked list neobsahuje žádné položky, vrátí se undefined
         if (!this.head) return undefined;
-        // tato proměnná bude později odkazovat na node, která se odstraní
-        let current = this.head;
-        // tato proměnná bude později odkazovat na node, která bude nový tail
-        let newTail = current;
-        // následující cyklus najde poslední a předposlední položku v listu
-        while (current.next) {
-            newTail = current;
-            current = current.next;
-        }
-        // změnění vlastnosti tail na předposlední node v listu
-        this.tail = newTail;
-        // nastavení vlastnoti next nové tail node na null
-        this.tail.next = null;
-        // snížení počtu položek v linked listu
-        this.length--;
-        // pokud je pole prázdné (nový tail je stejný jako odstraněná node), tak se nastaví vlastnosti head a tail na null
-        if (this.length === 0) {
+
+        // uložení node, která je momentálně tail do proměnné
+        const removedNode = this.tail;
+
+        if (this.length === 1) {
+            // pokud linked list obsahuje jen jednu položku, tak se head a tail nastaví na null
             this.head = null;
             this.tail = null;
+        } else {
+            // pokud linked list obsahuje více jak jednu položku, tak se jako tail nastaví předchozí node aktuální tail node
+            this.tail = this.tail.prev;
+            // nastavení vlastnosti next nové tail node na null
+            this.tail.next = null;
+            // nastavení vlastnosti prev odstraněné node na null (abychom po jejím vrácení nemohli s její pomocí linked list procházet)
+            removedNode.prev = null;
         }
+        // snížení počtu položek v linked listu
+        this.length--;
+
         // vrácení odstraněné node
-        return current;
+        return removedNode;
     }
 }
 
-const list = new SinglyLinkedList();
-// použití metody push pro vložení hodnot do linked listu
+const list = new DoublyLinkedList();
 list.push(3).push(true).push(12).push(23);
 
 // odstranění dvou posledních položek linked listu
@@ -262,7 +253,7 @@ list.pop();</code></pre>
                         </div>
                     </div>
                     <h2 class="heading-secondary u-mb-tiny">Metoda shift</h2>
-                    <p class="paragraph u-mb-small">Pomocí metody shift můžeme u pole odstranit a získat jeho první položku. Stejnou metodu si vytvoříme i pro náš Singly Linked List. Odstraní první node linked listu a vrátí ji.</p>
+                    <p class="paragraph u-mb-small">Dále si do naší DoublyLinkedList třídy přidáme metodu shift, která bude sloužit k odstranění a získání první položky linked listu. Protože nodes v Doubly Linked Listu obsahují odkaz také na jejich předcházející node, tak jej nové head budeme muset nastavit na null.</p>
                     <div data-interactive-example-id="3" class="code-box u-mb-medium">
                         <div class="code-box__header">
                             <div class="code-box__icon">
@@ -299,31 +290,38 @@ list.pop();</code></pre>
                                 </button>
                             </div>
                         </div>
-                        <pre id="code-3" class="code-box__code code-box__code--max-height code-box__code--max-height-bigger"><code>class SinglyLinkedList {
+                        <pre id="code-3" class="code-box__code code-box__code--max-height code-box__code--max-height-bigger"><code>class DoublyLinkedList {
     /* ... */
 
-    // metoda pro odstranění a získání první položky z linked listu
+    // metoda pro odstranění a získání první položky linked listu
     shift() {
         // pokud je linked list prázdný, vrátí se undefined
         if (!this.head) return undefined;
-        // uložení aktuální node, která je head, do proměnné
-        let currentHead = this.head;
-        // nastavení následující node v linked listu jako head (pokud tam již žádná není, nastaví se null);
-        this.head = currentHead.next;
+
+        // uložení aktuální head do proměnné
+        const oldHead = this.head;
+        
+        if (this.length === 1) {
+            // pokud linked list obsahuje jen jednu položku, tak se head a tail nastaví na null
+            this.head = null;
+            this.tail = null;
+        } else {
+            // pokud linked list obsahuje více jak jednu položku, tak se jako head nastaví následující node v linked listu
+            this.head = oldHead.next;
+            // nastavení vlastnosti prev nové head na null
+            this.head.prev = null;
+            // nastavení vlastnosti next odstraněné node na null (abychom s její pomocí nemohli linked list procházet až ji vrátíme)
+            oldHead.next = null;
+        }
         // snížení počtu položek v linked listu
         this.length--;
-        // pokud je linked list prázdný, nastaví se také tail na null
-        if (this.length === 0) {
-            this.tail = null;
-        }
-        // nastavení vlastnosti next odstraněné node na null (aby přes ni nešlo linked list procházet až ji vrátíme)
-        currentHead.next = null;
+
         // vrácení odstraněné node
-        return currentHead;
+        return oldHead;
     }
 }
 
-const list = new SinglyLinkedList();
+const list = new DoublyLinkedList();
 list.push(3).push(true).push(12).push(23);
 
 // odstranění dvou prvních položek linked listu
@@ -334,7 +332,7 @@ list.shift();</code></pre>
                         </div>
                     </div>
                     <h2 class="heading-secondary u-mb-tiny">Metoda unshift</h2>
-                    <p class="paragraph u-mb-small">Na přidávání položek na začátek pole existuje metoda unshift. U polí je přidávání položky na začátek drahou operací, protože se musí u ostatních položek pole posunout indexy. U linked listu to tak není, protože se nic přeindexovávat nemusí. Při přidávání položky do linked listu se jen vytvoří nová node, nastaví se jako head, a její vlastnost next se nastaví na bývalou head.</p>
+                    <p class="paragraph u-mb-small">Metodu shift pro odstraňování položek ze začátku doubly linked listu máme. Teď si vytvoříme metodu unshift, pomocí které budeme naopak přidávat položky na začátek doubly linked listu.</p>
                     <div data-interactive-example-id="4" class="code-box u-mb-medium">
                         <div class="code-box__header">
                             <div class="code-box__icon">
@@ -371,21 +369,24 @@ list.shift();</code></pre>
                                 </button>
                             </div>
                         </div>
-                        <pre id="code-4" class="code-box__code code-box__code--max-height code-box__code--max-height-bigger"><code>class SinglyLinkedList {
+                        <pre id="code-4" class="code-box__code code-box__code--max-height code-box__code--max-height-bigger"><code>class DoublyLinkedList {
     /* ... */
 
     // metoda pro přidání položky na začátek linked listu
     unshift(value) {
         // vytvoření nové node
         const newNode = new Node(value);
-        if (!this.head) {
-            // pokud je linked list prázdný, tak se nová node nastaví jako head a tail
+
+        if (this.length === 0) {
+            // pokud linked list neobsahuje žádné položky, tak se nová node nastaví jako head a tail
             this.head = newNode;
             this.tail = newNode;
         } else {
-            // pokud není linked list prázdný, tak se nové node nastaví vlastnost next na aktuální head
+            // pokud linked list obsahuje nějaké položky, tak se vlastnost next nové node nastaví na aktuální head
             newNode.next = this.head;
-            // a nová node se nastaví jako head
+            // vlastnost prev pro aktuální head se nastaví na novou node
+            this.head.prev = newNode;
+            // nová node se nastaví jako head
             this.head = newNode;
         }
         // zvýšení počtu položek v linked listu
@@ -395,9 +396,9 @@ list.shift();</code></pre>
     }
 }
 
-const list = new SinglyLinkedList();
+const list = new DoublyLinkedList();
 
-// přídání tří položek na začátek linked listu
+// přidání tří položek na začátek linked listu
 list.unshift(3);
 list.unshift(true);
 list.unshift(12);</code></pre>
@@ -406,7 +407,8 @@ list.unshift(12);</code></pre>
                         </div>
                     </div>
                     <h2 class="heading-secondary u-mb-tiny">Metoda get</h2>
-                    <p class="paragraph u-mb-small">U polí máme možnost získat požadovanou položku pomocí jejího indexu. Linked listy indexy nemají, ale pokud chceme položku podle předaného indexu přece jenom najít, tak si na to můžeme vytvořit metodu. Získávání specifických položek z linked listu není ale tak efektivní jako u polí, protože se linked list musí postupně projet až k požadované node.</p>
+                    <p class="paragraph u-mb-small">Stejně jako pro Singly Linked List, tak i pro Doubly Linked List si vytvoříme metodu get, pomocí které budeme moci získat požadovanou node z linked listu podle předaného indexu. Vlastně bychom ani nemuseli pro Doubly Linked List vytvářet novou, mohli bychom zkopírovat tu, kterou jsme vytvořili pro Singly Linked List. Tím bychom ale nevyužili toho, že v Doubly Linked Listu nodes obsahují odkazy také na předchozí nodes. Pokud by například linked list obsahoval 50 nodes a chtěli bychom získat předposlední node, tak bychom museli projet celý list, než bychom se k ní dostali. Kdybychom ale využili toho, že nodes obsahují odkazy také na předchozí položky a procházeli bychom linked list od konce, dostali bychom se k ní mnohem rychleji.</p>
+                    <p class="paragraph u-mb-small">Takže si pro Doubly Linked List vytvoříme novou metodu get, která zjistí prostřední index podle počtu položek v linked listu a porovná jestli je předaný index větší nebo menší než tento index. Pokud bude předaný index menší než prostřední index, tak se bude linked list procházet od začátku, a když větší tak se bude procházet od konce.</p>
                     <div data-interactive-example-id="5" class="code-box u-mb-medium">
                         <div class="code-box__header">
                             <div class="code-box__icon">
@@ -443,7 +445,7 @@ list.unshift(12);</code></pre>
                                 </button>
                             </div>
                         </div>
-                        <pre id="code-5" class="code-box__code code-box__code--max-height code-box__code--max-height-bigger"><code>class SinglyLinkedList {
+                        <pre id="code-5" class="code-box__code code-box__code--max-height code-box__code--max-height-bigger"><code>class DoublyLinkedList {
     /* ... */
 
     // metoda pro získání položky z linked listu podle předaného indexu
@@ -451,31 +453,44 @@ list.unshift(12);</code></pre>
         // pokud je index mimo rozsah linked listu, tak se vrátí null
         if (index &lt; 0 || index &gt;= this.length) return null;
 
-        // do této proměnné se uloží node, která se najde
-        let current = this.head;
+        // získání prostředního indexu linked listu
+        const middleIndex = this.length / 2;
 
-        // tento cyklus bude probíhat tak dlouho, dokud se nedojde na požadovanou node
-        for (let i = 1; i &lt;= index; i++) {
-            // posunutí na další node v linked listu
-            current = current.next;
+        if (index &lt;= middleIndex) {
+            // pokud je index menší nebo se rovná prostřednímu indexu, tak se linked list bude procházet od začátku
+            let currentNode = this.head;
+            // tento cyklus bude linked list postupně procházet
+            for (let i = 0; i &lt; this.length; i++) {
+                // pokud se index i rovná předanému indexu, tak se vrátí nalezená node
+                if (index === i) return currentNode;
+                // posunutí na další node v linked listu
+                currentNode = currentNode.next;
+            }
+        } else {
+            // pokud je index větší než prostřední index, tak se linked list bude procházet od konce
+            let currentNode = this.tail;
+            // tento cyklus bude linked list postupně procházet
+            for (let i = this.length-1; i &gt;= 0; i--) {
+                // pokud se index i rovná předanému indexu, tak se vrátí nalezená node
+                if (index === i) return currentNode;
+                // posunutí na další node v linked listu (vlastně spíš předchozí, protože se linked list prochází od konce)
+                currentNode = currentNode.prev;
+            }
         }
-
-        // vrácení nalezené node
-        return current;
     }
 }
 
-const list = new SinglyLinkedList();
-list.unshift(3).unshift(true).unshift(12);
+const list = new DoublyLinkedList();
+list.unshift(3).unshift(8).unshift(12).unshift(23).unshift(14);
 
-// získání druhé node v linked listu
-const ziskanaNode = list.get(1);</code></pre>
+// získání čtvrté node v linked listu
+const ziskanaNode = list.get(3);</code></pre>
                         <div class="code-box__linked-list">
                             <div id="linked-list-5" class="linked-list linked-list--bigger-bottom-padding"></div>
                         </div>
                     </div>
                     <h2 class="heading-secondary u-mb-tiny">Metoda set</h2>
-                    <p class="paragraph u-mb-small">Jako další metodu si do našeho Singly Linked Listu přídáme metodu set. Pomocí této metody půjde nastavit hodnota node na předaném indexu. Vytvoření této metody je jednoduché, protože k získání požadované node použijeme metodu get, kterou jsme si vytvořili předtím. Poté jen změníme hodnotu, kterou node uchovává.</p>
+                    <p class="paragraph u-mb-small">Další metoda, kterou si do naší DoublyLinkedList třídy přidáme, bude metoda set. Bude úplně stejná jako ta pro Singly Linked List, kterou jsme vytvořili v minulé části. Získáme node pomocí metody get podle předaného indexu a změníme jí hodnotu, kterou uchovává.</p>
                     <div data-interactive-example-id="6" class="code-box u-mb-medium">
                         <div class="code-box__header">
                             <div class="code-box__icon">
@@ -512,7 +527,7 @@ const ziskanaNode = list.get(1);</code></pre>
                                 </button>
                             </div>
                         </div>
-                        <pre id="code-6" class="code-box__code code-box__code--max-height code-box__code--max-height-bigger"><code>class SinglyLinkedList {
+                        <pre id="code-6" class="code-box__code code-box__code--max-height code-box__code--max-height-bigger"><code>class DoublyLinkedList {
     /* ... */
 
     // metoda pro nastavení hodnoty na specifickém indexu
@@ -530,7 +545,7 @@ const ziskanaNode = list.get(1);</code></pre>
     }
 }
 
-const list = new SinglyLinkedList();
+const list = new DoublyLinkedList();
 list.unshift(3).unshift(true).unshift(12);
 
 // změnění hodnoty druhé položky v linked listu
@@ -540,7 +555,7 @@ list.set(1, false);</code></pre>
                         </div>
                     </div>
                     <h2 class="heading-secondary u-mb-tiny">Metoda insert</h2>
-                    <p class="paragraph u-mb-small">Pro přidávání položek do linked listu jsme si zatím vytvořili metody push a unshift. Pomocí těchto metod ale můžeme položku přidat pouze na začátek nebo konec linked listu. Pro přídání položky podle předaného indexu si vytvoříme metodu insert.</p>
+                    <p class="paragraph u-mb-small">Pro přidávání položek do linked listu podle předaného indexu si vytvoříme metodu insert. Bude podobná její verzi pro Singly Linked List, ale narozdíl od ní musí nově přidanou položku napojit také druhým směrem.</p>
                     <div data-interactive-example-id="7" class="code-box u-mb-medium">
                         <div class="code-box__header">
                             <div class="code-box__icon">
@@ -577,27 +592,30 @@ list.set(1, false);</code></pre>
                                 </button>
                             </div>
                         </div>
-                        <pre id="code-7" class="code-box__code code-box__code--max-height code-box__code--max-height-bigger"><code>class SinglyLinkedList {
+                        <pre id="code-7" class="code-box__code code-box__code--max-height code-box__code--max-height-bigger"><code>class DoublyLinkedList {
     /* ... */
 
     // metoda pro přidání hodnoty na specifickém indexu
     insert(index, value) {
         // pokud je předaný index mimo rozsah linked listu, tak se vrátí false
-        if(index &lt; 0 || index &gt; this.length) return false;
+        if (index &lt; 0 || index &gt; this.length) return false;
 
         // pokud se index rovná délce linked listu, tak se pro přidání položky použije metoda push
-        if(index === this.length) return !!this.push(value); // aby se vrátilo true, tak je použita dvakrát negace
+        if (index === 0) return !!this.unshift(value); // aby se vrátilo true, tak je použita dvakrát negace
         // pokud se index rovná 0, tak se pro přidání položky použije metoda unshift
-        if(index === 0) return !!this.unshift(value); // aby se vrátilo true, tak je použita dvakrát negace
+        if (index === this.length) return !!this.push(value); // aby se vrátilo true, tak je použita dvakrát negace
 
         // vytvoření nové node
         const newNode = new Node(value);
-        // získání node, která bude předcházet nově přidané node
+        // získání node, která se pro novou node nastaví jako předchozí
         const prevNode = this.get(index-1);
-        // vlastnost next nové node bude ukazovat na node, na kterou ukazuje vlastnost next předešlé node
-        newNode.next = prevNode.next;
-        // nastavení vlastnosti next předcházející node na novou node
-        prevNode.next = newNode;
+        // získání node, která se pro novou node nastaví jako následující
+        const nextNode = prevNode.next;
+        
+        // propojení nové node s její předchozí node
+        prevNode.next = newNode, newNode.prev = prevNode;
+        // propojení nové node s její následující node
+        newNode.next = nextNode, nextNode.prev = newNode;
         // zvýšení počtu položek v linked listu
         this.length++;
         // položka se úspěšně přidala, vrátí se true
@@ -605,7 +623,7 @@ list.set(1, false);</code></pre>
     }
 }
 
-const list = new SinglyLinkedList();
+const list = new DoublyLinkedList();
 list.unshift(3).unshift(true).unshift(12);
 
 // přidání položky na index 2
@@ -615,7 +633,7 @@ list.insert(2, 25);</code></pre>
                         </div>
                     </div>
                     <h2 class="heading-secondary u-mb-tiny">Metoda remove</h2>
-                    <p class="paragraph u-mb-small">Pro odstraňování položek ze začátku a konce linked listu máme metody shift a pop. Teď si pro náš Singly Linked List vytvoříme metodu, která nám umožní odstranit položku podle předaného indexu.</p>
+                    <p class="paragraph u-mb-small">Poslední metodu, kterou si pro náš Doubly Linked List vytvoříme bude metoda remove, pomocí které budeme moci z linked listu odstranit položku podle předaného indexu.</p>
                     <div data-interactive-example-id="8" class="code-box u-mb-medium">
                         <div class="code-box__header">
                             <div class="code-box__icon">
@@ -652,7 +670,7 @@ list.insert(2, 25);</code></pre>
                                 </button>
                             </div>
                         </div>
-                        <pre id="code-8" class="code-box__code code-box__code--max-height code-box__code--max-height-bigger"><code>class SinglyLinkedList {
+                        <pre id="code-8" class="code-box__code code-box__code--max-height code-box__code--max-height-bigger"><code>class DoublyLinkedList {
     /* ... */
 
     // metoda pro odstranění položky podle předaného indexu
@@ -660,20 +678,24 @@ list.insert(2, 25);</code></pre>
         // pokud je předaný index mimo rozsah linked listu, tak se vrátí undefined
         if (index &lt; 0 || index &gt;= this.length) return undefined;
 
-        // pokud se má odstranit poslední node linked listu, tak se použije metoda pop
-        if (index === this.length - 1) return this.pop();
         // pokud se má odstranit první node linked listu, tak se použije metoda shift
         if (index === 0) return this.shift();
+        // pokud se má odstranit poslední node linked listu, tak se použije metoda pop
+        if (index === this.length-1) return this.pop();
 
-        // získání node, která předchází node, která se má smazat (použitím metody get)
-        const prevNode = this.get(index-1);
         // získání node, která se má odstranit
-        const removedNode = prevNode.next;
-        // node, která předchází odstraňované node se nastaví vlastnost next na node, kterou má odstraňovaná node jako next
-        prevNode.next = removedNode.next;
-        // nastavení vlastnosti next odstraněné node na null (aby přes ni nešlo linked list procházet až ji vrátíme)
-        removedNode.next = null;
+        let removedNode = this.get(index);
+        // získání předchozí node odstraňované node
+        let prevNode = removedNode.prev;
+        // získání následující node odstraňované node
+        let nextNode = removedNode.next;
 
+        // propojení předchozí a následující node odstraňované node
+        prevNode.next = nextNode;
+        nextNode.prev = prevNode;
+
+        // nastavení vlastností prev a next odstraněné node na null (abychom s její pomocí nemohli linked list procházet až ji vrátíme)
+        removedNode.prev = null, removedNode.next = null;
         // snížení počtu položek v linked listu
         this.length--;
         // vrácení odstraněné node
@@ -681,7 +703,7 @@ list.insert(2, 25);</code></pre>
     }
 }
 
-const list = new SinglyLinkedList();
+const list = new DoublyLinkedList();
 list.unshift(3).unshift(true).unshift(12);
 
 // odstranění druhé položky linked listu
@@ -690,90 +712,12 @@ list.remove(1);</code></pre>
                             <div id="linked-list-8" class="linked-list linked-list--bigger-bottom-padding"></div>
                         </div>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Metoda reverse</h2>
-                    <p class="paragraph u-mb-small">Jako poslední metodu si do pro náš Singly Linked List vytvoříme metodu reverse. Jejím zavoláním budeme moci linked list převrátit. Prohodí se tedy head a tail a obrátí se směr propojení linked listu.</p>
-                    <div data-interactive-example-id="9" class="code-box u-mb-medium">
-                        <div class="code-box__header">
-                            <div class="code-box__icon">
-                                <svg>
-                                    <use xlink:href="../media/img/icon-sprite.svg#icon-cogs"></use>
-                                </svg>
-                            </div>
-                            <div class="code-box__buttons-container">
-                                <button class="code-box__button code-box__button--move" data-interactive-example-move-button="true">
-                                    <svg>
-                                        <use xlink:href="../media/img/icon-sprite.svg#icon-forward3"></use>
-                                    </svg>
-                                </button>
-                                <select class="code-box__speed-input" data-interactive-example-speed-input="true">
-                                    <option value="0.25">0.25</option>
-                                    <option value="0.5">0.5</option>
-                                    <option value="0.75">0.75</option>
-                                    <option selected value="1">1</option>
-                                    <option value="1.25">1.25</option>
-                                    <option value="1.5">1.5</option>
-                                    <option value="1.75">1.75</option>
-                                </select>
-                                <button class="code-box__button" data-interactive-example-play-button="true">
-                                    <span>
-                                        <svg>
-                                            <use xlink:href="../media/img/icon-sprite.svg#icon-play3"></use>
-                                        </svg>
-                                    </span>
-                                </button>
-                                <button class="code-box__button code-box__button--reset" data-interactive-example-reset-button="true">
-                                    <svg>
-                                        <use xlink:href="../media/img/icon-sprite.svg#icon-loop2"></use>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                        <pre id="code-9" class="code-box__code code-box__code--max-height code-box__code--max-height-bigger"><code>class SinglyLinkedList {
-    /* ... */
-
-    // metoda pro převrácení linked listu
-    reverse() {
-        // uložení aktuální head do proměnné
-        let node = this.head;
-        // prohození head a tail
-        this.head = this.tail;
-        this.tail = node;
-
-        // pomocné proměnné
-        let next;
-        let prev = null;
-
-        // tento cyklus bude probíhat tak dlouho, dokud se linked list celý neprojede
-        while (node) {
-            // uložení vlastnosti next do proměnné next
-            next = node.next;
-            // nastavení vlastnosti next na předchozí node
-            node.next = prev;
-
-            // uložení node do proměnné prev, abychom ji v dalším cyklu mohli použít jako předchozí node
-            prev = node;
-            // v dalším cyklu se nastaví další node (pokud se next nerovná null)
-            node = next;
-        }
-        return this;
-    }
-}
-
-const list = new SinglyLinkedList();
-list.unshift(3).unshift(true).unshift(12).unshift(26);
-
-// převrácení linked listu
-list.reverse();</code></pre>
-                        <div class="code-box__linked-list">
-                            <div id="linked-list-9" class="linked-list linked-list--bigger-bottom-padding"></div>
-                        </div>
-                    </div>
-                    <h2 class="heading-secondary u-mb-tiny">Big O náročnost Singly Linked Listu</h2>
-                    <p class="paragraph u-mb-small">Na závěr bychom se ještě mohli podívat, jaká je časová náročnost některých operací se singly linked listem.</p>
+                    <h2 class="heading-secondary u-mb-tiny">Big O náročnost Doubly Linked Listu</h2>
+                    <p class="paragraph u-mb-small">Na závěr této části se ještě podíváme, jaká je čásová náročnost některých operací s doubly linked listem.</p>
                     <ul class="unordered-list">
                         <li><b>Vkládání hodnot (na začátek a konec):</b> O(1)</li>
-                        <li><b>Odstraňování hodnot:</b> záleží kde, pokud položku odstraňujeme ze začátku linked listu, tak je to O(1), jinak je to spíš O(n)</li>
-                        <li><b>Hledání:</b> O(n)</li>
+                        <li><b>Odstraňování hodnot (ze začátku a z konce):</b> O(1)</li>
+                        <li><b>Hledání:</b> O(n) - technicky je to O(n/2), protože procházíme jen polovinu linked listu, ale to je stále O(n)</li>
                         <li><b>Přístup k položkám:</b> O(n)</li>
                     </ul>
                 </main>
@@ -792,6 +736,6 @@ list.reverse();</code></pre>
         </div>
     </div>
 
-    <script type="module" src="../media/js/parts/singlyLinkedList.js"></script>
+    <script type="module" src="../media/js/parts/doublyLinkedList.js"></script>
 </body>
 </html>
