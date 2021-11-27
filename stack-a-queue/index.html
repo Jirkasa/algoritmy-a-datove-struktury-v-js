@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=yes maximum-scale=2.2 minimum-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../media/css/style.css">
+
+    <script src="../media/js/libraries/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    <title>Algoritmy a Datové Struktury v JS - Stack a Queue</title>
+</head>
+<body>
+    <div class="page">
+        <header class="header">
+            <div class="header__content">
+                <h2 class="header__heading">Algoritmy a Datové Struktury v JS</h2>
+                <nav class="header__navigation">
+                    <ul>
+                        <li><a href="#">something</a></li>
+                        <li><a href="#">something</a></li>
+                        <li><a href="#">something</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <div class="heading-section">
+            Stack a Queue
+        </div>
+        <div class="article-page">
+            <div class="article-page__content">
+                <main class="article-page__main-side">
+                    <h1 class="heading-primary u-mb-medium">Stack a Queue</h1>
+                    <hr class="horizontal-rule u-mb-medium">
+                    <p class="paragraph u-mb-medium">V této části si ukážeme datové struktury Stack a Queue. Tyto datové struktury jsou podobné linked listům, o kterých byly poslední dvě části. Také používají nodes, které jsou spolu propojeny.</p>
+                    <h2 class="heading-secondary u-mb-tiny">Stack</h2>
+                    <p class="paragraph u-mb-small">Stack je LIFO datová struktura. LIFO je zkratka pro Last In First Out, což v češtině znamená poslední dovnitř, první ven. Položku, kterou tedy do stacku vložíme jako poslední, dostaneme ze stacku jako první. Stack si tedy můžeme například představit jako krabici, do které na sebe vkládáme papíry. Pokud potom budeme z krabice chtít vzít papír, tak si vezmeme poslední, který jsme tam vložili.</p>
+                    <h3 class="heading-tertiary u-mb-tiny">Vytvoření Stacku</h3>
+                    <p class="paragraph u-mb-small">Existuje více cest jak stack vytvořit. Klidně můžeme použít i pole, pokud se nám pro stack nechce vytvářet třída. Pokud budeme chtít do pole, které používáme jako stack vložit hodnotu, můžeme použít metodu push, která slouží k vložení hodnoty na konec pole. K získání poslední vložené položky ze stacku bychom potom mohli použít metodu pop, která slouží k odstranění a získání poslední položky pole. Nebo bychom mohli také nové hodnoty vkládat a získávat ze začátku pole pomocí metod unshift a shift. To by ale bylo pomalejší, protože by se u všech položek pole museli vždy měnit indexy. Proto je lepší vkládat a získávat položky pole z jeho konce, aby se indexy nemuseli měnit.</p>
+                    <div class="code-box u-mb-small">
+                        <pre class="code-box__code"><code>// vytvoření stacku
+const stack = [];
+
+// vložení hodnoty do stacku
+stack.push(7);
+// vložení další hodnoty do stacku
+stack.push(55);
+
+// získání a odstranění hodnoty ze stacku
+const hodnota = stack.pop();</code></pre>
+                    </div>
+                    <p class="paragraph u-mb-small">Předchozí ukázka ukazuje vytvoření a používání stacku pomocí pole. To nám ale nabízí indexy, které pro stack ani nevyužijeme. Proto je lepší vytvořit si pro stack vlastní třídu, ve které budeme mít jen to, co pro stack opravdu potřebujeme.</p>
+                    <p class="paragraph u-mb-small">Následující ukázka ukazuje základ třídy pro stack, do které si později přidáme metody push a pop.</p>
+                    <div class="code-box u-mb-small">
+<pre class="code-box__code"><code>// stack bude používat stejnou třídu pro Node jako Singly Linked List
+class Node {
+    constructor(value) {
+        this.value = value;
+        this.next = null;
+    }
+}
+
+// třída pro stack
+class Stack {
+    constructor() {
+        // vlastnost first uchovává poslední vloženou hodnotu (node)
+        this.first = null;
+        // vlastnost size udává počet položek ve stacku
+        this.size = 0;
+    }
+}</code></pre>
+                    </div>
+                    <h3 class="heading-tertiary u-mb-tiny">Metoda push</h3>
+                    <p class="paragraph u-mb-small">Pro vložení položky do stacku si vytvoříme metodu push. V této metodě se předaná položka připojí na začátek linked listu (nodes ve stacku jsou projené stejně jako v Singly Linked Listu) a nastaví se jako poslední přidaná položka.</p>
+                    <div data-interactive-example-id="1" class="code-box u-mb-small">
+                        <div class="code-box__header">
+                            <div class="code-box__icon">
+                                <svg>
+                                    <use xlink:href="../media/img/icon-sprite.svg#icon-cogs"></use>
+                                </svg>
+                            </div>
+                            <div class="code-box__buttons-container">
+                                <button class="code-box__button code-box__button--move" data-interactive-example-move-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-forward3"></use>
+                                    </svg>
+                                </button>
+                                <select class="code-box__speed-input" data-interactive-example-speed-input="true">
+                                    <option value="0.25">0.25</option>
+                                    <option value="0.5">0.5</option>
+                                    <option value="0.75">0.75</option>
+                                    <option selected value="1">1</option>
+                                    <option value="1.25">1.25</option>
+                                    <option value="1.5">1.5</option>
+                                    <option value="1.75">1.75</option>
+                                </select>
+                                <button class="code-box__button" data-interactive-example-play-button="true">
+                                    <span>
+                                        <svg>
+                                            <use xlink:href="../media/img/icon-sprite.svg#icon-play3"></use>
+                                        </svg>
+                                    </span>
+                                </button>
+                                <button class="code-box__button code-box__button--reset" data-interactive-example-reset-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-loop2"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <pre id="code-1" class="code-box__code code-box__code--max-height code-box__code--max-height-bigger"><code>class Stack {
+    /* ... */
+
+    // metoda pro přidání položky do stacku
+    push(value) {
+        // vytvoření nové node
+        const newNode = new Node(value);
+
+        if (!this.first) {
+            // pokud je stack prázdný, tak se nová node jen nastaví jako naposled vložená položka
+            this.first = newNode;
+        } else {
+            // pokud stack již obsahuje nějaké položky, tak se vlastnost next nové node nastaví na naposled vloženou položku
+            newNode.next = this.first;
+            // nová node se nastaví jako naposled vložená položka
+            this.first = newNode;
+        }
+
+        // zvýšení a vrácení počtu položek ve stacku
+        return ++this.size;
+    }
+}
+
+// vytvoření stacku
+const stack = new Stack();
+
+// vložení hodnoty do stacku
+stack.push(25);
+// vložení dalších hodnot do stacku
+stack.push(5);
+stack.push(true);</code></pre>
+                        <div class="code-box__linked-list">
+                            <div id="linked-list-1" class="linked-list linked-list--bigger-bottom-padding"></div>
+                        </div>
+                    </div>
+                    <h3 class="heading-tertiary u-mb-tiny">Metoda pop</h3>
+                    <p class="paragraph u-mb-small">Pro získání a odstranění hodnoty ze stacku si vytvoříme metodu pop. Tato metoda odstraní ze stacku naposledy vloženou hodnotu a vrátí ji.</p>
+                    <div data-interactive-example-id="2" class="code-box u-mb-small">
+                        <div class="code-box__header">
+                            <div class="code-box__icon">
+                                <svg>
+                                    <use xlink:href="../media/img/icon-sprite.svg#icon-cogs"></use>
+                                </svg>
+                            </div>
+                            <div class="code-box__buttons-container">
+                                <button class="code-box__button code-box__button--move" data-interactive-example-move-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-forward3"></use>
+                                    </svg>
+                                </button>
+                                <select class="code-box__speed-input" data-interactive-example-speed-input="true">
+                                    <option value="0.25">0.25</option>
+                                    <option value="0.5">0.5</option>
+                                    <option value="0.75">0.75</option>
+                                    <option selected value="1">1</option>
+                                    <option value="1.25">1.25</option>
+                                    <option value="1.5">1.5</option>
+                                    <option value="1.75">1.75</option>
+                                </select>
+                                <button class="code-box__button" data-interactive-example-play-button="true">
+                                    <span>
+                                        <svg>
+                                            <use xlink:href="../media/img/icon-sprite.svg#icon-play3"></use>
+                                        </svg>
+                                    </span>
+                                </button>
+                                <button class="code-box__button code-box__button--reset" data-interactive-example-reset-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-loop2"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <pre id="code-2" class="code-box__code code-box__code--max-height code-box__code--max-height-bigger"><code>class Stack {
+    /* ... */
+
+    // metoda pro odstranění a získání položky ze stacku
+    pop() {
+        // pokud je stack prázdný, tak se vrátí null
+        if (!this.first) return null;
+
+        // získání hodnoty první (naposledy vložené) node ve stacku
+        const value = this.first.value;
+
+        // následující node ve stacku se nastaví jako první
+        this.first = this.first.next;
+        // snížení počtu položek ve stacku
+        this.size--;
+
+        // vrácení hodnoty odstraněné node
+        return value;
+    }
+}
+
+const stack = new Stack();
+
+// vložení hodnot do stacku
+stack.push(25);
+stack.push(5);
+stack.push(true);
+
+// získání naposledy vložené hodnoty ze stacku
+let hodnota1 = stack.pop();
+
+// přidání další hodnoty do Stacku
+stack.push(23);
+
+// získání hodnot ze Stacku
+let hodnota2 = stack.pop();
+let hodnota3 = stack.pop();</code></pre>
+                        <div class="code-box__linked-list">
+                            <div id="linked-list-2" class="linked-list linked-list--bigger-bottom-padding"></div>
+                        </div>
+                    </div>
+                    <p class="paragraph u-mb-small">Pokud bychom chtěli, tak bychom si pro stack mohli vytvořit ještě nějaké další metody. Například metodu peek, která by sloužila jen k získání poslední vložené položky bez jejího odstranění. Myslím ale, že díky metodám push a pop teď víte jak stack funguje a dle potřeby byste si nějaké další metody přidali sami.</p>
+                    <h3 class="heading-tertiary u-mb-tiny">Big O náročnost Stacku</h3>
+                    <p class="paragraph u-mb-medium">U stacku nás zajímá jen jaká je časová náročnost vkládání položky a její získávání a odstraňování. Časová náročnost těchto operací je O(1).</p>
+                    <h2 class="heading-secondary u-mb-tiny">Queue</h2>
+                    <p class="paragraph u-mb-small">Queue je FIFO datová struktura. FIFO je zkratka pro First In First Out, což v češtině znamená první dovnitř, první ven. Položku, kterou tedy do queue vložíme jako první, dostaneme z queue také jako první. Slovo queue do češtiny přeložíme jako fronta, takže si queue můžeme představit jako nějakou frontu lidí. Člověk, který přišel nejdříve a je ve frontě první, se dostane na řadu jako první a odejde také jako první.</p>
+                    <h3 class="heading-tertiary u-mb-tiny">Vytvoření Queue</h3>
+                    <p class="paragraph u-mb-small">Existuje více cest jak queue vytvořit. Dalo by se například použít i pole. Pro vkládání hodnot bychom mohli použít metodu unshift, a pro získávání hodnot metodu pop. Pole ale obsahuje indexy, které by se při přidávání nové hodnoty do pole museli posouvat. Časová náročnost pro vkládání hodnoty by tedy byla O(n). Tuto jednoduchou a neefektivní cestu vytvoření queue ukazuje následující ukázka.</p>
+                    <div class="code-box u-mb-small">
+                        <pre class="code-box__code"><code>// vytvoření queue
+const queue = [];
+
+// vložení hodnoty do queue
+queue.unshift(7);
+// vložení další hodnoty do queue
+queue.unshift(55);
+
+// získání a odstranění hodnoty z queue
+const hodnota = queue.pop();</code></pre>
+                    </div>
+                    <p class="paragraph u-mb-small">Předchozí ukázka ukazuje vytvoření a používání queue pomocí pole. Pokud se vám nechce vytvářet pro queue vlastní datovou strukturu a nezáleží vám tolik na časové náročnosti, tak byste mohli pole klidně použít. Pokud vám ale na časové náročnosti záleží, tak byste si pro queue mohli vytvořit vlastní třídu. Následující ukázka ukazuje její základ, který je v podstatě stejný jako základ třídy pro Singly Linked List. Jediný rozdíl je v tom, že namísto head je použit název first, a namísto tail je použit název last. Později si do této třídy přidáme metody enqueue a dequeue pro přidávání a odstraňování hodnot.</p>
+                    <div class="code-box u-mb-small">
+                        <pre class="code-box__code"><code> // queue bude používat stejnou třídu pro Node jako Singly Linked List
+class Node {
+    constructor(value) {
+        this.value = value;
+        this.next = null;
+    }
+}
+
+// třída pro queue
+class Queue {
+    constructor() {
+        // vlastnost first ukazuje na první node v linked listu
+        this.first = null;
+        // vlastnost last ukazuje na poslední node v linked listu
+        this.last = null;
+        // vlastnost size udává počet položek v queue
+        this.size = 0;
+    }
+}</code></pre>
+                    </div>
+                    <h3 class="heading-tertiary u-mb-tiny">Metoda enqueue</h3>
+                    <p class="paragraph u-mb-small">Pro vložení položky do queue si vytvoříme metodu enqueue. Protože naše Queue třída používá Singly Linked List, tak budeme nové položky přidávat na konec linked listu, abychom je potom pomocí metody dequeue mohli rychleji získat ze začátku linked listu. U Singly Linked Listu je totiž časová náročnost pro odstraňování položek z konce linked listu O(n), protože jsou nodes propojeny jen jedním směrem a musíme se nejdříve dostat k předposlední node.</p>
+                    <div data-interactive-example-id="3" class="code-box u-mb-small">
+                        <div class="code-box__header">
+                            <div class="code-box__icon">
+                                <svg>
+                                    <use xlink:href="../media/img/icon-sprite.svg#icon-cogs"></use>
+                                </svg>
+                            </div>
+                            <div class="code-box__buttons-container">
+                                <button class="code-box__button code-box__button--move" data-interactive-example-move-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-forward3"></use>
+                                    </svg>
+                                </button>
+                                <select class="code-box__speed-input" data-interactive-example-speed-input="true">
+                                    <option value="0.25">0.25</option>
+                                    <option value="0.5">0.5</option>
+                                    <option value="0.75">0.75</option>
+                                    <option selected value="1">1</option>
+                                    <option value="1.25">1.25</option>
+                                    <option value="1.5">1.5</option>
+                                    <option value="1.75">1.75</option>
+                                </select>
+                                <button class="code-box__button" data-interactive-example-play-button="true">
+                                    <span>
+                                        <svg>
+                                            <use xlink:href="../media/img/icon-sprite.svg#icon-play3"></use>
+                                        </svg>
+                                    </span>
+                                </button>
+                                <button class="code-box__button code-box__button--reset" data-interactive-example-reset-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-loop2"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <pre id="code-3" class="code-box__code code-box__code--max-height code-box__code--max-height-bigger"><code>class Queue {
+    /* ... */
+
+    // metoda pro přidání položky do queue
+    enqueue(value) {
+        // vytvoření nové node
+        const newNode = new Node(value);
+
+        if (!this.first) {
+            // pokud je queue prázdná, tak se nová node nastaví jako první i poslední
+            this.first = newNode;
+            this.last = newNode;
+        } else {
+            // pokud queue již obsahuje nějaké položky, tak se pro poslední node v queue nastaví vlastnost next na novou node
+            this.last.next = newNode;
+            // nová node se nastaví jako poslední položka v queue
+            this.last = newNode;
+        }
+        // zvýšení a vrácení počtu položek v queue
+        return ++this.size;
+    }
+}
+
+// vytvoření queue
+const queue = new Queue();
+
+// vložení hodnoty do queue
+queue.enqueue(25);
+// vložení dalších hodnot do queue
+queue.enqueue(5);
+queue.enqueue(true);</code></pre>
+                        <div class="code-box__linked-list">
+                            <div id="linked-list-3" class="linked-list linked-list--bigger-bottom-padding"></div>
+                        </div>
+                    </div>
+                    <h3 class="heading-tertiary u-mb-tiny">Metoda dequeue</h3>
+                    <p class="paragraph u-mb-small">Pro získání položky z queue si vytvoříme metodu dequeue. Tato metoda odstraní první node v linked listu a vrátí její hodnotu.</p>
+                    <div data-interactive-example-id="4" class="code-box u-mb-small">
+                        <div class="code-box__header">
+                            <div class="code-box__icon">
+                                <svg>
+                                    <use xlink:href="../media/img/icon-sprite.svg#icon-cogs"></use>
+                                </svg>
+                            </div>
+                            <div class="code-box__buttons-container">
+                                <button class="code-box__button code-box__button--move" data-interactive-example-move-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-forward3"></use>
+                                    </svg>
+                                </button>
+                                <select class="code-box__speed-input" data-interactive-example-speed-input="true">
+                                    <option value="0.25">0.25</option>
+                                    <option value="0.5">0.5</option>
+                                    <option value="0.75">0.75</option>
+                                    <option selected value="1">1</option>
+                                    <option value="1.25">1.25</option>
+                                    <option value="1.5">1.5</option>
+                                    <option value="1.75">1.75</option>
+                                </select>
+                                <button class="code-box__button" data-interactive-example-play-button="true">
+                                    <span>
+                                        <svg>
+                                            <use xlink:href="../media/img/icon-sprite.svg#icon-play3"></use>
+                                        </svg>
+                                    </span>
+                                </button>
+                                <button class="code-box__button code-box__button--reset" data-interactive-example-reset-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-loop2"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <pre id="code-4" class="code-box__code code-box__code--max-height code-box__code--max-height-bigger"><code>class Queue {
+    /* ... */
+
+    // metoda pro odstranění a získání hodnoty z queue
+    dequeue(value) {
+        // pokud je queue prázná, tak se vrátí null
+        if (!this.first) return null;
+
+        // uložení hodnoty první node
+        const value = this.first.value;
+
+        // pokud queue obsahuje jen jednu položku, tak se vlastnost last nastaví na null
+        if (this.first === this.last) {
+            this.last = null;
+        }
+        // jako první se nastaví další node v linked listu
+        this.first = this.first.next;
+        // snížení počtu položek v queue
+        this.size--;
+        // vrácení hodnoty odstraněné node
+        return value;
+    }
+}
+
+// vytvoření queue
+const queue = new Queue();
+
+// vložení hodnot do queue
+queue.enqueue(25);
+queue.enqueue(5);
+queue.enqueue(true);
+
+// získání hodnoty z queue
+const hodnota1 = queue.dequeue();
+
+// přidání další hodnoty do queue
+queue.enqueue(23);
+
+// získání hodnot z queue
+const hodnota2 = queue.dequeue();
+const hodnota3 = queue.dequeue();</code></pre>
+                        <div class="code-box__linked-list">
+                            <div id="linked-list-4" class="linked-list linked-list--bigger-bottom-padding"></div>
+                        </div>
+                    </div>
+                    <p class="paragraph u-mb-small">Pokud bychom chtěli, tak bychom si pro queue mohli vytvořit nějaké další metody. Po předchozích ukázkách metod enqueue a dequeue už asi víte jak queue funguje a tak byste si dle potřeby případně vytvořili nějaké sami.</p>
+                    <h3 class="heading-tertiary u-mb-tiny">Big O náročnost Queue</h3>
+                    <p class="paragraph">Co se týče časové náročnosti queue, tak nás zajímá jen vkládání položky a její získávání a odstraňování. Časová náročnost těchto operací je O(1).</p>
+                </main>
+                <div class="article-page__lateral-side">
+                    <nav class="navigation">
+                        <ul>
+                            <li><a href="#">Something</a></li>
+                            <li><a href="#">Anything</a></li>
+                            <li><a href="#">Something too</a></li>
+                            <li><a href="#">And another one</a></li>
+                            <li><a href="#">Some things</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="../media/js/parts/stack-a-queue.js"></script>
+</body>
+</html>

@@ -40,6 +40,18 @@
         }
     }
 
+    &--first {
+        &::before {
+            content: "first";
+        }
+    }
+
+    &--last {
+        &::after {
+            content: "last";
+        }
+    }
+
     &--tail-right {
         &::after {
             left: unset;

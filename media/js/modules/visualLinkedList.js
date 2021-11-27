@@ -112,6 +112,22 @@ class Node {
         this.element.classList.remove("node--tail");
     }
 
+    setFirstStatus() {
+        this.element.classList.add("node--first");
+        this.element.classList.add("node--tail-right");
+    }
+    removeFirstStatus() {
+        this.element.classList.remove("node--first");
+        this.element.classList.remove("node--tail-right");
+    }
+
+    setLastStatus() {
+        this.element.classList.add("node--last");
+    }
+    removeLastStatus() {
+        this.element.classList.remove("node--last");
+    }
+
     setValue(value) {
         this.value = value;
         this._valueEl.innerText = value;

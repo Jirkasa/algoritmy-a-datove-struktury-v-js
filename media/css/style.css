@@ -673,6 +673,12 @@ code.hljs {
 .node--tail::after {
   content: "tail";
 }
+.node--first::before {
+  content: "first";
+}
+.node--last::after {
+  content: "last";
+}
 .node--tail-right::after {
   left: unset;
   right: -0.5rem;
