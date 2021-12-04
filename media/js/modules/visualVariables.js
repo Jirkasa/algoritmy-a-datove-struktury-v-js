@@ -1,6 +1,8 @@
 class VisualVariables {
-    constructor(variables = []) {
+    constructor(variables = [], useVisibility = false) {
         this._variables = [];
+
+        this._useVisibility = useVisibility;
 
         for (let config of variables) {
             let variable = {};
@@ -17,11 +19,23 @@ class VisualVariables {
     }
 
     hide(variableId) {
-        if (this._variables[variableId]) this._variables[variableId].element.style.display = "none";
+        if (this._variables[variableId]) {
+            if (this._useVisibility) {
+                this._variables[variableId].element.style.visibility = "hidden";
+                return;
+            }
+            this._variables[variableId].element.style.display = "none";
+        }
     }
 
     show(variableId) {
-        if (this._variables[variableId]) this._variables[variableId].element.style.display = "inline-block";
+        if (this._variables[variableId]) {
+            if (this._useVisibility) {
+                this._variables[variableId].element.style.visibility = "visible";
+                return;
+            }
+            this._variables[variableId].element.style.display = "inline-block";
+        }
     }
 
     setValue(variableId, value) {

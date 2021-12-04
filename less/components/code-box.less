@@ -203,6 +203,26 @@
         min-height: 5rem;
     }
 
+    &__tree {
+        background-color: darken(@colors[primary], 20%);
+        border-top: .3rem solid @colors[primary];
+
+        padding: 1rem;
+
+        min-height: 18rem;
+
+        &--additional-space-for-variable {
+            min-height: 20rem;
+        }
+        &--additional-space-for-variable-and-pointer {
+            min-height: 21rem;
+        }
+
+        &--smaller-height {
+            min-height: 14rem;
+        }
+    }
+
     &__console {
         font-size: 1.6rem;
         background-color: darken(@colors[primary], 25%);

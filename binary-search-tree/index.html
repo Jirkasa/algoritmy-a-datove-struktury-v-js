@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=yes maximum-scale=2.2 minimum-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../media/css/style.css">
+
+    <script src="../media/js/libraries/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    <title>Algoritmy a Datové Struktury v JS - Binary Search Tree</title>
+</head>
+<body>
+    <div class="page">
+        <header class="header">
+            <div class="header__content">
+                <h2 class="header__heading">Algoritmy a Datové Struktury v JS</h2>
+                <nav class="header__navigation">
+                    <ul>
+                        <li><a href="#">something</a></li>
+                        <li><a href="#">something</a></li>
+                        <li><a href="#">something</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <div class="heading-section">
+            Binary Search Tree
+        </div>
+        <div class="article-page">
+            <div class="article-page__content">
+                <main class="article-page__main-side">
+                    <h1 class="heading-primary u-mb-medium">Binary Search Tree</h1>
+                    <hr class="horizontal-rule u-mb-medium">
+                    <p class="paragraph u-mb-medium">V této části se podíváme na Binary Search Tree. Jedná se o stromovou datovou strukturu. Stromových datových struktur existuje velké množství a Binary Search Tree je jen jednou z nich.</p>
+                    <h2 class="heading-secondary u-mb-tiny">Co je to Tree</h2>
+                    <p class="paragraph u-mb-small">Tree je datová struktura, která se stejně jako například linked list skládá z nodes. Každá node v tree uchovává nějakou hodnotu a může mít také potomky (další nodes). V závislosti na tom, o jaký typ stromové datové struktury se jedná, může mít node různé množství potomků. Například Binary Search Tree může mít maximálně dva potomky. Existuje mnoho stromových datových struktur, Binary Search Tree je jen jedna z nich. Zde se můžete podívat na <a href="https://en.wikipedia.org/wiki/List_of_data_structures#Trees" target="_blank" class="anchor">seznam různých druhů stromových datových struktur.</a></p>
+                    <p class="paragraph u-mb-small">Tree má v praxi mnoho využití. Možná jste již s nějakým typem tree dokonce pracovali a ani o tom nevíte. Například HTML DOM (Document Object Model) je tree datová struktura. Dále se tree používají například při parsování JSONu, v umělé inteligenci, nebo třeba složky v operačním systému jsou reprezentovány jako stromová struktura.</p>
+                    <p class="paragraph u-mb-small">Vzhledem k tomu, že v tree mohou mít potomci další potomky, vzniká více větví. U linked listu byly všechny node jen na jedné větvi, protože nodes potomky neměli, jen odkazovali na další a popřípadě i předchozí node v listu. Následující ukázka ukazuje, jak si například můžete tree představit.</p>
+                    <div class="code-box u-mb-medium">
+                        <div class="code-box__tree">
+                            <div class="tree">
+                                <div class="tree__node tree__node--root">
+                                    <div class="tree__node-circle"><span>45</span></div>
+                                    <div class="tree__node tree__left-child tree__left-child--triple-space">
+                                        <div class="tree__node-circle"><span>23</span></div>
+                                        <div class="tree__node tree__left-child tree__left-child--double-space">
+                                            <div class="tree__node-circle"><span>50</span></div>
+                                            <div class="tree__node tree__left-child">
+                                                <div class="tree__node-circle"><span>53</span></div>
+                                            </div>
+                                            <div class="tree__node tree__right-child">
+                                                <div class="tree__node-circle"><span>16</span></div>
+                                            </div>
+                                        </div>
+                                        <div class="tree__node tree__right-child tree__right-child--double-space">
+                                            <div class="tree__node-circle"><span>63</span></div>
+                                            <div class="tree__node tree__left-child">
+                                                <div class="tree__node-circle"><span>19</span></div>
+                                            </div>
+                                            <div class="tree__node tree__right-child">
+                                                <div class="tree__node-circle"><span>29</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tree__node tree__right-child tree__right-child--triple-space">
+                                        <div class="tree__node-circle"><span>33</span></div>
+                                        <div class="tree__node tree__left-child tree__left-child--double-space">
+                                            <div class="tree__node-circle"><span>95</span></div>
+                                            <div class="tree__node tree__left-child">
+                                                <div class="tree__node-circle"><span>75</span></div>
+                                            </div>
+                                        </div>
+                                        <div class="tree__node tree__right-child tree__right-child--double-space">
+                                            <div class="tree__node-circle"><span>34</span></div>
+                                            <div class="tree__node tree__left-child">
+                                                <div class="tree__node-circle"><span>17</span></div>
+                                            </div>
+                                            <div class="tree__node tree__right-child">
+                                                <div class="tree__node-circle"><span>38</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h2 class="heading-secondary u-mb-tiny">Terminologie</h2>
+                    <p class="paragraph u-mb-tiny">Existuje pár pojmů, které se u stromových datových struktur používají. Některé z nich možná v této části použiji. Zde jsou vysvětleny:</p>
+                    <ul class="unordered-list u-mb-medium">
+                        <li><b>root</b> - počáteční node (nemá žádné potomky)</li>
+                        <li><b>child</b> - potomek node</li>
+                        <li><b>parent</b> - předek node</li>
+                        <li><b>siblings</b> - jako siblings (sourozence) označujeme nodes se stejným předkem</li>
+                        <li><b>leaf</b> - node bez potomků</li>
+                        <li><b>edge</b> - propojení mezi dvěmi nodes</li>
+                    </ul>
+                    <h2 class="heading-secondary u-mb-tiny">Co je to Binary Search Tree</h2>
+                    <p class="paragraph u-mb-small">Binary Tree je stromová datová struktura, ve které může mít každá node maximálně 2 potomky. Pokud jsou navíc hodnoty v Binary Tree seřazené, tak se jedná o Binary Search Tree.</p>
+                    <p class="paragraph u-mb-medium">Každá node v Binary Search Tree obsahuje hodnotu, kterou uchovává, a dvě vlastnosti, ve kterých má uloženy odkazy na své potomky. V jedné vlastnosti odkazuje na node, která obsahuje menší hodnotu než node uchovává a ve druhé odkazuje na node, která obsahuje větší hodnotu než node uchovává. Díky tomu můžeme v Binary Search Tree celkem rychle vyhledávat, protože se nemusí kontrolovat co obsahuje každá node. Vždy se stačí jen zeptat, jestli je hledaná hodnota větší nebo menší než hodnota node a podle toho se pokračuje dál. Jak přesně se v Binary Search Tree hledá si tu později ukážeme.</p>
+                    <h2 class="heading-secondary u-mb-tiny">Vytvoření základu Binary Search Tree</h2>
+                    <p class="paragraph u-mb-small">Abychom si mohli zkusit v Binary Search Tree vyhledávat, tak si jej nejdříve musíme nějakým způsobem vytvořit. Vytvoříme si pro něj třídu, do které si později přidáme metody pro přidávání a hledání hodnot. Zatím bude obsahovat jen vlastnost root, která bude sloužit k uložení počáteční node. Pro nodes si vytvoříme třídu také. Bude obsahovat vlastnost value pro uložení hodnoty a vlastnosti left a right. Ve vlastnosti left se bude ukládat potomek, který má menší hodnotu než node, a ve vlastnosti right se bude uchovávat potomek, který má větší hodnotu než node.</p>
+                    <div class="code-box u-mb-medium">
+                        <pre class="code-box__code"><code>// třída pro node
+class Node {
+    constructor(value) {
+        this.value = value;
+        // vlastnost left uchovává odkaz na potomka, který má menší hodnotu než node
+        this.left = null;
+        // vlastnost right uchovává odkaz na potomka, který má větší hodnotu než node
+        this.right = null;
+    }
+}
+
+// třída pro Binary Search Tree
+class BinarySearchTree {
+    constructor() {
+        // vlastnost root uchovává počáteční node
+        this.root = null;
+    }
+}
+
+// vytvoření Binary Search Tree
+const tree = new BinarySearchTree();
+// vložení hodnot do Binary Search Tree (později si na to vytvoříme metodu)
+tree.root = new Node(10);
+tree.root.right = new Node(15);
+tree.root.left = new Node(7);
+tree.root.left.right = new Node(9);</code></pre>
+                        <div class="code-box__tree code-box__tree--smaller-height">
+                            <div class="tree">
+                                <div class="tree__node tree__node--root">
+                                    <div class="tree__node-circle"><span>10</span></div>
+                                    <div class="tree__node tree__left-child tree__left-child--double-space">
+                                        <div class="tree__node-circle"><span>7</span></div>
+                                        <div class="tree__node tree__right-child">
+                                            <div class="tree__node-circle"><span>9</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="tree__node tree__right-child tree__right-child--double-space">
+                                        <div class="tree__node-circle"><span>15</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h2 class="heading-secondary u-mb-tiny">Metoda insert</h2>
+                    <p class="paragraph u-mb-medium">Pro vkládání hodnot do Binary Search Tree si vytvoříme metodu insert. Tato metoda připojí vkládanou hodnotu na takové místo, aby Binary Search Tree zůstal po vložení hodnoty seřazený. V podstatě se tree prochází od počáteční node a vždy se určuje, jestli se má pokračovat na levého nebo pravého potomka. Pokud je vkládaná hodnota menší než hodnota porovnávané node, tak se pokračuje na levého potomka, a pokud je vkládaná hodnota větší než hodnota porovnávané node, tak se pokračuje na pravého potomka. Pokud node potomka nalevo nebo napravo nemá, tak se jako potomek nastaví nová node a vkládaná hodnota se tak do Binary Search Tree vloží.</p>
+                    <div data-interactive-example-id="1" class="code-box u-mb-medium">
+                        <div class="code-box__header">
+                            <div class="code-box__icon">
+                                <svg>
+                                    <use xlink:href="../media/img/icon-sprite.svg#icon-cogs"></use>
+                                </svg>
+                            </div>
+                            <div class="code-box__buttons-container">
+                                <button class="code-box__button code-box__button--move" data-interactive-example-move-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-forward3"></use>
+                                    </svg>
+                                </button>
+                                <select class="code-box__speed-input" data-interactive-example-speed-input="true">
+                                    <option value="0.25">0.25</option>
+                                    <option value="0.5">0.5</option>
+                                    <option value="0.75">0.75</option>
+                                    <option selected value="1">1</option>
+                                    <option value="1.25">1.25</option>
+                                    <option value="1.5">1.5</option>
+                                    <option value="1.75">1.75</option>
+                                </select>
+                                <button class="code-box__button" data-interactive-example-play-button="true">
+                                    <span>
+                                        <svg>
+                                            <use xlink:href="../media/img/icon-sprite.svg#icon-play3"></use>
+                                        </svg>
+                                    </span>
+                                </button>
+                                <button class="code-box__button code-box__button--reset" data-interactive-example-reset-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-loop2"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <pre id="code-1" class="code-box__code code-box__code--max-height"><code>class BinarySearchTree {
+    /* ... */
+
+    // metoda pro přidání hodnoty do Binary Search Tree
+    insert(value) {
+        // vytvoření nové node
+        const newNode = new Node(value);
+
+        // pokud v Binary Search Tree ještě nejsou žádné hodnoty, tak se nová node nastaví jako root
+        if (!this.root) {
+            this.root = newNode;
+            return this;
+        }
+
+        // tato proměnná bude uchovávat node, kterou budeme porovnávat s nově vytvořenou node (začneme od root)
+        let current = this.root;
+
+        // pomocí tohoto cyklu se nová node v Binary Search Tree napojí na správné místo, aby v něm byly hodnoty i nadále seřazené
+        while (true) {
+            // pokud se vkládaná hodnota rovná hodnotě porovnávané node, tak se vrátí undefined
+            // pokud ale chcete při nalezení hodnoty, která se v Binary Search Tree již nachází udělat něco jiného, tak samozřejmě můžete
+            // - mohli bychom si například pro node vytvořit vlastnost count a tam si ukládat, kolikrát byla stejná hodnota již vložena
+            if (value === current.value) return undefined;
+            // pokud je vkládaná hodnota větší než hodnota porovnávané node, pokračuje se směrem doprava (na potomka ve vlastnosti right)
+            if (value > current.value) {
+                // pokud node nemá ve vlastnosti right potomka, tak se jako potomek nastaví nová node
+                if (!current.right) {
+                    current.right = newNode;
+                    return this;
+                }
+                // v dalším cyklu se vkládaná hodnota bude porovnávat s potomkem ve vlastnosti right
+                current = current.right;
+            } else {
+                // pokud je vkládaná hodnota menší než hodnota porovnávané node, pokračuje se směrem doleva (na potomka ve vlastnosti left)
+                // pokud node nemá ve vlastnosti left potomka, tak se jako potomek nastaví nová node
+                if (!current.left) {
+                    current.left = newNode;
+                    return this;
+                }
+                // v dalším cyklu se vkládaná hodnota bude porovnávat s potomkem ve vlastnosti left
+                current = current.left;
+            }
+        }
+    }
+}
+
+// vytvoření Binary Search Tree
+const tree = new BinarySearchTree();
+// vložení hodnot do Binary Search Tree
+tree.insert(10);
+tree.insert(5);
+tree.insert(13);
+tree.insert(11);
+tree.insert(2);
+tree.insert(16);
+tree.insert(7);
+tree.insert(3);</code></pre>
+                        <div class="code-box__tree code-box__tree--additional-space-for-variable">
+                            <div class="variables u-mb-tiny">
+                                <div id="variable-insert-value" class="variables__var"><span>value: </span><span>0</span></div>
+                            </div>
+                            <div id="binary-search-tree-1" class="tree"></div>
+                        </div>
+                    </div>
+                    <h2 class="heading-secondary u-mb-tiny">Metoda find</h2>
+                    <p class="paragraph u-mb-medium">Pro vyhledávání v Binary Search Tree si vytvoříme metodu find. Stejně jako v metodě insert se bude tree postupně procházet od počáteční node a vždy se bude určovat, jestli se má pokračovat na levého nebo pravého potomka. Jakmile se narazí na node, která obsahuje hledanou hodnotu, tak se node našla a metoda ji vrátí.</p>
+                    <div data-interactive-example-id="2" class="code-box u-mb-medium">
+                        <div class="code-box__header">
+                            <div class="code-box__icon">
+                                <svg>
+                                    <use xlink:href="../media/img/icon-sprite.svg#icon-cogs"></use>
+                                </svg>
+                            </div>
+                            <div class="code-box__buttons-container">
+                                <button class="code-box__button code-box__button--move" data-interactive-example-move-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-forward3"></use>
+                                    </svg>
+                                </button>
+                                <select class="code-box__speed-input" data-interactive-example-speed-input="true">
+                                    <option value="0.25">0.25</option>
+                                    <option value="0.5">0.5</option>
+                                    <option value="0.75">0.75</option>
+                                    <option selected value="1">1</option>
+                                    <option value="1.25">1.25</option>
+                                    <option value="1.5">1.5</option>
+                                    <option value="1.75">1.75</option>
+                                </select>
+                                <button class="code-box__button" data-interactive-example-play-button="true">
+                                    <span>
+                                        <svg>
+                                            <use xlink:href="../media/img/icon-sprite.svg#icon-play3"></use>
+                                        </svg>
+                                    </span>
+                                </button>
+                                <button class="code-box__button code-box__button--reset" data-interactive-example-reset-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-loop2"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <pre id="code-2" class="code-box__code code-box__code--max-height"><code>class BinarySearchTree {
+    /* ... */
+
+    // metoda pro vyhledání node v Binary Search Tree
+    find(value) {
+        // pokud tree neobsahuje žádné nodes, tak se vrátí false
+        if (!this.root) return false;
+
+        // tato proměnná bude uchovávat node u které budeme zjišťovat, jestli nemá vyhledávanou hodnotu (začne se od root)
+        let current = this.root;
+
+        // tento cyklus postupně prochází tree a vyhledává node s hledanou hodnotou
+        while (current) {
+            // pokud se node s hledanou hodnotou našla, tak se vrátí
+            if (value === current.value) return current;
+
+            // pokud je hledaná hodnota větší než hodnota porovnávané node, tak se pokračuje na potomka napravo
+            if (value > current.value) {
+                current = current.right;
+            } else {
+                // pokud je hledaná hodnota menší než hodnota porovnávané node, tak se pokračuje na potomka nalevo
+                current = current.left;
+            }
+        }
+        // pokud předchozí cyklus hledanou node nenašel, tak se vrátí false
+        return false;
+    }
+}
+
+// vytvoření Binary Search Tree
+const tree = new BinarySearchTree();
+// vložení hodnot do Binary Search Tree (metoda insert vrací tree, takže můžeme metody insert řetězit)
+tree.insert(10).insert(5).insert(13).insert(11).insert(2).insert(16).insert(7).insert(3);
+
+// vyhledání node s hodnotou 11
+const vyhledanaNode1 = tree.find(11);
+// vyhledání node s hodnotou 3
+const vyhledanaNode2 = tree.find(3);</code></pre>
+                        <div class="code-box__tree code-box__tree--additional-space-for-variable-and-pointer">
+                            <div class="variables u-mb-tiny">
+                                <div id="variable-find-value" class="variables__var"><span>value: </span><span>0</span></div>
+                            </div>
+                            <div id="binary-search-tree-2" class="tree"></div>
+                        </div>
+                    </div>
+                    <h2 class="heading-secondary u-mb-tiny">Big O náročnost pro Binary Search Tree</h2>
+                    <p class="paragraph u-mb-small">Pro Binary Search Tree jsme si vytvořili metodu insert a metodu find. Další metody si tu pro něj již vytvářet nebudeme. Na závěr této části se ještě podíváme na časovou náročnost těchto dvou metod.</p>
+                    <ul class="unordered-list">
+                        <li><b>přidávání hodnot:</b> O(log n) - to ale není garantováno (pokud má například Binary Search Tree jen jednu větev, tak bude přidávání hodnoty podobné jako v linked listu)</li>
+                        <li><b>hledání hodnot:</b> O(log n) - to ale není garantováno (pokud má například Binary Search Tree jen jednu větev, tak bude hledání hodnoty podobné jako v linked listu)</li>
+                    </ul>
+                </main>
+                <div class="article-page__lateral-side">
+                    <nav class="navigation">
+                        <ul>
+                            <li><a href="#">Something</a></li>
+                            <li><a href="#">Anything</a></li>
+                            <li><a href="#">Something too</a></li>
+                            <li><a href="#">And another one</a></li>
+                            <li><a href="#">Some things</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="../media/js/parts/binarySearchTree.js"></script>
+</body>
+</html>
