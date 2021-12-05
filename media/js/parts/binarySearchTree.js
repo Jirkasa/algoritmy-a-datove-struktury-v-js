@@ -75,15 +75,6 @@ const config = [
 
             const tree = new BinarySearchTree();
 
-            // this.visualTree.insert(10);
-            // this.visualTree.insert(5);
-            // this.visualTree.insert(13);
-            // this.visualTree.insert(11);
-            // this.visualTree.insert(2);
-            // this.visualTree.insert(16);
-            // this.visualTree.insert(7);
-            // this.visualTree.insert(3);
-
             tree.exampleInsert = async function(value, lineHighlighter, timer, visualVariables, visualTree) {
                 const newNode = new Node(value);
 

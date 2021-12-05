@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=yes maximum-scale=2.2 minimum-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../media/css/style.css">
+
+    <script src="../media/js/libraries/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    <title>Algoritmy a Datové Struktury v JS - Tree Traversing</title>
+</head>
+<body>
+    <div class="page">
+        <header class="header">
+            <div class="header__content">
+                <h2 class="header__heading">Algoritmy a Datové Struktury v JS</h2>
+                <nav class="header__navigation">
+                    <ul>
+                        <li><a href="#">something</a></li>
+                        <li><a href="#">something</a></li>
+                        <li><a href="#">something</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <div class="heading-section">
+            Tree Traversing
+        </div>
+        <div class="article-page">
+            <div class="article-page__content">
+                <main class="article-page__main-side">
+                    <h1 class="heading-primary u-mb-medium">Tree Traversing</h1>
+                    <hr class="horizontal-rule u-mb-medium">
+                    <p class="paragraph u-mb-medium">V minulé části jsme si vytvořili Binary Search Tree a zkusili jsme si v něm hledat hodnoty. Díky tomu, že je Binary Search Tree seřazený, je hledání hodnot celkem jednoduché. Pokud ale chceme hledat hodnotu v tree, který není seřazený, tak už to je trochu složitější. Existuje více cest jak hledat hodnotu v tree, který není seřazený. V této části si ukážeme celkem čtyři metody, které k tomu můžeme použít.</p>
+                    <h2 class="heading-secondary u-mb-tiny">Co je to Tree Traversing</h2>
+                    <p class="paragraph u-mb-small">Tato část je pojmenovaná jako Tree Traversing. V češtině traversing znamená procházení. Ukážeme si tu tedy, jakými způsoby můžeme tree procházet. Vytvoříme si na to celkem čtyři metody, a každá metoda bude pro procházení tree používat jiný algoritmus. Tyto metody budou hodnoty procházených nodes ukládat do pole a to potom vrátí. Pokud byste ale tyto metody chtěli použít k vyhledávání node, tak si je můžete trochu poupravit. Cílem této části je jen ukázat, jakými způsoby se dá tree procházet a chtěl jsem aby se vždy projel celý tree.</p>
+                    <p class="paragraph u-mb-medium">Existují dva hlavní způsoby pro procházení tree: Breadth First Search a Depth First Search. Breadth First Search prochází tree horizontálně a Depth First Search spíš vertikálně. Jak přesně tyto algoritmy fungují si tu později ukážeme. U Depth First Search navíc existují tři hlavní verze: InOrder, PreOrder a PostOrder. Všechny tyto verze si v této části ukážeme.</p>
+                    <h2 class="heading-secondary u-mb-tiny">Co pro ukázku procházení tree použijeme</h2>
+                    <p class="paragraph u-mb-small">Abychom si mohli ukázat různé způsoby procházení tree, tak k tomu musíme mít nějaký tree vytvořený. V minulé části jsme si vytvořili třídu pro Binary Search Tree, kterou teď můžeme použít. Přidáme si do ní metody pro ukázku různých způsobů procházení tree. Binary Search Tree je sice seřazený, ale metody, které si pro něj vytvoříme by fungovali i kdyby seřazený nebyl. Binary Search Tree z minulé části používáme hlavně proto, abychom nemuseli vytvářet nějaký nový tree.</p>
+                    <p class="paragraph u-mb-small">Další věc, kterou budeme potřebovat, je Queue. Budeme ji potřebovat pro Breadth First Search. Queue jsme si ukazovali v části <a href="../stack-a-queue/" class="anchor">Stack a Queue</a>.</p>
+                    <p class="paragraph u-mb-small">Následující ukázka ukazuje startovní kód. Protože Queue i BinarySearchTree třídy používali stejně pojmenované třídy pro node, tak je Node třída pro Queue přejmenována na QueueNode.</p>
+                    <div class="code-box u-mb-medium">
+                        <pre class="code-box__code"><code>class QueueNode {
+    constructor(value) {
+        this.value = value;
+        this.next = null;
+    }
+}
+
+class Queue {
+    constructor() {
+        this.first = null;
+        this.last = null;
+        this.size = 0;
+    }
+
+    enqueue(value) {
+        const newNode = new QueueNode(value);
+        if (!this.first) {
+            this.first = newNode;
+            this.last = newNode;
+        } else {
+            this.last.next = newNode;
+            this.last = newNode;
+        }
+        return ++this.size;
+    }
+
+    dequeue() {
+        if (!this.first) return null;
+        const value = this.first.value;
+        if (this.first === this.last) {
+            this.last = null;
+        }
+        this.first = this.first.next;
+        this.size--;
+        return value;
+    }
+}
+
+class Node {
+    constructor(value) {
+        this.value = value;
+        this.left = null;
+        this.right = null;
+    }
+}
+
+class BinarySearchTree {
+    constructor() {
+        this.root = null;
+    }
+
+    insert(value) {
+        const newNode = new Node(value);
+        if (!this.root) {
+            this.root = newNode;
+            return this;
+        }
+        let current = this.root;
+        while (true) {
+            if (value === current.value) return undefined;
+            if (value > current.value) {
+                if (!current.right) {
+                    current.right = newNode;
+                    return this;
+                }
+                current = current.right;
+            } else {
+                if (!current.left) {
+                    current.left = newNode;
+                    return this;
+                }
+                current = current.left;
+            }
+        }
+    }
+
+    find(value) {
+        if (!this.root) return false;
+        let current = this.root;
+        while (current) {
+            if (value === current.value) return current;
+            if (value > current.value) {
+                current = current.right;
+            } else {
+                current = current.left;
+            }
+        }
+        return false;
+    }
+}</code></pre>
+                    </div>
+                    <h2 class="heading-secondary u-mb-tiny">Breadth First Search</h2>
+                    <p class="paragraph u-mb-small">První algoritmus pro procházení tree, který si ukážeme, je Breadth First Search. Tento algoritmus prochází tree horizontálně. Začne se u root a dále se tree postupně prochází dolů. Vždy se nejprve projdou nodes na stejné úrovni a poté se pokračuje dál.</p>
+                    <p class="paragraph u-mb-small">Tento algoritmus používá datovou strukturu Queue, do které se postupně přidávají nodes, které se mají procházet. Na začátku se do queue přidá root node. Poté se spustí cyklus, který se opakuje tak dlouho, dokud queue není prázdná. V každém cyklu se vždy z queue vezme jedna node a její potomci se do queue přidají. Tímto způsobem se postupně projde celý tree.</p>
+                    <div data-interactive-example-id="1" class="code-box u-mb-medium">
+                        <div class="code-box__header">
+                            <div class="code-box__icon">
+                                <svg>
+                                    <use xlink:href="../media/img/icon-sprite.svg#icon-cogs"></use>
+                                </svg>
+                            </div>
+                            <div class="code-box__buttons-container">
+                                <button class="code-box__button code-box__button--move" data-interactive-example-move-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-forward3"></use>
+                                    </svg>
+                                </button>
+                                <select class="code-box__speed-input" data-interactive-example-speed-input="true">
+                                    <option value="0.25">0.25</option>
+                                    <option value="0.5">0.5</option>
+                                    <option value="0.75">0.75</option>
+                                    <option selected value="1">1</option>
+                                    <option value="1.25">1.25</option>
+                                    <option value="1.5">1.5</option>
+                                    <option value="1.75">1.75</option>
+                                </select>
+                                <button class="code-box__button" data-interactive-example-play-button="true">
+                                    <span>
+                                        <svg>
+                                            <use xlink:href="../media/img/icon-sprite.svg#icon-play3"></use>
+                                        </svg>
+                                    </span>
+                                </button>
+                                <button class="code-box__button code-box__button--reset" data-interactive-example-reset-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-loop2"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <pre id="code-1" class="code-box__code code-box__code--max-height"><code>class BinarySearchTree {
+    /* ... */
+
+    // metoda pro Breadth First Search
+    BFS() {
+        // vytvoření queue
+        const queue = new Queue();
+        // do tohoto pole se budou postupně ukládat hodnoty nodes
+        const data = [];
+
+        // přidání root node do queue
+        queue.enqueue(this.root);
+
+        // tento cyklus se bude opakovat tak dlouho, dokud queue nebude prázdná
+        while (queue.size > 0) {
+            // získání node z queue
+            const node = queue.dequeue();
+            // hodnota node se vloží do pole data
+            data.push(node.value);
+
+            // pokud má node potomky, tak se přidají do queue (nejprve se přidá potomek nalevo)
+            if (node.left) queue.enqueue(node.left);
+            if (node.right) queue.enqueue(node.right);
+        }
+
+        // vrácení pole s hodnotami
+        return data;
+    }
+}
+
+// vytvoření tree
+const tree = new BinarySearchTree();
+tree.insert(10).insert(5).insert(16).insert(13).insert(6).insert(2);
+tree.insert(17).insert(7).insert(3).insert(14).insert(11);
+
+// zavolání metody pro Breadth First Search
+const vysledek = tree.BFS();
+console.log("Tree se procházel v tomto pořadí:");
+console.log(vysledek);</code></pre>
+                        <div class="code-box__tree code-box__tree--additional-space-for-variable">
+                            <div id="binary-search-tree-1" class="tree"></div>
+                        </div>
+                        <div class="code-box__linked-list">
+                            <div id="queue-1" class="linked-list linked-list--bigger-bottom-padding"></div>
+                        </div>
+                        <div class="code-box__array">
+                            <div id="visual-array-1" class="array array--no-padding">
+                                <div class="array__bracket array__bracket--first">[</div><div class="array__item-container"></div><div class="array__bracket array__bracket--last">]</div>
+                            </div>
+                        </div>
+                        <div id="console-1" class="code-box__console">&gt; </div>
+                    </div>
+                    <h2 class="heading-secondary u-mb-tiny">Depth First Search - PreOrder</h2>
+                    <p class="paragraph u-mb-small">Druhý algoritmus, který si pro procházení tree ukážeme, je Depth First Search. Tento algoritmus má tři verze: PreOrder, PostOrder a InOrder. Tyto verze se liší jen umístěním jednoho řádku kódu. Jako první si ukážeme PreOrder.</p>
+                    <p class="paragraph u-mb-small">Depth First Search algoritmus funguje tak, že se tree začne procházet od root node dolů směrem doleva. Jakmile se narazí na konec větve, tak se pokračuje zpátky nahoru, přičemž se procházejí potomci napravo. Pro ty se tato operace také provádí a postupně se tak projde celý tree.</p>
+                    <p class="paragraph u-mb-small">Rozdíl mezi všemi třemi verzemi Depth First Search algoritmu je umístění kódu, který v našem případě přidává hodnotu node do pole. U PreOrder verze se hodnota uloží hned, jak se na node narazí a než se pokračuje v procházení dál.</p>
+                    <p class="paragraph u-mb-small">Depth First Search používá rekurzy, takže pro vás může být jeho pochopení o něco těžší než Breadth First Search. Ale myslím, že následující vizuální ukázka vám v jeho pochopení může dost pomoct.</p>
+                    <div data-interactive-example-id="2" class="code-box u-mb-medium">
+                        <div class="code-box__header">
+                            <div class="code-box__icon">
+                                <svg>
+                                    <use xlink:href="../media/img/icon-sprite.svg#icon-cogs"></use>
+                                </svg>
+                            </div>
+                            <div class="code-box__buttons-container">
+                                <button class="code-box__button code-box__button--move" data-interactive-example-move-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-forward3"></use>
+                                    </svg>
+                                </button>
+                                <select class="code-box__speed-input" data-interactive-example-speed-input="true">
+                                    <option value="0.25">0.25</option>
+                                    <option value="0.5">0.5</option>
+                                    <option value="0.75">0.75</option>
+                                    <option selected value="1">1</option>
+                                    <option value="1.25">1.25</option>
+                                    <option value="1.5">1.5</option>
+                                    <option value="1.75">1.75</option>
+                                </select>
+                                <button class="code-box__button" data-interactive-example-play-button="true">
+                                    <span>
+                                        <svg>
+                                            <use xlink:href="../media/img/icon-sprite.svg#icon-play3"></use>
+                                        </svg>
+                                    </span>
+                                </button>
+                                <button class="code-box__button code-box__button--reset" data-interactive-example-reset-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-loop2"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="code-box__container">
+                            <div>
+                                <pre id="code-2" class="code-box__code code-box__code--max-height"><code>class BinarySearchTree {
+    /* ... */
+
+    // metoda pro Depth First Search - PreOrder
+    DFSPreOrder() {
+        // do tohoto pole se budou postupně ukládat hodnoty nodes
+        const data = [];
+
+        // pomocná funkce pro procházení tree
+        const traverse = function(node) {
+            // hodnota node se vloží do pole data
+            data.push(node.value);
+            // pokud má node levého potomka, tak se zavolá funkce traverse a potomek se předá jako argument
+            if (node.left) traverse(node.left);
+            // pokud má node pravého potomka, tak se zavolá funkce traverse a potomek se předá jako argument
+            if (node.right) traverse(node.right);
+        }
+
+        // zavolání funkce pro procházení tree s root node jako argumentem
+        traverse(this.root);
+
+        // vrácení pole s hodnotami
+        return data;
+    }
+}
+
+// vytvoření tree
+const tree = new BinarySearchTree();
+tree.insert(10).insert(5).insert(16).insert(13).insert(6).insert(2);
+tree.insert(17).insert(7).insert(3).insert(14).insert(11);
+
+// zavolání metody pro Depth First Search - PreOrder
+const vysledek = tree.DFSPreOrder();
+console.log("Tree se procházel v tomto pořadí:");
+console.log(vysledek);</code></pre>
+                            </div>
+                            <div id="call-stack-1" class="code-box__call-stack"></div>
+                        </div>
+                        <div class="code-box__tree code-box__tree--additional-space-for-variable">
+                            <div id="binary-search-tree-2" class="tree"></div>
+                        </div>
+                        <div class="code-box__array">
+                            <div id="visual-array-2" class="array array--no-padding">
+                                <div class="array__bracket array__bracket--first">[</div><div class="array__item-container"></div><div class="array__bracket array__bracket--last">]</div>
+                            </div>
+                        </div>
+                        <div id="console-2" class="code-box__console">&gt; </div>
+                    </div>
+                    <h2 class="heading-secondary u-mb-tiny">Depth First Search - PostOrder</h2>
+                    <p class="paragraph u-mb-small">V předchozí ukázce jsme si ukázali PreOrder verzi Depth First Search algoritmu. Teď si ukážeme PostOrder verzi. Ta se od PreOrder verze liší tím, že se nejprve prochází potomci node a až poté se hodnota node uloží do pole. Hodnota node se tedy do pole uloží až při vracení zpět nahoru.</p>
+                    <p class="paragraph u-mb-small">Jediný rozdíl v kódu pro PreOrder a PostOrder verzi je umístění řádku kódu, který vkládá hodnotu node do pole.</p>
+                    <div data-interactive-example-id="3" class="code-box u-mb-medium">
+                        <div class="code-box__header">
+                            <div class="code-box__icon">
+                                <svg>
+                                    <use xlink:href="../media/img/icon-sprite.svg#icon-cogs"></use>
+                                </svg>
+                            </div>
+                            <div class="code-box__buttons-container">
+                                <button class="code-box__button code-box__button--move" data-interactive-example-move-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-forward3"></use>
+                                    </svg>
+                                </button>
+                                <select class="code-box__speed-input" data-interactive-example-speed-input="true">
+                                    <option value="0.25">0.25</option>
+                                    <option value="0.5">0.5</option>
+                                    <option value="0.75">0.75</option>
+                                    <option selected value="1">1</option>
+                                    <option value="1.25">1.25</option>
+                                    <option value="1.5">1.5</option>
+                                    <option value="1.75">1.75</option>
+                                </select>
+                                <button class="code-box__button" data-interactive-example-play-button="true">
+                                    <span>
+                                        <svg>
+                                            <use xlink:href="../media/img/icon-sprite.svg#icon-play3"></use>
+                                        </svg>
+                                    </span>
+                                </button>
+                                <button class="code-box__button code-box__button--reset" data-interactive-example-reset-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-loop2"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="code-box__container">
+                            <div>
+                                <pre id="code-3" class="code-box__code code-box__code--max-height"><code>class BinarySearchTree {
+    /* ... */
+
+    // metoda pro Depth First Search - PostOrder
+    DFSPostOrder() {
+        const data = [];
+
+        const traverse = function(node) {
+            if (node.left) traverse(node.left);
+            if (node.right) traverse(node.right);
+            // u PostOrder verze se hodnota node do pole data vloží až se projde její levý a pravý potomek
+            data.push(node.value);
+        }
+
+        traverse(this.root);
+        return data;
+    }
+}
+
+// vytvoření tree
+const tree = new BinarySearchTree();
+tree.insert(10).insert(5).insert(16).insert(13).insert(6).insert(2);
+tree.insert(17).insert(7).insert(3).insert(14).insert(11);
+
+// zavolání metody pro Depth First Search - PostOrder
+const vysledek = tree.DFSPostOrder();
+console.log("Tree se procházel v tomto pořadí:");
+console.log(vysledek);</code></pre>
+                            </div>
+                            <div id="call-stack-2" class="code-box__call-stack"></div>
+                        </div>
+                        <div class="code-box__tree code-box__tree--additional-space-for-variable">
+                            <div id="binary-search-tree-3" class="tree"></div>
+                        </div>
+                        <div class="code-box__array">
+                            <div id="visual-array-3" class="array array--no-padding">
+                                <div class="array__bracket array__bracket--first">[</div><div class="array__item-container"></div><div class="array__bracket array__bracket--last">]</div>
+                            </div>
+                        </div>
+                        <div id="console-3" class="code-box__console">&gt; </div>
+                    </div>
+                    <h2 class="heading-secondary u-mb-tiny">Depth First Search - InOrder</h2>
+                    <p class="paragraph u-mb-small">Poslední verze Depth First Search algoritmu, kterou si ukážeme, je InOrder. Ta funguje tak, že se nejprve prochází levý potomek node, potom se hodnota node uloží do pole a poté se prochází pravý potomek node.</p>
+                    <p class="paragraph u-mb-small">Jediný rozdíl v kódu oproti verzím PreOrder a PostOrder je opět umístění řádku kódu, který vkládá hodnotu node do pole.</p>
+                    <div data-interactive-example-id="4" class="code-box">
+                        <div class="code-box__header">
+                            <div class="code-box__icon">
+                                <svg>
+                                    <use xlink:href="../media/img/icon-sprite.svg#icon-cogs"></use>
+                                </svg>
+                            </div>
+                            <div class="code-box__buttons-container">
+                                <button class="code-box__button code-box__button--move" data-interactive-example-move-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-forward3"></use>
+                                    </svg>
+                                </button>
+                                <select class="code-box__speed-input" data-interactive-example-speed-input="true">
+                                    <option value="0.25">0.25</option>
+                                    <option value="0.5">0.5</option>
+                                    <option value="0.75">0.75</option>
+                                    <option selected value="1">1</option>
+                                    <option value="1.25">1.25</option>
+                                    <option value="1.5">1.5</option>
+                                    <option value="1.75">1.75</option>
+                                </select>
+                                <button class="code-box__button" data-interactive-example-play-button="true">
+                                    <span>
+                                        <svg>
+                                            <use xlink:href="../media/img/icon-sprite.svg#icon-play3"></use>
+                                        </svg>
+                                    </span>
+                                </button>
+                                <button class="code-box__button code-box__button--reset" data-interactive-example-reset-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-loop2"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="code-box__container">
+                            <div>
+                                <pre id="code-4" class="code-box__code code-box__code--max-height"><code>class BinarySearchTree {
+    /* ... */
+
+    // metoda pro Depth First Search - InOrder
+    DFSInOrder() {
+        const data = [];
+
+        const traverse = function(node) {
+            if (node.left) traverse(node.left);
+            // u InOrder verze se hodnota node do pole data vloží až se projde její levý potomek
+            data.push(node.value);
+            if (node.right) traverse(node.right);
+        }
+
+        traverse(this.root);
+        return data;
+    }
+}
+
+// vytvoření tree
+const tree = new BinarySearchTree();
+tree.insert(10).insert(5).insert(16).insert(13).insert(6).insert(2);
+tree.insert(17).insert(7).insert(3).insert(14).insert(11);
+
+// zavolání metody pro Depth First Search - InOrder
+const vysledek = tree.DFSInOrder();
+console.log("Tree se procházel v tomto pořadí:");
+console.log(vysledek);</code></pre>
+                            </div>
+                            <div id="call-stack-3" class="code-box__call-stack"></div>
+                        </div>
+                        <div class="code-box__tree code-box__tree--additional-space-for-variable">
+                            <div id="binary-search-tree-4" class="tree"></div>
+                        </div>
+                        <div class="code-box__array">
+                            <div id="visual-array-4" class="array array--no-padding">
+                                <div class="array__bracket array__bracket--first">[</div><div class="array__item-container"></div><div class="array__bracket array__bracket--last">]</div>
+                            </div>
+                        </div>
+                        <div id="console-4" class="code-box__console">&gt; </div>
+                    </div>
+                </main>
+                <div class="article-page__lateral-side">
+                    <nav class="navigation">
+                        <ul>
+                            <li><a href="#">Something</a></li>
+                            <li><a href="#">Anything</a></li>
+                            <li><a href="#">Something too</a></li>
+                            <li><a href="#">And another one</a></li>
+                            <li><a href="#">Some things</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="../media/js/parts/treeTraversing.js"></script>
+</body>
+</html>

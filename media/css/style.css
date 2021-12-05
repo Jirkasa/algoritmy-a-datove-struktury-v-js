@@ -524,6 +524,10 @@ code.hljs {
 .array--no-top-padding {
   padding-top: 0;
 }
+.array--no-padding {
+  padding-top: 0;
+  padding-bottom: 0;
+}
 .array__label {
   position: absolute;
   left: 0;
