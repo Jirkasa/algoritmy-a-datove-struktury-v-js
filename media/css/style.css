@@ -253,28 +253,65 @@ code.hljs {
   text-align: center;
   padding: 3.5rem 3rem;
 }
-.navigation {
-  border: 0.2rem solid #1bbc9b;
-  background-color: #1bbc9b;
-}
+/*.navigation {
+    border: .2rem solid @colors[primary];
+    background-color: @colors[primary];
+    // padding: 2rem;
+
+    ul {
+        list-style: none;
+    }
+    li {
+        &:not(:last-child) {
+            border-bottom: .2rem solid @colors[primary];
+        }
+    }
+    a {
+        &:link, &:visited {
+            display: block;
+            font-size: 1.5rem;
+
+            color: @colors[dark-grey];
+            background-color: @colors[white];
+            text-decoration: none;
+
+            padding: .5rem 1rem;
+        }
+
+        &:hover {
+            color: @colors[white];
+            background-color: @colors[primary];
+        }
+    }
+}*/
 .navigation ul {
   list-style: none;
 }
-.navigation li:not(:last-child) {
-  border-bottom: 0.2rem solid #1bbc9b;
+.navigation__item:not(:last-child) {
+  margin-bottom: 0.5rem;
 }
-.navigation a:link,
-.navigation a:visited {
+.navigation__link:link,
+.navigation__link:visited {
   display: block;
-  font-size: 1.5rem;
-  color: #444;
-  background-color: #fff;
+  font-size: 1.6rem;
+  color: #2d3e50;
   text-decoration: none;
-  padding: 0.5rem 1rem;
+  padding: 0.8rem 0;
+  padding-right: 0.8rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s, background-color 0.3s;
 }
-.navigation a:hover {
+.navigation__link:hover,
+.navigation__link--active:link,
+.navigation__link--active:visited {
+  background-color: #2d3e50;
   color: #fff;
-  background-color: #1bbc9b;
+  padding: 0.8rem;
+}
+.navigation__link span {
+  font-weight: 700;
+  color: #1bbc9b;
+  margin-right: 1rem;
 }
 .horizontal-rule {
   border: none;

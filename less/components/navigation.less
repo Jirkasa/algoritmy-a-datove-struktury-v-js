@@ -1,4 +1,4 @@
-.navigation {
+/*.navigation {
     border: .2rem solid @colors[primary];
     background-color: @colors[primary];
     // padding: 2rem;
@@ -26,6 +26,52 @@
         &:hover {
             color: @colors[white];
             background-color: @colors[primary];
+        }
+    }
+}*/
+
+.navigation {
+
+    ul {
+        list-style: none;
+    }
+
+    &__item {
+        &:not(:last-child) {
+            margin-bottom: .5rem;
+        }
+    }
+
+    &__link {
+        &:link, &:visited {
+            display: block;
+
+            font-size: 1.6rem;
+
+            color: @colors[dark];
+            text-decoration: none;
+
+            padding: .8rem 0;
+            padding-right: .8rem;
+
+            border-radius: .5rem;
+
+            transition: all .2s, background-color .3s;
+        }
+
+        &:hover, &--active:link, &--active:visited {
+            background-color: @colors[dark];
+            color: @colors[white];
+
+            padding: .8rem;
+        }
+
+        span {
+            font-weight: 700;
+            
+            color: @colors[primary];
+            
+            margin-right: 1rem;
         }
     }
 }
