@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=yes maximum-scale=2.2 minimum-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../media/css/style.css">
+
+    <script src="../media/js/libraries/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    <title>Algoritmy a Datové Struktury v JS - Hash Table</title>
+</head>
+<body>
+    <div class="page">
+        <header class="header">
+            <div class="header__content">
+                <h2 class="header__heading">Algoritmy a Datové Struktury v JS</h2>
+                <nav class="header__navigation">
+                    <ul>
+                        <li><a href="../big-o-notation/">tutoriál</a></li>
+                        <li><a href="#">something</a></li>
+                        <li><a href="#">something</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <div class="heading-section">
+            Hash Table
+        </div>
+        <div class="article-page">
+            <div class="article-page__content">
+                <main class="article-page__main-side">
+                    <h1 class="heading-primary u-mb-medium">Hash Table</h1>
+                    <hr class="horizontal-rule u-mb-medium">
+                    <p class="paragraph u-mb-medium">V této části si ukážeme, co je to Hash Table. Jde o datovou strukturu, kterou má většina programovacích jazyků již zabudovanou v sobě.</p>
+                    <h2 class="heading-secondary u-mb-tiny">Co je to Hash Table</h2>
+                    <p class="paragraph u-mb-small">Hash Table (často se mu říká také Hash Map) je datová struktura, která slouží k ukládání hodnot pomocí klíčů. Většina programovacích jazyků ji má již zabudovanou v sobě. JavaScript má objekty a od ES6 také mapy. Objekty nám v JavaScriptu slouží k ukládání hodnot pomocí řetězců, jako klíčů.</p>
+                    <div class="code-box u-mb-small">
+                        <pre class="code-box__code"><code>// vytvoření objektu clovek
+const clovek = {
+    jmeno: "Karel", // uložení hodnoty pod klíč "jmeno"
+    vek: 35, // uložení hodnoty pod klíč "vek"
+    vyska: 180, // uložení hodnoty pod klíč "vyska"
+    vaha: 70 // uložení hodnoty pod klíč "vaha"
+};
+
+// získání hodnoty z objektu clovek pod klíčem "jmeno"
+let jmeno = clovek.jmeno;</code></pre>
+                    </div>
+                    <p class="paragraph u-mb-small">Narozdíl od polí jsou objekty rychlé při získávání, vkládání i odstraňování položek. U polí se při odstraňování nebo při přidávání položky posouvají indexy, u objektů ne, u těch používáme jako klíče řetězce.</p>
+                    <p class="paragraph u-mb-small">Důvod, proč používáme pro objekty jako klíče řetězce je ten, že chceme, aby byl kód čitelný pro člověka. Počítač ale neví, co se například nachází pod klíčem "jmeno", neukládá si data pomocí textových klíčů. Proto musíme mít nějaký kód, který textové řetězce převádí na jinou hodnotu, podle které se počítač může podívat, co se pod daným klíčem nachází.</p>
+                    <p class="paragraph u-mb-medium">Vytvářet si vlastní Hash Table sice není užitečné, když v JavaScriptu máme objekty a mapy, ale abychom pochopili, jakým způsobem vlastně zhruba fungují, tak si jej vytvoříme. Nejprve si ale řekneme, co to jsou hashovací funkce.</p>
+                    <h2 class="heading-secondary u-mb-tiny">Hashovací funkce</h2>
+                    <p class="paragraph u-mb-small">Hodnoty pro náš Hash Table, který si později vytvoříme, budeme ukládat v poli. K přístupu k položkám pole se používají indexy, ale u našeho Hash Tablu namísto nich budeme chtít použít řetězce. Proto si budeme muset napsat nějaký kód, který nám řetězce převede na indexy, pomocí kterých budeme moci požadovanou hodnotu v poli získat nebo nastavit. Vytvoříme si na to funkci, která jako parametr vezme řetězec a vrátí nám index. Podle toho, jaký řetězec do funkce předáme jako argument, dostaneme index. Funkci, která tuto operaci provádí, se říká hashovací funkce.</p>
+                    <p class="paragraph u-mb-small">Existuje velké množství hashovacích funkcí. Používají se pro různé účely, například také při registraci na webových stránkách. Hesla se v databázi neuchovávají tak jak je zadáme, ale nejdříve se projedou hashovací funkcí, která z nich udělá náhodnou posloupnost znaků. Pokud by se někdo do databáze náhodou dostal, tak by se hesla nedozvěděl, protože jsou zahashovaná.</p>
+                    <p class="paragraph u-mb-tiny">Dobrá hashovací funkce by měla splňovat tyto podmínky (nemusí platit pro všechny typy, hlavně pro naše účely):</p>
+                    <ul class="unordered-list u-mb-small">
+                        <li>měla by být rychlá (nehledě například na počet znaků v řetězci)</li>
+                        <li>měla by distribuovat indexy rovnoměrně (neměla by pro jeden řetězec vygenerovat index 0 a pro další třeba až 5326)</li>
+                        <li>stejný vstup by měl vždy vytvořit stejný výstup (pokud například do funkce předáme řetězec "ahoj" a dostaneme číslo 2, tak bychom toto číslo měli dostat vždy, když funkci s tímto argumentem zavoláme)</li>
+                    </ul>
+                    <p class="paragraph u-mb-small">Pro náš Hash Table, který si v této části vytvoříme, použijeme vlastní hashovací funkci. Následující ukázka ji ukazuje, ale nemusíte vědět jak funguje. Stačí vám vědět, že když ji zavoláme, tak nám podle předaného řetězce vrátí index, který potom budeme moci použít k přístupu do pole.</p>
+                    <div class="code-box u-mb-small">
+                        <pre class="code-box__code"><code>// naše hashovací funkce přijímá řetězcový klíč a délku pole (později z této funkce uděláme
+// metodu pro třídu HashTable, kterou si vytvoříme a délku pole již přijímat nebude)
+function hash(key, arrayLen) {
+    let total = 0;
+    const WEIRD_PRIME = 31;
+    for (let i = 0; i &lt; Math.min(key.length, 100); i++) {
+        let char = key[i];
+        let value = char.charCodeAt(0) - 96;
+        total = (total * WEIRD_PRIME + value) % arrayLen;
+    }
+    return total;
+}
+
+// použití hashovací funkce
+console.log("ahoj: " + hash("ahoj", 10));
+console.log("algoritmus: " + hash("algoritmus", 10));
+console.log("jmeno: " + hash("jmeno", 10));
+console.log("krtek: " + hash("krtek", 10));
+</code></pre>
+                        <div class="code-box__console">&gt; ahoj: 4<br>&gt; algoritmus: 5<br>&gt; jmeno: 7<br>&gt; krtek: 5<br>&gt;</div>
+                    </div>
+                    <p class="paragraph u-mb-medium">Naše hashovací funkce má jeden problém. Nevygeneruje pro každý řetězec unikátní index, takže například pro řetězec "algoritmus" a "krtek" vygeneruje stejný index. Tento problém je nevyhnutelný a řeší se různými způsoby. Jeden z nich si později ukážeme.</p>
+                    <h2 class="heading-secondary u-mb-tiny">Vytvoření základu Hash Tablu</h2>
+                    <p class="paragraph u-mb-small">Jak jsem již psal, vytvoříme si vlastní Hash Table. Vytvoříme si pro něj třídu HashTable, která bude uchovávat pole, do kterého později namísto pomocí indexů budeme přistupovat pomocí řetězcových klíčů přes metody, které si pro třídu vytvoříme. Prozatím bude třída obsahovat jen metodu pro hashování, kterou budeme používat v ostatních metodách. Tuto metodu budeme používat jen uvnitř třídy, takže jsme si ji pojmenovali jako _hash. To podtržítko značí, že je metoda privátní a neměli bychom ji používat zvenku třídy. Je to taková zaběhlá konvence.</p>
+                    <div class="code-box u-mb-medium">
+                        <pre class="code-box__code"><code>// třída pro Hash Table
+class HashTable {
+    // při vytváření můžeme předat, jak velké chceme pole pro uchovávání hodnot (defaultně je to 53 položek)
+    constructor(size=53) {
+        // vytvoření prázdného pole o požadované velikosti, ve kterém se budou uchovávat hodnoty
+        this.keyMap = new Array(size);
+    }
+
+    // hashovací funkce k získání indexu pro předaný řetězec
+    _hash(key) {
+        let total = 0;
+        const WEIRD_PRIME = 31;
+        for (let i = 0; i &lt; Math.min(key.length, 100); i++) {
+            let char = key[i];
+            let value = char.charCodeAt(0) - 96;
+            total = (total * WEIRD_PRIME + value) % this.keyMap.length;
+        }
+        return total;
+    }
+}</code></pre>
+                    </div>
+                    <h2 class="heading-secondary u-mb-tiny">Metoda set</h2>
+                    <p class="paragraph u-mb-small">Pro přidání hodnoty do Hash Tablu si vytvoříme metodu set. Tato metoda bude přijímat dva parametry. Prvním bude klíč, pod který chceme vložit hodnotu a druhým bude samotná hodnota.</p>
+                    <p class="paragraph u-mb-small">Protože naše hashovací funkce může pro více různých řetězců vrátit stejný index, tak to musíme nějakým způsobem ošetřit. Existuje více strategií pro řešení tohoto problému. Jedna z nich se jmenuje Linear Probing a ta funguje tak, že když najdeme kolizi, tak v poli hledáme další prázdný slot. Můžeme tak mít na jednom indexu uloženou jen jednu hodnotu. Další je například Separate Chaining a tu pro náš Hash Table použijeme.</p>
+                    <p class="paragraph u-mb-small">Separate Chaining funguje tak, že v poli nejsou uloženy přímo hodnoty, ale jsou tam uloženy další pole. Tato pole uchovávají ještě další pole, které vždy mají na prvním indexu uložený klíč a na druhém hodnotu. Takže díky tomu můžeme na jednom indexu pole uložit více hodnot. Jak takové pole například vypadá můžete vidět v následující ukázce.</p>
+                    <div class="code-box u-mb-small">
+                        <pre class="code-box__code"><code>// pole, ve kterém jsou uloženy hodnoty Hash Tablu
+[
+    [["jmeno", "Karel"], ["vek", 43]], // hodnoty na indexu 0
+    [["vyska", 180]], // hodnoty na indexu 1
+    [["vaha", 70]] // hodnoty na indexu 2
+]</code></pre>
+                    </div>
+                    <p class="paragraph u-mb-small">Metoda set na začátku získá index podle předaného klíče. Poté na tomto indexu v poli keyMap vytvoří nové pole, pokud se tam ještě pole nenachází. Dále se pole v poli keyMap prochází a zjišťuje se, jestli se tam již hodnota pro tento klíč nenachází. Pokud se tam již hodnota nachází, tak se změní na novou hodnotu a pokud ne, tak se do pole přidá.</p>
+                    <div class="code-box u-mb-medium">
+                        <pre class="code-box__code"><code>class HashTable {
+    /* ... */
+
+    // metoda pro nastavení/vložení hodnoty do Hash Tablu
+    set(key, value) {
+        // získání indexu pro řetězcový klíč
+        const index = this._hash(key);
+
+        // pokud v poli keyMap na získaném indexu ještě neexistuje pole, tak se tam pole vytvoří
+        if (!this.keyMap[index]) this.keyMap[index] = [];
+
+        // pole v poli keyMap se postupně prochází
+        for (let i = 0; i &lt; this.keyMap[index].length; i++) {
+            // pokud se v poli našel klíč, pod který chceme hodnotu nastavit, tak se změní hodnota, kterou uchovává
+            if (this.keyMap[index][i][0] === key) {
+                // změnění hodnoty
+                this.keyMap[index][i][1] = value;
+                // metoda již dál nepokračuje
+                return;
+            }
+        }
+        
+        // přidání nové položky do pole v poli keyMap
+        const keyValuePair = [key, value];
+        this.keyMap[index].push(keyValuePair);
+    }
+}</code></pre>
+                    </div>
+                    <h2 class="heading-secondary u-mb-tiny">Metoda get</h2>
+                    <p class="paragraph u-mb-small">Pro získání hodnoty z Hash Tablu si vytvoříme metodu get. Tato metoda na začátku získá index podle předaného klíče a poté pomocí cyklu hledá v poli nacházejícím se na tomto indexu v poli keyMap hledanou hodnotu. Až ji najde tak ji vrátí a pokud ji nenajde, tak se vrátí undefined.</p>
+                    <div class="code-box u-mb-medium">
+                        <pre class="code-box__code"><code>class HashTable {
+    /* ... */
+
+    // metoda pro získání hodnoty z Hash Tablu
+    get(key) {
+        // získání indexu pro předaný klíč
+        const index = this._hash(key);
+
+        // pokud se na získaném indexu v poli keyMap nenachází pole, tak hodnota pod předaným klíčem neexistuje
+        if (!this.keyMap[index]) return undefined;
+
+        // pole v poli keyMap se postupně prochází a hledá se hodnota s požadovaným klíčem
+        for (let i = 0; this.keyMap[index].length; i++) {
+            // pokud se hodnota našla, tak ji metoda vrátí
+            if (this.keyMap[index][i][0] === key) return this.keyMap[index][i][1];
+        }
+
+        // pokud kód došel až sem, tak hodnota pod předaným klíčem neexistuje
+        return undefined;
+    }
+}</code></pre>
+                    </div>
+                    <h2 class="heading-secondary u-mb-tiny">Metoda keys</h2>
+                    <p class="paragraph u-mb-small">Jako další metodu si pro náš Hash Table vytvoříme metodu keys, která bude vracet pole klíčů, které Hash Table uchovává. Pole keyMap, které Hash Table uchovává se postupně projede a klíče se přidají do pole, které se na konci metody vrátí. V kódu je použita <a href="http://pole-v-js.4fan.cz/destrukturovani/" target="_blank" class="anchor">destrukturovací syntaxe</a>.</p>
+                    <div class="code-box u-mb-medium">
+                        <pre class="code-box__code"><code>class HashTable {
+    /* ... */
+
+    // metoda pro získání pole s klíčy, které Hash Table obsahuje
+    keys() {
+        // do tohoto pole se budou postupně ukládat klíče, které Hash Table obsahuje
+        const keys = [];
+        // tento cyklus postupně projde pole keyMap
+        for (const arr of this.keyMap) {
+            // pokud se na tomto místě nenachází pole, tak se následující kód neprovede a pokračuje se dalším cyklem
+            if (!arr) continue;
+            // pole se postupně projde a klíče se přidají do pole keys
+            // (je použita destrukturovací syntaxe - první položka pole (klíč) se v každém cyklu uloží do proměnné key)
+            for (const [key] of arr) keys.push(key);
+        }
+        // vrácení pole s klíčy
+        return keys;
+    }
+}</code></pre>
+                    </div>
+                    <h2 class="heading-secondary u-mb-tiny">Metoda values</h2>
+                    <p class="paragraph u-mb-small">Poslední metodou, kterou si pro náš Hash Table vytvoříme, bude metoda values. Pomocí této metody budeme moci získat pole hodnot, které Hash Table uchovává. Tato metoda je podobná metodě keys, rozdíl je v tom, že se namísto klíčů vrací hodnoty. Kromě toho metoda values vrací jen unikátní hodnoty, takže má navíc jednu podmínku, která zjišťuje, jestli se již vkládaná hodnota v poli nevyskytuje.</p>
+                    <div class="code-box u-mb-medium">
+                        <pre class="code-box__code"><code>class HashTable {
+    /* ... */
+
+    // metoda pro získání pole s hodnotami, které Hash Table obsahuje
+    values() {
+        // do tohoto pole se budou postupně ukládat hodnoty, které Hash Table obsahuje
+        const values = [];
+        // tento cyklus postupně projde pole keyMap
+        for (const arr of this.keyMap) {
+            // pokud se na tomto místě nenachází pole, tak se následující kód neprovede a pokračuje se dalším cyklem
+            if (!arr) continue;
+            // pole se postupně projde a hodnoty se přidají do pole values
+            for (const [,value] of arr) {
+                // pokud se vkládaná hodnota v poli values nenachází, tak se tam přidá
+                if (!values.includes(value)) values.push(value);
+            }
+        }
+        // vrácení pole s hodnotami
+        return values;
+    }
+}</code></pre>
+                    </div>
+                    <h2 class="heading-secondary u-mb-tiny">Big O náročnost Hash Tablu</h2>
+                    <p class="paragraph u-mb-small">Na závěr si ještě ukážeme časovou náročnost některých operací s Hash Tablem. Všechny jsou O(1).</p>
+                    <ul class="unordered-list">
+                        <li><b>vkládání hodnot:</b> O(1)</li>
+                        <li><b>odstraňování hodnot:</b> O(1)</li>
+                        <li><b>získávání hodnot:</b> O(1)</li>
+                    </ul>
+                </main>
+                <div class="article-page__lateral-side">
+                    <h2 class="heading-secondary u-mb-small">Části Tutoriálu</h2>
+                    <nav class="navigation">
+                        <ul>
+                            <li class="navigation__item"><a href="../big-o-notation/" class="navigation__link"><span>1.</span>Big O Notation</a></li>
+                            <li class="navigation__item"><a href="../postup-pri-reseni-problemu/" class="navigation__link"><span>2.</span>Postup při řešení problému</a></li>
+                            <li class="navigation__item"><a href="../rekurze/" class="navigation__link"><span>3.</span>Rekurze</a></li>
+                            <li class="navigation__item"><a href="../vyhledavaci-algoritmy/" class="navigation__link"><span>4.</span>Vyhledávací algoritmy</a></li>
+                            <li class="navigation__item"><a href="../serazovaci-algoritmy/" class="navigation__link"><span>5.</span>Seřazovací algoritmy</a></li>
+                            <li class="navigation__item"><a href="../singly-linked-list/" class="navigation__link"><span>6.</span>Singly Linked List</a></li>
+                            <li class="navigation__item"><a href="../doubly-linked-list/" class="navigation__link"><span>7.</span>Doubly Linked List</a></li>
+                            <li class="navigation__item"><a href="../stack-a-queue/" class="navigation__link"><span>8.</span>Stack a Queue</a></li>
+                            <li class="navigation__item"><a href="../binary-search-tree/" class="navigation__link"><span>9.</span>Binary Search Tree</a></li>
+                            <li class="navigation__item"><a href="../tree-traversing/" class="navigation__link"><span>10.</span>Tree Traversing</a></li>
+                            <li class="navigation__item"><a href="../binary-heap/" class="navigation__link"><span>11.</span>Binary Heap</a></li>
+                            <li class="navigation__item"><a href="../hash-table/" class="navigation__link navigation__link--active"><span>12.</span>Hash Table</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
