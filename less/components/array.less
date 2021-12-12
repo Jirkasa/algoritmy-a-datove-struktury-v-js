@@ -8,6 +8,10 @@
     padding-bottom: 2rem;
     padding-top: 2rem;
 
+    &--bigger-top-padding {
+        padding-top: 4rem;
+    }
+
     &--no-top-padding {
         padding-top: 0;
     }
@@ -68,6 +72,16 @@
         padding: .2rem .3rem;
 
         width: 2.4rem;
+
+        &--yellow {
+            background-color: @colors[light-yellow];
+        }
+        &--red {
+            background-color: @colors[light-red];
+        }
+        &--blue {
+            background-color: @colors[light-blue];
+        }
     }
     &__item-container {
         display: inline-block;
@@ -111,9 +125,12 @@
         background-color: @colors[light-yellow];
 
         &--bottom {
-            top: unset;
+            top: unset !important;
             bottom: 1rem;
         }
+    }
+    &--bigger-top-padding &__pointer {
+        top: 3rem;
     }
 
     &__pointer-label {

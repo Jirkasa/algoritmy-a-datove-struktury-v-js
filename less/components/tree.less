@@ -26,6 +26,43 @@
         position: relative;
         z-index: 5;
 
+        &--green {
+            background-color: @colors[light-green];
+            border-color: lighten(@colors[light-green], 25%);
+        }
+        &--yellow {
+            background-color: @colors[light-yellow];
+            border-color: lighten(@colors[light-yellow], 25%);
+        }
+        &--red {
+            background-color: @colors[light-red];
+            border-color: lighten(@colors[light-red], 25%);
+        }
+        &--blue {
+            background-color: @colors[light-blue];
+            border-color: lighten(@colors[light-blue], 25%);
+        }
+
+        span {
+            #center-pos-abs();
+        }
+    }
+
+    &__node-priority {
+        font-size: 1.2rem;
+        width: 1.5rem;
+        height: 1.5rem;
+
+        color: @colors[dark-grey];
+        background-color: @colors[light-green];
+        border: .2rem solid lighten(@colors[light-green], 25%);
+        border-radius: 50%;
+
+        position: absolute;
+        left: 100%;
+        top: 100%;
+        transform: translate(-50%, -50%);
+
         span {
             #center-pos-abs();
         }

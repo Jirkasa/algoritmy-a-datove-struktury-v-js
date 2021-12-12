@@ -121,6 +121,11 @@ class VisualArray {
         removedItemEl.remove();
     }
 
+    popItem() {
+        const removedItemEl = this._itemElements.pop();
+        removedItemEl.remove();
+    }
+
     show() {
         this._element.style.display = "inline-block";
     }
