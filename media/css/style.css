@@ -29,6 +29,11 @@ body {
   font-weight: normal;
   color: #444;
 }
+.heading-quaternary {
+  font-size: 1.9rem;
+  font-weight: normal;
+  color: #444;
+}
 .paragraph {
   font-size: 1.6rem;
   color: #444;
@@ -64,6 +69,15 @@ body {
 }
 .u-mb-large {
   margin-bottom: 3rem !important;
+}
+.u-text-center {
+  text-align: center !important;
+}
+.u-highlight-good {
+  color: #649c38;
+}
+.u-highlight-bad {
+  color: #9c4438;
 }
 pre code.hljs {
   display: block;
@@ -252,6 +266,12 @@ code.hljs {
   color: #fff;
   text-align: center;
   padding: 3.5rem 3rem;
+}
+.two-sides {
+  display: flex;
+}
+.two-sides__side {
+  flex: 0 0 50%;
 }
 /*.navigation {
     border: .2rem solid @colors[primary];
@@ -493,6 +513,11 @@ code.hljs {
 }
 .code-box__tree--smaller-height-with-additional-space-for-pointer {
   min-height: 16rem;
+}
+.code-box__graph {
+  background-color: #0e6351;
+  border-top: 0.3rem solid #1bbc9b;
+  padding: 1rem;
 }
 .code-box__console {
   font-size: 1.6rem;
@@ -988,6 +1013,114 @@ code.hljs {
 }
 .tree__right-child--triple-space::before {
   transform: rotate(12.5deg) translateX(0.6rem) translateY(0.6rem) scaleX(4.4);
+}
+.graph {
+  position: relative;
+  width: 43rem;
+  height: 15rem;
+  margin: 0 auto;
+}
+.graph__vertex {
+  font-size: 1.7rem;
+  width: 3rem;
+  height: 3rem;
+  color: #444;
+  background-color: #cbb26f;
+  border: 0.2rem solid #ede4cd;
+  border-radius: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+}
+.graph__vertex span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.graph__vertex-pointer {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0.2rem;
+  height: 1rem;
+  background-color: #c5cb6f;
+}
+.graph__vertex-pointer--up {
+  top: unset;
+  bottom: 100%;
+}
+.graph__vertex-pointer-label {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1rem;
+  color: #dcdfa7;
+}
+.graph__vertex-pointer--up .graph__vertex-pointer-label {
+  top: unset;
+  bottom: 100%;
+}
+.graph__edge {
+  height: 0.2rem;
+  background-color: #ede4cd;
+  position: absolute;
+  transform-origin: left;
+  z-index: 3;
+}
+.graph__edge--directed::before,
+.graph__edge--directed::after {
+  content: "";
+  position: absolute;
+  right: 1.5rem;
+  top: 50%;
+  transform-origin: right;
+  width: 1.3rem;
+  height: 0.2rem;
+  background-color: #ede4cd;
+  border-radius: 0.1rem;
+}
+.graph__edge--directed::before {
+  transform: translateY(-50%) rotate(-45deg);
+}
+.graph__edge--directed::after {
+  transform: translateY(-50%) rotate(45deg);
+}
+.graph__edge--inverted::before,
+.graph__edge--inverted::after {
+  right: unset;
+  left: 1.5rem;
+  transform-origin: left;
+}
+.graph__edge-weight {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%);
+  font-size: 1.5rem;
+  color: #d9c694;
+}
+.graph__edge-weight--inverted {
+  transform: translate(-50%, -100%) rotate(180deg);
+}
+.matrix {
+  margin: 0 auto;
+  border-collapse: collapse;
+  font-size: 1.6rem;
+  color: #444;
+  background-color: #e8f8f5;
+}
+.matrix td,
+.matrix th {
+  border: 0.2rem solid #0e6351;
+  text-align: center;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+.matrix th {
+  background-color: #d1f2eb;
 }
 .article-page__content {
   width: 100%;

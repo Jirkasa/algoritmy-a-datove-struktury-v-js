@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=yes maximum-scale=2.2 minimum-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../media/css/style.css">
+
+    <script src="../media/js/libraries/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    <title>Algoritmy a Datové Struktury v JS - Graph</title>
+</head>
+<body>
+    <div class="page">
+        <header class="header">
+            <div class="header__content">
+                <h2 class="header__heading">Algoritmy a Datové Struktury v JS</h2>
+                <nav class="header__navigation">
+                    <ul>
+                        <li><a href="../big-o-notation/">tutoriál</a></li>
+                        <li><a href="#">something</a></li>
+                        <li><a href="#">something</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <div class="heading-section">
+            Graph
+        </div>
+        <div class="article-page">
+            <div class="article-page__content">
+                <main class="article-page__main-side">
+                    <h1 class="heading-primary u-mb-medium">Graph</h1>
+                    <hr class="horizontal-rule u-mb-medium">
+                    <p class="paragraph u-mb-medium">V této části se podíváme na Graph. Jedná se o velmi užitečnou datovou strukturu, která má mnoho použití.</p>
+                    <h2 class="heading-secondary u-mb-tiny">Co je to Graph</h2>
+                    <p class="paragraph u-mb-small">Graph je datová struktura, skládající se z nodes, které jsou spolu různě propojeny. Mohou být propojeny jakkoliv, neexistuje žádné pravidlo jak by měli být propojeny. U linked listu byly nodes propojeny za sebou, u tree nodes tvořili stromovou strukturu, ale u graphu mohou být propojeny různě.</p>
+                    <p class="paragraph u-mb-small">Graph má různá využití. Například Google Mapy používají graph pro nalezení nejkratší cesty z jednoho místa na druhé. Uživatelé sociálních sítí také představují graph. Mají různé přátele, kteří mají další přátele a dohromady tedy tvoří v podstatě graph.</p>
+                    <p class="paragraph u-mb-small">Následující ukázka ukazuje, jak si můžete graph například představit.</p>
+                    <div class="code-box u-mb-medium">
+                        <div class="code-box__graph">
+                            <div class="graph" id="first-graph"></div>
+                        </div>
+                    </div>
+                    <h2 class="heading-secondary u-mb-tiny">Terminologie</h2>
+                    <p class="paragraph u-mb-small">Existuje pár pojmů, které se u graphů používají. Některé z nich možná v této části použiji. Zde jsou vysvětleny:</p>
+                    <ul class="unordered-list u-mb-medium">
+                        <li><b>vertex</b> - představuje node graphu</li>
+                        <li><b>edge</b> - propojení mezi dvěma vertexy</li>
+                        <li><b>weighted/unweighted</b> - graphy, které mají u edgů přiřazené hodnoty jsou weighted, a ty které u edgů nemají přiřazené hodnoty jsou unweighted</li>
+                        <li><b>directed/undirected</b> - u undirected graphu jsou vertexy propojeny oběma směry; u directed graphu jsou vertexy propojeny jen jedním směrem</li>
+                    </ul>
+                    <h2 class="heading-secondary u-mb-tiny">Typy Graphů</h2>
+                    <p class="paragraph u-mb-small">Existují různé typy graphů. Zde se můžete podívat na <a href="https://en.wikipedia.org/wiki/List_of_data_structures#Graphs" target="_blank" class="anchor">jejich seznam</a>. Tady si hlavně ukážeme, co je to directed/undirected graph a weighted/unweighted graph, a že třeba i Tree je graph.</p>
+                    <h3 class="heading-tertiary u-mb-tiny">Tree</h3>
+                    <p class="paragraph u-mb-small">Mezi graphy se dá zařadit datová struktura Tree, o které jste se mohli dočíst v části <a href="../binary-search-tree/" class="anchor">Binary Search Tree</a>. Jedná se o graph, ve kterém jsou dva vertexy vždy propojeny jen jednou cestou. Neexistuje jiná cesta, jak se dostat z jednoho vertexu na nějaký jiný.</p>
+                    <div class="code-box u-mb-small">
+                        <div class="code-box__tree">
+                            <div class="tree">
+                                <div class="tree__node tree__node--root">
+                                    <div class="tree__node-circle"><span>A</span></div>
+                                    <div class="tree__node tree__left-child tree__left-child--triple-space">
+                                        <div class="tree__node-circle"><span>B</span></div>
+                                        <div class="tree__node tree__left-child tree__left-child--double-space">
+                                            <div class="tree__node-circle"><span>D</span></div>
+                                            <div class="tree__node tree__left-child">
+                                                <div class="tree__node-circle"><span>H</span></div>
+                                            </div>
+                                            <div class="tree__node tree__right-child">
+                                                <div class="tree__node-circle"><span>I</span></div>
+                                            </div>
+                                        </div>
+                                        <div class="tree__node tree__right-child tree__right-child--double-space">
+                                            <div class="tree__node-circle"><span>E</span></div>
+                                            <div class="tree__node tree__left-child">
+                                                <div class="tree__node-circle"><span>J</span></div>
+                                            </div>
+                                            <div class="tree__node tree__right-child">
+                                                <div class="tree__node-circle"><span>K</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tree__node tree__right-child tree__right-child--triple-space">
+                                        <div class="tree__node-circle"><span>C</span></div>
+                                        <div class="tree__node tree__left-child tree__left-child--double-space">
+                                            <div class="tree__node-circle"><span>F</span></div>
+                                            <div class="tree__node tree__left-child">
+                                                <div class="tree__node-circle"><span>L</span></div>
+                                            </div>
+                                        </div>
+                                        <div class="tree__node tree__right-child tree__right-child--double-space">
+                                            <div class="tree__node-circle"><span>G</span></div>
+                                            <div class="tree__node tree__left-child">
+                                                <div class="tree__node-circle"><span>M</span></div>
+                                            </div>
+                                            <div class="tree__node tree__right-child">
+                                                <div class="tree__node-circle"><span>N</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="heading-tertiary u-mb-tiny">Weighted Graph</h3>
+                    <p class="paragraph u-mb-small">Pokud mají edge graphu přiřazenou hodnotu, tak se jedná o weighted graph.</p>
+                    <div class="code-box u-mb-small">
+                        <div class="code-box__graph">
+                            <div id="weighted-graph" class="graph"></div>
+                        </div>
+                    </div>
+                    <h3 class="heading-tertiary u-mb-tiny">Directed Graph</h3>
+                    <p class="paragraph u-mb-small">Pokud jsou vertexy v graphu propojeny jen jedním směrem, tak se jedná o directed graph.</p>
+                    <div class="code-box u-mb-medium">
+                        <div class="code-box__graph">
+                            <div id="directed-graph" class="graph"></div>
+                        </div>
+                    </div>
+                    <h2 class="heading-secondary u-mb-tiny">Jakým způsobem je Graph reprezentován</h2>
+                    <p class="paragraph u-mb-small">Pro reprezentaci Graphu existují dva standardní způsoby: Adjacency List a Adjacency Matrix. Oba mají své výhody a nevýhody.</p>
+                    <h3 class="heading-tertiary u-mb-tiny">Adjacency Matrix</h3>
+                    <p class="paragraph u-mb-small">Jedním ze způsobů jak reprezentovat graph, je použít tabulku (matici) ve které si zaznamenáváme, které vertexy jsou spolu propojeny. Takovou tabulku si můžeme vytvořit jako pole polí.</p>
+                    <p class="paragraph u-mb-small">Níže můžete vidět tabulku a pod ní graficky zobrazený graph. Na místech, kde je zapsaná 1 jsou vertexy propojeny. Tam kde je zapsaná 0 vertexy nejsou propojeny.</p>
+                    <table class="matrix u-mb-small">
+                        <thead>
+                            <tr>
+                                <th>-</th>
+                                <th>A</th>
+                                <th>B</th>
+                                <th>C</th>
+                                <th>D</th>
+                                <th>E</th>
+                                <th>F</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>A</th>
+                                <td>0</td>
+                                <td>1</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <th>B</th>
+                                <td>1</td>
+                                <td>0</td>
+                                <td>1</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <th>C</th>
+                                <td>0</td>
+                                <td>1</td>
+                                <td>0</td>
+                                <td>1</td>
+                                <td>0</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <th>D</th>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>1</td>
+                                <td>0</td>
+                                <td>1</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <th>E</th>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>1</td>
+                                <td>0</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <th>F</th>
+                                <td>1</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>1</td>
+                                <td>0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="code-box u-mb-small">
+                        <div class="code-box__graph">
+                            <div id="adjacency-matrix-graph" class="graph"></div>
+                        </div>
+                    </div>
+                    <h3 class="heading-tertiary u-mb-tiny">Adjacency List</h3>
+                    <p class="paragraph u-mb-small">Druhý způsob pro reprezentaci graphu je Adjacency List. Tento způsob používá pro ukládání propojení vertexů namísto matice linked list nebo pole. V tomto poli (nebo linked listu) je pro každý vertex vyhrazeno pole (nebo linked list), ve kterém se ukládá s jakými vertexy je vertex propojen.</p>
+                    <div class="code-box u-mb-small">
+                        <pre class="code-box__code"><code>[
+    [1, 5], // vertex 0 je propojen s vertexy 1 a 5
+    [0, 2], // vertex 1 je propojen s vertexy 0 a 2
+    [1, 3], // vertex 2 je propojen s vertexy 1 a 3
+    [2, 4], // vertex 3 je propojen s vertexy 2 a 4
+    [3, 5], // vertex 4 je propojen s vertexy 3 a 5
+    [4, 0] // vertex 5 je propojen s vertexy 4 a 0
+]</code></pre>
+                    </div>
+                    <div class="code-box u-mb-small">
+                        <div class="code-box__graph">
+                            <div id="adjacency-list-array-graph" class="graph"></div>
+                        </div>
+                    </div>
+                    <p class="paragraph u-mb-small">Ukládání polí obsahující propojení vertexu s vertexy uvnitř pole se hodí, když máme jako vertexy hodnoty, které jsou čísla představující indexy tohoto pole. Pokud ale máme jako vertexy jiné hodnoty než jsou indexy pole, tak můžeme namísto pole použít Hash Table. Můžeme tedy pole (nebo linked listy) obsahující propojení vertexu s vertexy ukládat v objektu.</p>
+                    <div class="code-box u-mb-small">
+                        <pre class="code-box__code"><code>{
+    A: ["B", "F"], // vertex A je propojen s vertexy B a F
+    B: ["A", "C"], // vertex B je propojen s vertexy A a C
+    C: ["B", "D"], // vertex C je propojen s vertexy B a D
+    D: ["C", "E"], // vertex D je propojen s vertexy C a E
+    E: ["D", "F"], // vertex E je propojen s vertexy D a F
+    F: ["E", "A"] // vertex F je propojen s vertexy E a A
+}</code></pre>
+                    </div>
+                    <div class="code-box u-mb-small">
+                        <div class="code-box__graph">
+                            <div id="adjacency-list-hash-map-graph" class="graph"></div>
+                        </div>
+                    </div>
+                    <h3 class="heading-tertiary u-mb-tiny">Adjacency Matrix vs. Adjacency List</h3>
+                    <p class="paragraph u-mb-small">Oba způsoby mají své výhody a nevýhody. Zde je jejich porovnání:</p>
+                    <div class="two-sides u-mb-medium">
+                        <div class="two-sides__side">
+                            <h4 class="heading-quaternary u-mb-tiny u-text-center">Adjacency Matrix</h4>
+                            <ul class="unordered-list">
+                                <li class="u-highlight-bad">zabere více paměti</li>
+                                <li class="u-highlight-bad">pomalejší procházení všech edgů</li>
+                                <li class="u-highlight-good">rychlejší získání specifického edge</li>
+                            </ul>
+                        </div>
+                        <div class="two-sides__side">
+                            <h4 class="heading-quaternary u-mb-tiny u-text-center">Adjacency List</h4>
+                            <ul class="unordered-list">
+                                <li class="u-highlight-good">může zabrat méně paměti</li>
+                                <li class="u-highlight-good">rychlejší procházení všech edgů</li>
+                                <li class="u-highlight-bad">pomalejší získání specifického edge</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- ještě napsat co v této části použijeme (a budu dělat undirected graph) -->
+                    <h2 class="heading-secondary u-mb-tiny">Vytvoření základu Graphu</h2>
+                    <p class="paragraph u-mb-small">Pro ukázku graphu si vytvoříme undirected graph, jeho vertexy tedy budou propojeny oběma směry. K jeho reprezentaci použijeme Adjacency List, který se u většinu graphů hodí více než Adjacency Matrix. Vytvoříme si třídu jménem Graph, která bude Adjacency List uchovávat. Nic víc v této třídě zatím nepotřebujeme, později si do ní přidáme metody pro interakci s graphem.</p>
+                    <div class="code-box u-mb-medium">
+                        <pre class="code-box__code"><code>// třída pro Graph
+class Graph {
+    constructor() {
+        this.adjacencyList = {};
+    }
+}</code></pre>
+                    </div>
+                    <h2 class="heading-secondary u-mb-tiny">Metoda addVertex</h2>
+                    <p class="paragraph u-mb-small">Pro přidání vertexu do graphu si vytvoříme metodu addVertex. Bude obsahovat pouze jeden řádek, který pro vertex vytvoří v adjacency listu pole. Toto pole bude sloužit k uchování vertexů, ke kterým se vertex napojí.</p>
+                    <p class="paragraph u-mb-small">Pravděpodobně by bylo lepší použít namísto pole linked list, ale pro jednoduchost jsem použil jen pole. Myslím že byste si kód zvládli předělat, pokud byste chtěli namísto pole použít linked list.</p>
+                    <div data-interactive-example-id="1" class="code-box u-mb-medium">
+                        <div class="code-box__header">
+                            <div class="code-box__icon">
+                                <svg>
+                                    <use xlink:href="../media/img/icon-sprite.svg#icon-cogs"></use>
+                                </svg>
+                            </div>
+                            <div class="code-box__buttons-container">
+                                <button class="code-box__button code-box__button--move"
+                                    data-interactive-example-move-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-forward3"></use>
+                                    </svg>
+                                </button>
+                                <select class="code-box__speed-input" data-interactive-example-speed-input="true">
+                                    <option value="0.25">0.25</option>
+                                    <option value="0.5">0.5</option>
+                                    <option value="0.75">0.75</option>
+                                    <option selected value="1">1</option>
+                                    <option value="1.25">1.25</option>
+                                    <option value="1.5">1.5</option>
+                                    <option value="1.75">1.75</option>
+                                </select>
+                                <button class="code-box__button" data-interactive-example-play-button="true">
+                                    <span>
+                                        <svg>
+                                            <use xlink:href="../media/img/icon-sprite.svg#icon-play3"></use>
+                                        </svg>
+                                    </span>
+                                </button>
+                                <button class="code-box__button code-box__button--reset"
+                                    data-interactive-example-reset-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-loop2"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <pre id="code-1" class="code-box__code"><code>class Graph {
+    /* ... */
+
+    // metoda pro přidání vertexu do graphu
+    addVertex(vertex) {
+        // pokud vertex v graphu ještě není, tak se pro něj v adjacency listu vytvoří pole
+        if (!this.adjacencyList[vertex]) this.adjacencyList[vertex] = [];
+    }
+}
+
+// vytvoření graphu
+const graph = new Graph();
+
+// přidání vertexů do graphu
+graph.addVertex("A");
+graph.addVertex("B");
+graph.addVertex("C");
+graph.addVertex("D");
+graph.addVertex("E");
+graph.addVertex("F");</code></pre>
+                        <div class="code-box__graph">
+                            <div id="graph-1" class="graph"></div>
+                        </div>
+                    </div>
+                    <h2 class="heading-secondary u-mb-tiny">Metoda addEdge</h2>
+                    <p class="paragraph u-mb-small">Pro propojení dvou vertexů ve graphu si vytvoříme metodu addEdge. Tato metoda vezme jako parametr dva vertexy a vzájemně je propojí jejich přidáním do adjacency listu. Do pole prvního vertexu se přidá druhý vertex a do pole druhého vertexu se přidá první vertex.</p>
+                    <div data-interactive-example-id="2" class="code-box u-mb-medium">
+                        <div class="code-box__header">
+                            <div class="code-box__icon">
+                                <svg>
+                                    <use xlink:href="../media/img/icon-sprite.svg#icon-cogs"></use>
+                                </svg>
+                            </div>
+                            <div class="code-box__buttons-container">
+                                <button class="code-box__button code-box__button--move"
+                                    data-interactive-example-move-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-forward3"></use>
+                                    </svg>
+                                </button>
+                                <select class="code-box__speed-input" data-interactive-example-speed-input="true">
+                                    <option value="0.25">0.25</option>
+                                    <option value="0.5">0.5</option>
+                                    <option value="0.75">0.75</option>
+                                    <option selected value="1">1</option>
+                                    <option value="1.25">1.25</option>
+                                    <option value="1.5">1.5</option>
+                                    <option value="1.75">1.75</option>
+                                </select>
+                                <button class="code-box__button" data-interactive-example-play-button="true">
+                                    <span>
+                                        <svg>
+                                            <use xlink:href="../media/img/icon-sprite.svg#icon-play3"></use>
+                                        </svg>
+                                    </span>
+                                </button>
+                                <button class="code-box__button code-box__button--reset"
+                                    data-interactive-example-reset-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-loop2"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <pre id="code-2" class="code-box__code code-box__code--max-height"><code>class Graph {
+    /* ... */
+
+    // metoda pro propojení dvou vertexů
+    addEdge(v1, v2) {
+        // pokud se jeden z předaných vertexů v graphu nenachází, tak se metoda ukončí
+        if (!this.adjacencyList[v1] || !this.adjacencyList[v2]) return;
+
+        // pokud předané vertexy nejsou propojeny, tak se propojí
+        if (!this.adjacencyList[v1].includes(v2)) this.adjacencyList[v1].push(v2);
+        if (!this.adjacencyList[v2].includes(v1)) this.adjacencyList[v2].push(v1);
+    }
+}
+
+// vytvoření graphu
+const graph = new Graph();
+
+// přidání vertexů do graphu
+graph.addVertex("A"); graph.addVertex("B"); graph.addVertex("C");
+graph.addVertex("D"); graph.addVertex("E"); graph.addVertex("F");
+
+// propojení vertexů
+graph.addEdge("A", "B");
+graph.addEdge("B", "C");
+graph.addEdge("C", "D");
+graph.addEdge("D", "F");
+graph.addEdge("D", "E");
+graph.addEdge("F", "E");
+graph.addEdge("E", "A");
+graph.addEdge("B", "D");</code></pre>
+                        <div class="code-box__graph">
+                            <div id="graph-2" class="graph"></div>
+                        </div>
+                    </div>
+                    <h2 class="heading-secondary u-mb-tiny">Metoda removeEdge</h2>
+                    <p class="paragraph u-mb-small">Pro odstranění propojení mezi dvěma vertexy si vytvoříme metodu removeEdge. Tato metoda vezme jako parametr dva vertexy. V adjacency listu pro první vertex odstraní druhý vertex a v adjacency listu pro druhý vertex odstraní první vertex.</p>
+                    <p class="paragraph u-mb-small">V kódu jsou použity metody findIndex a splice, které se týkají polí. Pokud nevíte jak fungují, můžete se podívat třeba zde: <a href="http://pole-v-js.4fan.cz/metody/#hledani-polozky-v-poli" target="_blank" class="anchor">findIndex</a>, <a href="http://pole-v-js.4fan.cz/metody/#pridavani-a-odebirani-polozek" target="_blank" class="anchor">splice</a>.</p>
+                    <div data-interactive-example-id="3" class="code-box u-mb-medium">
+                        <div class="code-box__header">
+                            <div class="code-box__icon">
+                                <svg>
+                                    <use xlink:href="../media/img/icon-sprite.svg#icon-cogs"></use>
+                                </svg>
+                            </div>
+                            <div class="code-box__buttons-container">
+                                <button class="code-box__button code-box__button--move"
+                                    data-interactive-example-move-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-forward3"></use>
+                                    </svg>
+                                </button>
+                                <select class="code-box__speed-input" data-interactive-example-speed-input="true">
+                                    <option value="0.25">0.25</option>
+                                    <option value="0.5">0.5</option>
+                                    <option value="0.75">0.75</option>
+                                    <option selected value="1">1</option>
+                                    <option value="1.25">1.25</option>
+                                    <option value="1.5">1.5</option>
+                                    <option value="1.75">1.75</option>
+                                </select>
+                                <button class="code-box__button" data-interactive-example-play-button="true">
+                                    <span>
+                                        <svg>
+                                            <use xlink:href="../media/img/icon-sprite.svg#icon-play3"></use>
+                                        </svg>
+                                    </span>
+                                </button>
+                                <button class="code-box__button code-box__button--reset"
+                                    data-interactive-example-reset-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-loop2"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <pre id="code-3" class="code-box__code code-box__code--max-height"><code>class Graph {
+    /* ... */
+
+    // metoda pro odstranění propojení mezi dvěma vertexy
+    removeEdge(v1, v2) {
+        // pokud se jeden z předaných vertexů v graphu nenachází, tak se metoda ukončí
+        if (!this.adjacencyList[v1] || !this.adjacencyList[v2]) return;
+
+        // získání indexu vertexu v2 v adjacency listu pro vertex v1
+        let index = this.adjacencyList[v1].findIndex((val) => val === v2);
+        // odstranění propojení s vertexem na získaném indexu
+        if (index !== -1) this.adjacencyList[v1].splice(index, 1);
+
+        // získání indexu vertexu v1 v adjacency listu pro vertex v2
+        index = this.adjacencyList[v2].findIndex((val) => val === v1);
+        // odstranění propojení s vertexem na získaném indexu
+        if (index !== -1) this.adjacencyList[v2].splice(index, 1);
+    }
+}
+
+// vytvoření graphu
+const graph = new Graph();
+graph.addVertex("A"); graph.addVertex("B"); graph.addVertex("C");
+graph.addVertex("D"); graph.addVertex("E"); graph.addVertex("F");
+graph.addEdge("A", "B"); graph.addEdge("B", "C"); graph.addEdge("C", "D"); graph.addEdge("D", "F");
+graph.addEdge("D", "E"); graph.addEdge("F", "E"); graph.addEdge("E", "A"); graph.addEdge("B", "D");
+
+// odstranění propojení mezi některými vertexy
+graph.removeEdge("A", "B");
+graph.removeEdge("B", "D");
+graph.removeEdge("D", "F");</code></pre>
+                        <div class="code-box__graph">
+                            <div id="graph-3" class="graph"></div>
+                        </div>
+                    </div>
+                    <h2 class="heading-secondary u-mb-tiny">Metoda removeVertex</h2>
+                    <p class="paragraph u-mb-small">Pro odstranění vertexu graphu si vytvoříme metodu removeVertex. Tato metoda přijme vertex, který se má odstranit, odstraní jeho propojení s jinými vertexy v graphu pomocí metody removeEdge, a odstraní jeho pole z adjacency listu pomocí operátoru delete.</p>
+                    <p class="paragraph u-mb-small">Operátor delete v JavaScriptu slouží k odstranění vlastnosti objektu.</p>
+                    <div data-interactive-example-id="4" class="code-box u-mb-small">
+                        <div class="code-box__header">
+                            <div class="code-box__icon">
+                                <svg>
+                                    <use xlink:href="../media/img/icon-sprite.svg#icon-cogs"></use>
+                                </svg>
+                            </div>
+                            <div class="code-box__buttons-container">
+                                <button class="code-box__button code-box__button--move"
+                                    data-interactive-example-move-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-forward3"></use>
+                                    </svg>
+                                </button>
+                                <select class="code-box__speed-input" data-interactive-example-speed-input="true">
+                                    <option value="0.25">0.25</option>
+                                    <option value="0.5">0.5</option>
+                                    <option value="0.75">0.75</option>
+                                    <option selected value="1">1</option>
+                                    <option value="1.25">1.25</option>
+                                    <option value="1.5">1.5</option>
+                                    <option value="1.75">1.75</option>
+                                </select>
+                                <button class="code-box__button" data-interactive-example-play-button="true">
+                                    <span>
+                                        <svg>
+                                            <use xlink:href="../media/img/icon-sprite.svg#icon-play3"></use>
+                                        </svg>
+                                    </span>
+                                </button>
+                                <button class="code-box__button code-box__button--reset"
+                                    data-interactive-example-reset-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-loop2"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <pre id="code-4" class="code-box__code code-box__code--max-height"><code>class Graph {
+    /* ... */
+
+    // metoda pro odstranění vertexu
+    removeVertex(vertex) {
+        // tento cyklus odstraní propojení se všemi vertexy, se kterými je odstraňovaný vertex propojen
+        while (this.adjacencyList[vertex].length) {
+            // získání a odstranění vertexu z konce pole odstraňovaného vertexu v adjacency listu
+            const adjacentVertex = this.adjacencyList[vertex].pop();
+            // použití metody removeEdge pro odstranění propojení mezi vertexy
+            this.removeEdge(vertex, adjacentVertex);
+        }
+        // odstranění vertexu z graphu (odstranění jeho pole v adjacency listu)
+        delete this.adjacencyList[vertex];
+    }
+}
+
+// vytvoření graphu
+const graph = new Graph();
+graph.addVertex("A"); graph.addVertex("B"); graph.addVertex("C");
+graph.addVertex("D"); graph.addVertex("E"); graph.addVertex("F");
+graph.addEdge("A", "B"); graph.addEdge("B", "C"); graph.addEdge("C", "D"); graph.addEdge("D", "F");
+graph.addEdge("D", "E"); graph.addEdge("F", "E"); graph.addEdge("E", "A"); graph.addEdge("B", "D");
+
+// odstranění vertexů z graphu
+graph.removeVertex("F");
+graph.removeVertex("B");</code></pre>
+                        <div class="code-box__graph">
+                            <div id="graph-4" class="graph"></div>
+                        </div>
+                    </div>
+                    <p class="paragraph">Další metody si pro náš graph v této části již vytvářet nebudeme. Vytvořili jsme si metody pro přidávání a odstraňování vertexů a edgů. Následující část bude o procházení graphu, a tam si pro náš graph vytvoříme ještě další metody.</p>
+                </main>
+                <div class="article-page__lateral-side">
+                    <h2 class="heading-secondary u-mb-small">Části Tutoriálu</h2>
+                    <nav class="navigation">
+                        <ul>
+                            <li class="navigation__item"><a href="../big-o-notation/" class="navigation__link"><span>1.</span>Big O Notation</a></li>
+                            <li class="navigation__item"><a href="../postup-pri-reseni-problemu/" class="navigation__link"><span>2.</span>Postup při řešení problému</a></li>
+                            <li class="navigation__item"><a href="../rekurze/" class="navigation__link"><span>3.</span>Rekurze</a></li>
+                            <li class="navigation__item"><a href="../vyhledavaci-algoritmy/" class="navigation__link"><span>4.</span>Vyhledávací algoritmy</a></li>
+                            <li class="navigation__item"><a href="../serazovaci-algoritmy/" class="navigation__link"><span>5.</span>Seřazovací algoritmy</a></li>
+                            <li class="navigation__item"><a href="../singly-linked-list/" class="navigation__link"><span>6.</span>Singly Linked List</a></li>
+                            <li class="navigation__item"><a href="../doubly-linked-list/" class="navigation__link"><span>7.</span>Doubly Linked List</a></li>
+                            <li class="navigation__item"><a href="../stack-a-queue/" class="navigation__link"><span>8.</span>Stack a Queue</a></li>
+                            <li class="navigation__item"><a href="../binary-search-tree/" class="navigation__link"><span>9.</span>Binary Search Tree</a></li>
+                            <li class="navigation__item"><a href="../tree-traversing/" class="navigation__link"><span>10.</span>Tree Traversing</a></li>
+                            <li class="navigation__item"><a href="../binary-heap/" class="navigation__link"><span>11.</span>Binary Heap</a></li>
+                            <li class="navigation__item"><a href="../hash-table/" class="navigation__link"><span>12.</span>Hash Table</a></li>
+                            <li class="navigation__item"><a href="../graph/" class="navigation__link navigation__link--active"><span>13.</span>Graph</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="../media/js/parts/graph.js"></script>
+</body>
+</html>
