@@ -1038,6 +1038,9 @@ code.hljs {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+.graph__vertex--visited {
+  background-color: #cb7a6f;
+}
 .graph__vertex-pointer {
   position: absolute;
   top: 100%;

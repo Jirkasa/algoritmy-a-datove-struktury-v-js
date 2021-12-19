@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=yes maximum-scale=2.2 minimum-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../media/css/style.css">
+
+    <script src="../media/js/libraries/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    <title>Algoritmy a Datové Struktury v JS - Graph Traversing</title>
+</head>
+<body>
+    <div class="page">
+        <header class="header">
+            <div class="header__content">
+                <h2 class="header__heading">Algoritmy a Datové Struktury v JS</h2>
+                <nav class="header__navigation">
+                    <ul>
+                        <li><a href="../big-o-notation/">tutoriál</a></li>
+                        <li><a href="#">something</a></li>
+                        <li><a href="#">something</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <div class="heading-section">
+            Graph Traversing
+        </div>
+        <div class="article-page">
+            <div class="article-page__content">
+                <main class="article-page__main-side">
+                    <h1 class="heading-primary u-mb-medium">Graph Traversing</h1>
+                    <hr class="horizontal-rule u-mb-medium">
+                    <p class="paragraph u-mb-medium">Minulá část byla o datové struktuře jménem Graph. Dozvěděli jste se v ní co to graph je, jaké jsou typy graphů a také jsme si pro graph vytvořili vlastní třídu. V této části si ukážeme, jak můžeme graph procházet.</p>
+                    <h2 class="heading-secondary u-mb-tiny">Co je to Graph Traversing</h2>
+                    <p class="paragraph u-mb-small">Tato část je pojmenovaná jako Graph Traversing. Jak jsem již psal v části <a href="../tree-traversing/" class="anchor">Tree Traversing</a>, v češtině traversing znamená procházení. Ukážeme si tedy, jakými způsoby můžeme graph procházet. Stejně jako u procházení tree, tak i u graphů existují dva hlavní způsoby pro jejich procházení: Breadth First a Depth First. Pro oba tyto způsoby si do naší graph třídy, kterou jsme si vytvořili v minulé části, přidáme metodu. Tyto metody projdou všechny vertexy graphu a na konci vrátí pole, které bude obsahovat vertexy graphu v pořadí, ve kterém byly navštíveny.</p>
+                    <h2 class="heading-secondary u-mb-tiny">Co pro ukázku procházení Graphu potřebujeme</h2>
+                    <p class="paragraph u-mb-small">Jak jsem již psal, pro procházení graphu si v naší graph třídě z minulé části vytvoříme metody. Vytvoříme si celkem 3 metody. Dvě se budou týkat Depth First procházení a třetí Breadth First procházení. Depth First procházení můžeme provádět iterativně nebo rekurzivně. Obě verze si ukážeme, proto pro něj budeme mít dvě metody. Pro iterativní verzi Depth First procházení navíc potřebujeme Stack a pro Breadth First procházení potřebujeme Queue. Obě tyto datové struktury jsme si vytvářeli v části <a href="../stack-a-queue/" class="anchor">Stack a Queue</a>, takže je jen použijeme.</p>
+                    <p class="paragraph u-mb-small">Následující ukázka ukazuje startovní kód.</p>
+                    <div class="code-box u-mb-medium">
+                        <pre class="code-box__code"><code>class Node {
+    constructor(value) {
+        this.value = value;
+        this.next = null;
+    }
+}
+
+class Stack {
+    constructor() {
+        this.first = null;
+        this.size = 0;
+    }
+
+    push(value) {
+        const newNode = new Node(value);
+        if (!this.first) {
+            this.first = newNode;
+        } else {
+            newNode.next = this.first;
+            this.first = newNode;
+        }
+        return ++this.size;
+    }
+
+    pop() {
+        if (!this.first) return null;
+        const value = this.first.value;
+        this.first = this.first.next;
+        this.size--;
+        return value;
+    }
+}
+
+class Queue {
+    constructor() {
+        this.first = null;
+        this.last = null;
+        this.size = 0;
+    }
+
+    enqueue(value) {
+        const newNode = new Node(value);
+        if (!this.first) {
+            this.first = newNode;
+            this.last = newNode;
+        } else {
+            this.last.next = newNode;
+            this.last = newNode;
+        }
+        return ++this.size;
+    }
+
+    dequeue() {
+        if (!this.first) return null;
+        const value = this.first.value;
+        if (this.first === this.last) {
+            this.last = null;
+        }
+        this.first = this.first.next;
+        this.size--;
+        return value;
+    }
+}
+
+class Graph {
+    constructor() {
+        this.adjacencyList = {};
+    }
+
+    addVertex(vertex) {
+        if (!this.adjacencyList[vertex]) this.adjacencyList[vertex] = [];
+    }
+
+    addEdge(v1, v2) {
+        if (!this.adjacencyList[v1] || !this.adjacencyList[v2]) return;
+        if (!this.adjacencyList[v1].includes(v2)) this.adjacencyList[v1].push(v2);
+        if (!this.adjacencyList[v2].includes(v1)) this.adjacencyList[v2].push(v1);
+    }
+
+    removeEdge(v1, v2) {
+        if (!this.adjacencyList[v1] || !this.adjacencyList[v2]) return;
+        let index = this.adjacencyList[v1].findIndex((val) => val === v2);
+        if (index !== -1) this.adjacencyList[v1].splice(index, 1);
+        index = this.adjacencyList[v2].findIndex((val) => val === v1);
+        if (index !== -1) this.adjacencyList[v2].splice(index, 1);
+    }
+
+    removeVertex(vertex) {
+        while (this.adjacencyList[vertex].length) {
+            const adjacentVertex = this.adjacencyList[vertex].pop();
+            this.removeEdge(vertex, adjacentVertex);
+        }
+        delete this.adjacencyList[vertex];
+    }
+}</code></pre>
+                    </div>
+                    <h2 class="heading-secondary u-mb-tiny">Depth First Traversing - rekurzivně</h2>
+                    <p class="paragraph u-mb-small">Jako první si ukážeme Depth First procházení graphu. Depth First u graphu znamená, že se vždy vezme první vertex se kterým je zrovna procházený vertex propojen a pokračuje se dál. Až se najde vertex, který již nemá žádné propojené vertexy, které by se měli procházet, tak se pokračuje směrem zpět a stejným způsobem se procházejí ostatní vertexy, které ještě nebyly navštíveny.</p>
+                    <p class="paragraph u-mb-small">Graph nemá žádný počáteční vertex jako tomu bylo u tree. Takže pokud chceme graph procházet, musíme určit odkud se má začít. Proto budou metody pro procházení graphu vždy přijímat vertex, od kterého se má začínat.</p>
+                    <p class="paragraph u-mb-small">Depth First procházení můžeme provést rekurzivně nebo iterativně. Jako první si ukážeme rekurzivní verzi. Depth First procházení je u graphu možná složitější si představit než u tree, ale myslím že následující vizuální ukázka vám v tom může pomoct.</p>
+                    <p class="paragraph u-mb-small">V ukázce se vertexy, které již byly navštíveny, ukládají do objektu visited. V graficky znázorněném graphu se vertexy uložené v tomto objektu označují červeně.</p>
+                    <div data-interactive-example-id="1" class="code-box u-mb-medium">
+                        <div class="code-box__header">
+                            <div class="code-box__icon">
+                                <svg>
+                                    <use xlink:href="../media/img/icon-sprite.svg#icon-cogs"></use>
+                                </svg>
+                            </div>
+                            <div class="code-box__buttons-container">
+                                <button class="code-box__button code-box__button--move"
+                                    data-interactive-example-move-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-forward3"></use>
+                                    </svg>
+                                </button>
+                                <select class="code-box__speed-input" data-interactive-example-speed-input="true">
+                                    <option value="0.25">0.25</option>
+                                    <option value="0.5">0.5</option>
+                                    <option value="0.75">0.75</option>
+                                    <option selected value="1">1</option>
+                                    <option value="1.25">1.25</option>
+                                    <option value="1.5">1.5</option>
+                                    <option value="1.75">1.75</option>
+                                </select>
+                                <button class="code-box__button" data-interactive-example-play-button="true">
+                                    <span>
+                                        <svg>
+                                            <use xlink:href="../media/img/icon-sprite.svg#icon-play3"></use>
+                                        </svg>
+                                    </span>
+                                </button>
+                                <button class="code-box__button code-box__button--reset"
+                                    data-interactive-example-reset-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-loop2"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="code-box__container">
+                            <div>
+                                <pre id="code-1" class="code-box__code code-box__code--max-height"><code>class Graph {
+    /* ... */
+
+    // metoda pro Depth First procházení (rekurzivní verze)
+    DFRecursive(startVertex) {
+        // do tohoto pole se budou postupně ukládat navštívené vertexy
+        const result = [];
+        // v tomto objektu se budou ukládat vertexy, které již byly navštíveny
+        const visited = {};
+
+        // pomocná funkce pro procházení graphu
+        const df = (vertex) => {
+            // pokud se vertex v graphu nenachází, tak se funkce ukončí
+            if (!this.adjacencyList[vertex]) return;
+
+            // vertex se uložením do objektu označí jako navštívený
+            visited[vertex] = true;
+            // uložení vertexu do pole result
+            result.push(vertex);
+
+            // tento cyklus projde všechny vertexy, se kterými je vertex propojen
+            for (let adjacentVertex of this.adjacencyList[vertex]) {
+                // pokud vertex ještě nebyl navštíven, tak se pro něj zavolá funkce df
+                if (!visited[adjacentVertex]) df(adjacentVertex);
+            }
+        }
+        // zavolání pomocné funkce df se startovním vertexem jako argumentem
+        df(startVertex);
+
+        // vrácení pole s vertexy
+        return result;
+    }
+}
+
+// vytvoření graphu
+const graph = new Graph();
+graph.addVertex("A"); graph.addVertex("B"); graph.addVertex("C"); graph.addVertex("D");
+graph.addVertex("E"); graph.addVertex("F"); graph.addVertex("G"); graph.addVertex("H");
+graph.addVertex("I");
+graph.addEdge("A", "D"); graph.addEdge("D", "B"); graph.addEdge("D", "E"); graph.addEdge("B", "C");
+graph.addEdge("D", "C"); graph.addEdge("E", "F"); graph.addEdge("F", "G"); graph.addEdge("G", "A");
+graph.addEdge("G", "H"); graph.addEdge("E", "I"); graph.addEdge("I", "F");
+
+// zavolání metody pro Depth First procházení (procházet se začne od vertexu D)
+const vysledek = graph.DFRecursive("D");
+console.log("Graph se procházel v tomto pořadí:");
+console.log(vysledek);
+</code></pre>
+                            </div>
+                            <div id="call-stack-1" class="code-box__call-stack"></div>
+                        </div>
+                        <div class="code-box__graph">
+                            <div id="graph-1" class="graph"></div>
+                        </div>
+                        <div class="code-box__array">
+                            <div id="visual-array-1" class="array array--no-padding">
+                                <div class="array__bracket array__bracket--first">[</div><div class="array__item-container"></div><div class="array__bracket array__bracket--last">]</div>
+                            </div>
+                        </div>
+                        <div id="console-1" class="code-box__console">&gt; </div>
+                    </div>
+                    <h2 class="heading-secondary u-mb-tiny">Depth First Traversing - iterativně</h2>
+                    <p class="paragraph u-mb-small">Předchozí ukázka ukazovala Depth First procházení s použitím rekurze. Jde to ale provést i bez ní, budeme k tomu ale potřebovat Stack, který jsme si vytvářeli v části <a href="../stack-a-queue/" class="anchor">Stack a Queue</a>.</p>
+                    <p class="paragraph u-mb-small">Iterativní verze Depth First procházení funguje tak, že se na začátku do stacku přidá vertex, od kterého se má graph začít procházet a označí se jako navštívený. Poté se ze stacku postupně získávají vertexy a vertexy, které jsou s nimi propojeny a ještě nebyly navštíveny se přidávají do stacku. To probíhá tak dlouho, dokud se stack nevyprázdní.</p>
+                    <p class="paragraph u-mb-small">U iterativní verze Depth First procházení se budou vertexy procházet v jiném pořadí než u rekurzivní verze, pořád se ale jedná o Depth First procházení.</p>
+                    <div data-interactive-example-id="2" class="code-box u-mb-medium">
+                        <div class="code-box__header">
+                            <div class="code-box__icon">
+                                <svg>
+                                    <use xlink:href="../media/img/icon-sprite.svg#icon-cogs"></use>
+                                </svg>
+                            </div>
+                            <div class="code-box__buttons-container">
+                                <button class="code-box__button code-box__button--move"
+                                    data-interactive-example-move-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-forward3"></use>
+                                    </svg>
+                                </button>
+                                <select class="code-box__speed-input" data-interactive-example-speed-input="true">
+                                    <option value="0.25">0.25</option>
+                                    <option value="0.5">0.5</option>
+                                    <option value="0.75">0.75</option>
+                                    <option selected value="1">1</option>
+                                    <option value="1.25">1.25</option>
+                                    <option value="1.5">1.5</option>
+                                    <option value="1.75">1.75</option>
+                                </select>
+                                <button class="code-box__button" data-interactive-example-play-button="true">
+                                    <span>
+                                        <svg>
+                                            <use xlink:href="../media/img/icon-sprite.svg#icon-play3"></use>
+                                        </svg>
+                                    </span>
+                                </button>
+                                <button class="code-box__button code-box__button--reset"
+                                    data-interactive-example-reset-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-loop2"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <pre id="code-2" class="code-box__code code-box__code--max-height"><code>class Graph {
+    /* ... */
+
+    // metoda pro Depth First procházení (iterativní verze)
+    DFIterative(startVertex) {
+        // vytvoření stacku
+        const stack = new Stack();
+        // do tohoto pole se budou postupně ukládat navštívené vertexy
+        const result = [];
+        // v tomto objektu se budou ukládat vertexy, které již byly navštíveny
+        const visited = {};
+        // tato proměnná bude uchovávat vertex, který se momentálně prochází
+        let currentVertex;
+        
+        // startovní vertex se přidá do stacku a označí se jako navštívený
+        stack.push(startVertex);
+        visited[startVertex] = true;
+
+        // následující cyklus bude probíhat tak dlouho, dokud se stack nevyprázdní
+        while (stack.size !== 0) {
+            // získání vertexu ze stacku
+            currentVertex = stack.pop();
+            // uložení vertexu do pole result
+            result.push(currentVertex);
+
+            // tento cyklus projde všechny vertexy, se kterými je vertex propojen
+            for (let neighbor of this.adjacencyList[currentVertex]) {
+                // pokud vertex ještě nebyl navštíven, tak se přidá do stacku a označí se jako navštívený
+                if (!visited[neighbor]) {
+                    stack.push(neighbor);
+                    visited[neighbor] = true;
+                }
+            }
+        }
+
+        // vrácení pole s vertexy
+        return result;
+    }
+}
+
+// vytvoření graphu
+const graph = new Graph();
+graph.addVertex("A"); graph.addVertex("B"); graph.addVertex("C"); graph.addVertex("D");
+graph.addVertex("E"); graph.addVertex("F"); graph.addVertex("G"); graph.addVertex("H");
+graph.addVertex("I");
+graph.addEdge("A", "D"); graph.addEdge("D", "B"); graph.addEdge("D", "E"); graph.addEdge("B", "C");
+graph.addEdge("D", "C"); graph.addEdge("E", "F"); graph.addEdge("F", "G"); graph.addEdge("G", "A");
+graph.addEdge("G", "H"); graph.addEdge("E", "I"); graph.addEdge("I", "F");
+
+// zavolání metody pro Depth First procházení (procházet se začne od vertexu D)
+const vysledek = graph.DFIterative("D");
+console.log("Graph se procházel v tomto pořadí:");
+console.log(vysledek);
+</code></pre>
+                        <div class="code-box__graph">
+                            <div id="graph-2" class="graph"></div>
+                        </div>
+                        <div class="code-box__linked-list">
+                            <div id="stack-1" class="linked-list linked-list--bigger-bottom-padding"></div>
+                        </div>
+                        <div class="code-box__array">
+                            <div id="visual-array-2" class="array array--no-padding">
+                                <div class="array__bracket array__bracket--first">[</div><div class="array__item-container"></div><div class="array__bracket array__bracket--last">]</div>
+                            </div>
+                        </div>
+                        <div id="console-2" class="code-box__console">&gt; </div>
+                    </div>
+                    <h2 class="heading-secondary u-mb-tiny">Breadth First Traversing</h2>
+                    <p class="paragraph u-mb-small">Druhý způsob, který si pro procházení graphu ukážeme, je Breadth First. U graphu Breadth First znamená nejdříve procházet všechny propojené vertexy vertexu a až poté pokračovat dále.</p>
+                    <p class="paragraph u-mb-small">Kód pro Breadth First procházení je hodně podobný iterativní verzi Depth First procházení. Jediný rozdíl je v tom, že se namísto stacku používá queue.</p>
+                    <div data-interactive-example-id="3" class="code-box">
+                        <div class="code-box__header">
+                            <div class="code-box__icon">
+                                <svg>
+                                    <use xlink:href="../media/img/icon-sprite.svg#icon-cogs"></use>
+                                </svg>
+                            </div>
+                            <div class="code-box__buttons-container">
+                                <button class="code-box__button code-box__button--move"
+                                    data-interactive-example-move-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-forward3"></use>
+                                    </svg>
+                                </button>
+                                <select class="code-box__speed-input" data-interactive-example-speed-input="true">
+                                    <option value="0.25">0.25</option>
+                                    <option value="0.5">0.5</option>
+                                    <option value="0.75">0.75</option>
+                                    <option selected value="1">1</option>
+                                    <option value="1.25">1.25</option>
+                                    <option value="1.5">1.5</option>
+                                    <option value="1.75">1.75</option>
+                                </select>
+                                <button class="code-box__button" data-interactive-example-play-button="true">
+                                    <span>
+                                        <svg>
+                                            <use xlink:href="../media/img/icon-sprite.svg#icon-play3"></use>
+                                        </svg>
+                                    </span>
+                                </button>
+                                <button class="code-box__button code-box__button--reset"
+                                    data-interactive-example-reset-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-loop2"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <pre id="code-3" class="code-box__code code-box__code--max-height"><code>class Graph {
+    /* ... */
+
+    // metoda pro Breadth First procházení
+    BF(startVertex) {
+        // vytvoření queue
+        const queue = new Queue();
+        // do tohoto pole se budou postupně ukládat navštívené vertexy
+        const result = [];
+        // v tomto objektu se budou ukládat vertexy, které již byly navštíveny
+        const visited = {};
+        // tato proměnná bude uchovávat vertex, který se momentálně prochází
+        let currentVertex;
+        
+        // startovní vertex se přidá do queue a označí se jako navštívený
+        queue.enqueue(startVertex);
+        visited[startVertex] = true;
+
+        // následující cyklus bude probíhat tak dlouho, dokud se queue nevyprázdní
+        while (queue.size !== 0) {
+            // získání vertexu z queue
+            currentVertex = queue.dequeue();
+            // uložení vertexu do pole result
+            result.push(currentVertex);
+
+            // tento cyklus projde všechny vertexy, se kterými je vertex propojen
+            for (let neighbor of this.adjacencyList[currentVertex]) {
+                // pokud vertex ještě nebyl navštíven, tak se přidá do queue a označí se jako navštívený
+                if (!visited[neighbor]) {
+                    queue.enqueue(neighbor);
+                    visited[neighbor] = true;
+                }
+            }
+        }
+
+        // vrácení pole s vertexy
+        return result;
+    }
+}
+
+// vytvoření graphu
+const graph = new Graph();
+graph.addVertex("A"); graph.addVertex("B"); graph.addVertex("C"); graph.addVertex("D");
+graph.addVertex("E"); graph.addVertex("F"); graph.addVertex("G"); graph.addVertex("H");
+graph.addVertex("I");
+graph.addEdge("A", "D"); graph.addEdge("D", "B"); graph.addEdge("D", "E"); graph.addEdge("B", "C");
+graph.addEdge("D", "C"); graph.addEdge("E", "F"); graph.addEdge("F", "G"); graph.addEdge("G", "A");
+graph.addEdge("G", "H"); graph.addEdge("E", "I"); graph.addEdge("I", "F");
+
+// zavolání metody pro Breadth First procházení (procházet se začne od vertexu D)
+const vysledek = graph.BF("D");
+console.log("Graph se procházel v tomto pořadí:");
+console.log(vysledek);
+</code></pre>
+                        <div class="code-box__graph">
+                            <div id="graph-3" class="graph"></div>
+                        </div>
+                        <div class="code-box__linked-list">
+                            <div id="queue-1" class="linked-list linked-list--bigger-bottom-padding"></div>
+                        </div>
+                        <div class="code-box__array">
+                            <div id="visual-array-3" class="array array--no-padding">
+                                <div class="array__bracket array__bracket--first">[</div><div class="array__item-container"></div><div class="array__bracket array__bracket--last">]</div>
+                            </div>
+                        </div>
+                        <div id="console-3" class="code-box__console">&gt; </div>
+                    </div>
+                </main>
+                <div class="article-page__lateral-side">
+                    <h2 class="heading-secondary u-mb-small">Části Tutoriálu</h2>
+                    <nav class="navigation">
+                        <ul>
+                            <li class="navigation__item"><a href="../big-o-notation/" class="navigation__link"><span>1.</span>Big O Notation</a></li>
+                            <li class="navigation__item"><a href="../postup-pri-reseni-problemu/" class="navigation__link"><span>2.</span>Postup při řešení problému</a></li>
+                            <li class="navigation__item"><a href="../rekurze/" class="navigation__link"><span>3.</span>Rekurze</a></li>
+                            <li class="navigation__item"><a href="../vyhledavaci-algoritmy/" class="navigation__link"><span>4.</span>Vyhledávací algoritmy</a></li>
+                            <li class="navigation__item"><a href="../serazovaci-algoritmy/" class="navigation__link"><span>5.</span>Seřazovací algoritmy</a></li>
+                            <li class="navigation__item"><a href="../singly-linked-list/" class="navigation__link"><span>6.</span>Singly Linked List</a></li>
+                            <li class="navigation__item"><a href="../doubly-linked-list/" class="navigation__link"><span>7.</span>Doubly Linked List</a></li>
+                            <li class="navigation__item"><a href="../stack-a-queue/" class="navigation__link"><span>8.</span>Stack a Queue</a></li>
+                            <li class="navigation__item"><a href="../binary-search-tree/" class="navigation__link"><span>9.</span>Binary Search Tree</a></li>
+                            <li class="navigation__item"><a href="../tree-traversing/" class="navigation__link"><span>10.</span>Tree Traversing</a></li>
+                            <li class="navigation__item"><a href="../binary-heap/" class="navigation__link"><span>11.</span>Binary Heap</a></li>
+                            <li class="navigation__item"><a href="../hash-table/" class="navigation__link"><span>12.</span>Hash Table</a></li>
+                            <li class="navigation__item"><a href="../graph/" class="navigation__link"><span>13.</span>Graph</a></li>
+                            <li class="navigation__item"><a href="../graph-traversing/" class="navigation__link navigation__link--active"><span>14.</span>Graph Traversing</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="../media/js/parts/graphTraversing.js"></script>
+</body>
+</html>

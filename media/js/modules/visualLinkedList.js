@@ -34,7 +34,11 @@ class Node {
                 this._valueEl.classList.add("node__property-value--string");
                 break;
         }
-        this._valueEl.innerText = this.value;
+        if (typeof this.value === "string") {
+            this._valueEl.innerText = `"${this.value}"`;
+        } else {
+            this._valueEl.innerText = this.value;
+        }
         valueProperty.appendChild(this._valueEl);
 
         // create next property element

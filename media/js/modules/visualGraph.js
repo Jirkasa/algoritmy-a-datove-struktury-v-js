@@ -109,6 +109,10 @@ class Vertex {
         containerEl.appendChild(this._element);
     }
 
+    setAsVisited() {
+        this._element.classList.add("graph__vertex--visited");
+    }
+
     hasConnectionToVertex(vertex) {
         let hasConnection = false;
         for (let connection of this._connectedVertices) {
@@ -202,6 +206,11 @@ class VisualGraph {
         }
         this.adjacencyList[vertex].removeElement();
         delete this.adjacencyList[vertex];
+    }
+
+    setVertexAsVisited(vertex) {
+        if (!this.adjacencyList[vertex]) return;
+        this.adjacencyList[vertex].setAsVisited();
     }
 
     setEdgeAsDirected(v1, v2) {
