@@ -15,6 +15,7 @@ class Node {
 
         this._circleElement = document.createElement("div");
         this._circleElement.classList.add("tree__node-circle");
+        if (priority === Infinity) priority = "&infin;";
         this._circleElement.innerHTML = '<span>' + value + '</span><div class="tree__node-priority"><span>' + priority + '</span></div>';
         this._element.appendChild(this._circleElement);
     }
@@ -22,6 +23,7 @@ class Node {
     setValueAndPriority(value, priority) {
         this.value = value;
         this.priority = priority;
+        if (priority === Infinity) priority = "&infin;"
         this._circleElement.innerHTML = '<span>' + value + '</span><div class="tree__node-priority"><span>' + priority + '</span></div>';
     }
 
@@ -66,12 +68,18 @@ class Node {
         this._element.appendChild(el);
     }
 
+    removeChild() {
+        if (this.hasRightChild) this.hasRightChild = false;
+        else if (this.hasLeftChild) this.hasLeftChild = false;
+    }
+
     attachPointer(pointerEl) {
         this._element.appendChild(pointerEl);
     }
 
-    removeElement() {
+    removeElement(parentNode) {
         this._element.remove();
+        if (parentNode) parentNode.removeChild();
     }
 }
 
@@ -112,7 +120,7 @@ class VisualPriorityQueue {
         }
     }
 
-    enqueue(value, priority, twoLevels = false) {
+    enqueue(value, priority, twoLevels = false, minVersion = false) {
         const newNode = new Node(value, priority);
         this.values.push(newNode);
         const parentIdx = Math.trunc((this.values.length-2)/2);
@@ -133,16 +141,17 @@ class VisualPriorityQueue {
             newNode.setAsChild(spaceMultiplier, this.values[parentIdx]);
         }
 
-        this.bubbleUp();
+        this.bubbleUp(minVersion);
     }
 
-    bubbleUp() {
+    bubbleUp(minVersion = false) {
         let idx = this.values.length-1;
 
         while (idx > 0) {
             const parentIndex = Math.trunc((idx-1)/2);
 
-            if (this.values[idx].priority <= this.values[parentIndex].priority) break;
+            if (!minVersion && this.values[idx].priority <= this.values[parentIndex].priority) break;
+            else if (minVersion && this.values[idx].priority >= this.values[parentIndex].priority) break;
 
             const parentValue = this.values[parentIndex].value;
             const parentPriority = this.values[parentIndex].priority;
@@ -150,6 +159,66 @@ class VisualPriorityQueue {
             this.values[idx].setValueAndPriority(parentValue, parentPriority);
 
             idx = parentIndex;
+        }
+    }
+
+    dequeue(minVersion = false) {
+        const max = this.values[0];
+        const parentIdx = Math.trunc((this.values.length-2)/2);
+        const end = this.values.pop();
+        if (parentIdx >= 0) end.removeElement(this.values[parentIdx]);
+        else end.removeElement();
+        if (this.values.length > 0) {
+            this.values[0].setValueAndPriority(end.value, end.priority);
+            this.sinkDown(minVersion);
+        }
+        return max;
+    }
+
+    sinkDown(minVersion = false) {
+        let idx = 0;
+        const length = this.values.length;
+        const element = this.values[0];
+
+        while (true) {
+            let leftChildIdx = 2 * idx + 1;
+            let rightChildIdx = 2 * idx + 2;
+            let leftChild, rightChild;
+            let swap = null;
+
+            if (leftChildIdx < length) {
+                leftChild = this.values[leftChildIdx];
+                if ((!minVersion && leftChild.priority > element.priority) || (minVersion && leftChild.priority < element.priority)) {
+                    swap = leftChildIdx;
+                }
+            }
+            if (rightChildIdx < length) {
+                rightChild = this.values[rightChildIdx];
+                if (!minVersion) {
+                    if (
+                        (swap === null && rightChild.priority > element.priority) ||
+                        (swap !== null && rightChild.priority > leftChild.priority)
+                    ) {
+                        swap = rightChildIdx;
+                    }
+                } else {
+                    if (
+                        (swap === null && rightChild.priority < element.priority) ||
+                        (swap !== null && rightChild.priority < leftChild.priority)
+                    ) {
+                        swap = rightChildIdx;
+                    }
+                }
+            }
+
+            if (swap === null) break;
+            const swapValue = this.values[swap].value;
+            const swapPriority = this.values[swap].priority;
+            const idxValue = this.values[idx].value;
+            const idxPriority = this.values[idx].priority;
+            this.values[idx].setValueAndPriority(swapValue, swapPriority);
+            this.values[swap].setValueAndPriority(idxValue, idxPriority);
+            idx = swap;
         }
     }
 

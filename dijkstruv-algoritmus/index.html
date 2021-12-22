@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=yes maximum-scale=2.2 minimum-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../media/css/style.css">
+
+    <script src="../media/js/libraries/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    <title>Algoritmy a Datové Struktury v JS - Dijkstrův algoritmus</title>
+</head>
+<body>
+    <div class="page">
+        <header class="header">
+            <div class="header__content">
+                <h2 class="header__heading">Algoritmy a Datové Struktury v JS</h2>
+                <nav class="header__navigation">
+                    <ul>
+                        <li><a href="../big-o-notation/">tutoriál</a></li>
+                        <li><a href="#">something</a></li>
+                        <li><a href="#">something</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <div class="heading-section">
+            Dijkstrův algoritmus
+        </div>
+        <div class="article-page">
+            <div class="article-page__content">
+                <main class="article-page__main-side">
+                    <h1 class="heading-primary u-mb-medium">Dijkstrův algoritmus</h1>
+                    <hr class="horizontal-rule u-mb-medium">
+                    <p class="paragraph u-mb-medium">V této části si ukážeme Dijkstrův algoritmus. Jedná se o jeden z nejznámějších algoritmů a je široce používaný.</p>
+                    <h2 class="heading-secondary u-mb-tiny">Co je to Dijkstrův algoritmus</h2>
+                    <p class="paragraph u-mb-small">Dijkstrův algoritmus je algoritmus pro hledání nejkratší cesty v graphu z jednoho vertexu na druhý. Vytvořil jej holandský programátor, fyzik, esejista (a nevím co dalšího ještě byl...) <a href="https://cs.wikipedia.org/wiki/Edsger_Dijkstra" target="_blank" class="anchor">Edsger Dijkstra</a>, po kterém je tento algoritmus pojmenován. Byl to velmi chytrý a vlivný člověk a hodně jeho objevů a algoritmů se běžně používá dodnes.</p>
+                    <p class="paragraph u-mb-medium">Nalezení nejkratší cesty v graphu se hodí na různé věci. Můžeme například chtít nalézt nejkratší cestu z jednoho místa na mapě na druhé a tak dále.</p>
+                    <h2 class="heading-secondary u-mb-tiny">Vytvoření Weighted Graphu</h2>
+                    <p class="paragraph u-mb-small">Dijkstrův algoritmus pracuje s weighted graphy. Edge graphu tedy musí mít přidělenou nějakou hodnotu. V minulých částech jsme si vytvářeli jen obyčejný unweighted graph, takže si pro ukázku Dijkstrova algoritmu musíme weighted graph vytvořit. Vlastně nám jen stačí si naši třídu pro graph trochu poupravit. Protože budeme chtít uchovávat i hodnotu edgů, tak budeme při propojování vertexů muset do adjacency listu kromě samotných vertexů vkládat také hodnotu propojení (edge). Takže namísto samotných vertexů budeme v polích v adjacency listu ukládat objekty, které budou obsahovat vertex, se kterým je vertex, kterému pole patří propojený a hodnotu tohoto propojení.</p>
+                    <p class="paragraph u-mb-small">Následující ukázka ukazuje třídu pro weighted graph, která vznikla upravením třídy pro graph, který jsme vytvářeli v minulých částech. Metoda addVertex zůstala stejná, metody removeEdge a removeVertex se změnili jen lehce a v metodě addEdge se teď do adjacency listu namísto samotného vertexu přidává objekt.</p>
+                    <div class="code-box u-mb-medium">
+                        <pre class="code-box__code"><code>class WeightedGraph {
+    constructor() {
+        this.adjacencyList = {};
+    }
+
+    addVertex(vertex) {
+        if (!this.adjacencyList[vertex]) this.adjacencyList[vertex] = [];
+    }
+
+    // jako parametr se metodě addEdge předává i hodnota edge
+    addEdge(v1, v2, weight) {
+        if (!this.adjacencyList[v1] || !this.adjacencyList[v2]) return;
+        // protože pole obsahují objekty, tak se pro ověření jestli již vertexy nejsou propojené používá metoda findIndex
+        // do polí v adjacency listu se u weighted graphu vkládají objekty, které obsahují propojený vertex a hodnotu propojení 
+        if (this.adjacencyList[v1].findIndex(v => v.node === v2) === -1) this.adjacencyList[v1].push({node: v2, weight});
+        if (this.adjacencyList[v2].findIndex(v => v.node === v1) === -1) this.adjacencyList[v2].push({node: v1, weight});
+    }
+
+    removeEdge(v1, v2) {
+        if (!this.adjacencyList[v1] || !this.adjacencyList[v2]) return;
+        // protože jsou v adjacency listu uloženy objekty, tak se musí porovnávat s jejich vlastností jménem node
+        let index = this.adjacencyList[v1].findIndex((v) => v.node === v2);
+        if (index !== -1) this.adjacencyList[v1].splice(index, 1);
+        // protože jsou v adjacency listu uloženy objekty, tak se musí porovnávat s jejich vlastností jménem node
+        index = this.adjacencyList[v2].findIndex((v) => v.node === v1);
+        if (index !== -1) this.adjacencyList[v2].splice(index, 1);
+    }
+
+    removeVertex(vertex) {
+        while (this.adjacencyList[vertex].length) {
+            const adjacentVertex = this.adjacencyList[vertex].pop();
+            // proměnná adjacentVertex uchovává objekt, ale do metody removeEdge chceme předat vertex
+            this.removeEdge(vertex, adjacentVertex.node);
+        }
+        delete this.adjacencyList[vertex];
+    }
+}</code></pre>
+                    </div>
+                    <h2 class="heading-secondary u-mb-tiny">Jak Dijkstrův algoritmus funguje</h2>
+                    <p class="paragraph u-mb-small">Než si do naší WeightedGraph třídy přidáme metodu pro nalezení nejkratší cesty z jednoho vertexu na druhý, tak si vysvětlíme, jak vůbec Dijkstrův algoritmus funguje. Pro tento účel jsem vytvořil následující vizuální ukázku, protože v textu se to vysvětluje špatně.</p>
+                    <div data-interactive-example-id="1" class="code-box u-mb-medium">
+                        <div class="code-box__header">
+                            <div class="code-box__icon">
+                                <svg>
+                                    <use xlink:href="../media/img/icon-sprite.svg#icon-cogs"></use>
+                                </svg>
+                            </div>
+                            <div class="code-box__buttons-container">
+                                <button class="code-box__button code-box__button--move" data-interactive-example-move-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-forward3"></use>
+                                    </svg>
+                                </button>
+                                <select class="code-box__speed-input" data-interactive-example-speed-input="true">
+                                    <option value="0.25">0.25</option>
+                                    <option value="0.5">0.5</option>
+                                    <option value="0.75">0.75</option>
+                                    <option selected value="1">1</option>
+                                    <option value="1.25">1.25</option>
+                                    <option value="1.5">1.5</option>
+                                    <option value="1.75">1.75</option>
+                                </select>
+                                <button class="code-box__button" data-interactive-example-play-button="true">
+                                    <span>
+                                        <svg>
+                                            <use xlink:href="../media/img/icon-sprite.svg#icon-play3"></use>
+                                        </svg>
+                                    </span>
+                                </button>
+                                <button class="code-box__button code-box__button--reset" data-interactive-example-reset-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-loop2"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="code-box__graph" style="border-top: none;">
+                            <div id="dijkstra-explanation-graph" class="graph"></div>
+                        </div>
+                        <div class="code-box__dijkstras-algorithm-explanation">
+                            <div class="dijkstra-explanation">
+                                <div class="dijkstra-explanation__description">Hledáme nejkratší cestu z vertexu A k vertexu E</div>
+                                <div id="dijkstra-explanation-message" class="dijkstra-explanation__message">Chceme najít nejkratší cestu z vertexu A k vertexu E.</div>
+                                <div class="dijkstra-explanation__bottom-part">
+                                    <div class="dijkstra-explanation__bottom-part-side">
+                                        <table class="dijkstra-explanation__shortest-path-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>vertex</th>
+                                                    <th>nejkratší cesta od A</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="dijkstra-explanation-shortest-path-table-body">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="dijkstra-explanation__bottom-part-side">
+                                        <div class="dijkstra-explanation__visited-vertices">
+                                            <div class="dijkstra-explanation__visited-vertices-header">navštívené vertexy</div>
+                                            <div id="dijkstra-explanation-visited-vertices" class="dijkstra-explanation__visited-vertices-container">
+                                                []
+                                            </div>
+                                        </div>
+                                        <div class="dijkstra-explanation__previous-vertices">
+                                            <div class="dijkstra-explanation__previous-vertices-header">předcházející vertex</div>
+                                            <div class="dijkstra-explanation__previous-vertices-container">
+                                                {<br>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;A: <span id="previous-vertex-1">null</span>,<br>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;B: <span id="previous-vertex-2">null</span>,<br>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;C: <span id="previous-vertex-3">null</span>,<br>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;D: <span id="previous-vertex-4">null</span>,<br>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;E: <span id="previous-vertex-5">null</span>,<br>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;F: <span id="previous-vertex-6">null</span><br>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h2 class="heading-secondary u-mb-tiny">Dijkstrův algoritmus používá Priority Queue</h2>
+                    <p class="paragraph u-mb-small">K vytvoření Dijkstrova algoritmu potřebujeme Priority Queue. Tu jsme vytvářeli v části <a href="../binary-heap/" class="anchor">Binary Heap</a>. Vytvořili jsme si Priority Queue, která je postavená na Max Binary Heap, ale pro Dijkstrův algoritmus potřebujeme Priority Queue, která je postavená na Min Binary Heap. Položky s nižší prioritou by měli mít v Priority Queue přednost. Budeme si tedy muset naši Priority Queue upravit tak, aby byla postavená na Min Binary Heap. Jediná věc, kterou v naší třídě budeme muset změnit jsou porovnávací znaménka v podmínkách u metod bubbleUp a sinkDown.</p>
+                    <p class="paragraph u-mb-small">Navíc si do naší PriorityQueue třídy přidáme ještě vlastnost length, abychom mohli jednoduše zjistit, kolik Priority Queue obsahuje položek. Následující ukázka upravenou třídu pro Priority Queue ukazuje.</p>
+                    <div class="code-box u-mb-medium">
+                        <pre class="code-box__code"><code>class Node {
+    constructor(value, priority) {
+        this.value = value;
+        this.priority = priority;
+    }
+}
+
+class PriorityQueue {
+    constructor() {
+        this.values = [];
+        // PriorityQueue teď obsahuje také vlastnost pro počet položek, které uchovává
+        this.length = 0;
+    }
+
+    enqueue(value, priority) {
+        this.values.push(new Node(value, priority));
+        // zvýšení počtu položek v Priority Queue
+        this.length++;
+        this.bubbleUp();
+    }
+
+    bubbleUp() {
+        let idx = this.values.length-1;
+
+        while (idx > 0) {
+            const parentIdx = Math.trunc((idx-1)/2);
+
+            // změnilo se porovnávací znaménko
+            if (this.values[idx].priority &gt;= this.values[parentIdx].priority) break;
+
+            const parent = this.values[parentIdx];
+            this.values[parentIdx] = this.values[idx];
+            this.values[idx] = parent;
+
+            idx = parentIdx;
+        }
+    }
+
+    dequeue() {
+        const max = this.values[0];
+        const end = this.values.pop();
+        // snížení počtu položek v Priority Queue
+        this.length--;
+        if (this.values.length &gt; 0) {
+            this.values[0] = end;
+            this.sinkDown();
+        }
+        return max;
+    }
+
+    sinkDown() {
+        let idx = 0;
+        const length = this.values.length;
+        const element = this.values[0];
+
+        while (true) {
+            let leftChildIdx = 2 * idx + 1;
+            let rightChildIdx = 2 * idx + 2;
+            let leftChild, rightChild;
+            let swap = null;
+
+            if (leftChildIdx &lt; length) {
+                leftChild = this.values[leftChildIdx];
+                // změnilo se porovnávací znaménko
+                if (leftChild.priority &lt; element.priority) {
+                    swap = leftChildIdx;
+                }
+            }
+            if (rightChildIdx &lt; length) {
+                rightChild = this.values[rightChildIdx];
+                if (
+                    // změnila se porovnávací znaménka
+                    (swap === null && rightChild.priority &lt; element.priority) ||
+                    (swap !== null && rightChild.priority &lt; leftChild.priority)
+                ) {
+                    swap = rightChildIdx;
+                }
+            }
+
+            if (swap === null) break;
+            this.values[idx] = this.values[swap];
+            this.values[swap] = element;
+            idx = swap;
+        }
+    }
+}</code></pre>
+                    </div>
+                    <h2 class="heading-secondary u-mb-tiny">Implementace Dijkstrova algoritmu</h2>
+                    <p class="paragraph u-mb-small">Ukázali jsme si jak Dijkstrův algoritmus funguje a protože k jeho implementaci potřebujeme Priority Queue postavenou na Min Binary Heap, upravili jsme si naši Priority Queue třídu. Teď už se můžeme pustit do samotného kódu Dijkstrova algoritmu. Následující ukázka jej ukazuje.</p>
+                    <div data-interactive-example-id="2" class="code-box u-mb-small">
+                        <div class="code-box__header">
+                            <div class="code-box__icon">
+                                <svg>
+                                    <use xlink:href="../media/img/icon-sprite.svg#icon-cogs"></use>
+                                </svg>
+                            </div>
+                            <div class="code-box__buttons-container">
+                                <button class="code-box__button code-box__button--move" data-interactive-example-move-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-forward3"></use>
+                                    </svg>
+                                </button>
+                                <select class="code-box__speed-input" data-interactive-example-speed-input="true">
+                                    <option value="0.25">0.25</option>
+                                    <option value="0.5">0.5</option>
+                                    <option value="0.75">0.75</option>
+                                    <option selected value="1">1</option>
+                                    <option value="1.25">1.25</option>
+                                    <option value="1.5">1.5</option>
+                                    <option value="1.75">1.75</option>
+                                </select>
+                                <button class="code-box__button" data-interactive-example-play-button="true">
+                                    <span>
+                                        <svg>
+                                            <use xlink:href="../media/img/icon-sprite.svg#icon-play3"></use>
+                                        </svg>
+                                    </span>
+                                </button>
+                                <button class="code-box__button code-box__button--reset" data-interactive-example-reset-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-loop2"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <pre id="code-1" class="code-box__code code-box__code--max-height"><code>class WeightedGraph {
+    /* ... */
+
+    // metoda pro zjištění nejkratší cesty mezi dvěma vertexy
+    shortestPath(start, finish) {
+        // vytvoření Priority Queue
+        const nodes = new PriorityQueue();
+        // V tomto objektu se budou ukládat vzdálenosti od startovního vertexu
+        const distances = {};
+        // v tomto objektu se budou ukládat předcházející vertexy vertexů
+        const previous = {};
+        // do tohoto pole se na konci uloží nejkratší cesta a pole se vrátí
+        let path = [];
+        // tato proměnná bude sloužit k ukládání získané položky z Priority Queue
+        let smallest;
+
+        // tento cyklus naplní objekt distances a přidá všechny vertexy do Priority Queue
+        for (let vertex in this.adjacencyList) {
+            if (vertex === start) {
+                // pokud se jedná o startovní vertex, tak se mu do objektu distances uloží vzdálenost 0
+                distances[vertex] = 0;
+                // startovní vertex se do Priority Queue přidá s prioritou 0 (vzdáleností 0)
+                nodes.enqueue(vertex, 0);
+            } else {
+                // pokud se nejedná o startovní vertex, tak se mu do objektu distances uloží vzdálenost jako nekonečno
+                distances[vertex] = Infinity;
+                // vertex se do Priority Queue přidá s prioritou nekonečno
+                nodes.enqueue(vertex, Infinity);
+            }
+            // v objektu previous se objektu nastaví jako předchozí vertex null
+            previous[vertex] = null;
+        }
+
+        // tento cyklus bude probíhat tak dlouho, dokud Priority Queue bude obsahovat nějaké položky
+        while (nodes.length &gt; 0) {
+            // získání vertexu z Priority Queue (získání vertexu s nejmenší vzdáleností, který se v Priority Queue nachází)
+            smallest = nodes.dequeue().value; // Priority Queue vrací Node objekt, stačí nám ale jen hodnota (vertex)
+
+            // pokud se došlo ke konečnému vertexu, tak se našla nejkratší cesta
+            if (smallest === finish) {
+                // pole se naplní vertexy pomocí hodnot v objektu previous
+                while (previous[smallest]) {
+                    path.push(smallest);
+                    smallest = previous[smallest];
+                }
+                // cyklus může skončit
+                break;
+            }
+
+            // tento cyklus projde všechny vertexy, které jsou s vertexem smallest propojeny
+            for (let neighbor of this.adjacencyList[smallest]) {
+                // zjištění vzdálenosti vertexu od startovního vertexu přes vertex smallest
+                let candidate = distances[smallest] + neighbor.weight;
+
+                // pokud je zjištěná vzdálenost menší než vzdálenost v objektu distances, tak se hodnota v objektu distances změní
+                if (candidate &lt; distances[neighbor.node]) {
+                    // změnění vzdálenosti vertexu od startovního vertexu v objektu distances
+                    distances[neighbor.node] = candidate;
+                    // nová kratší cesta vede přes vertex smallest (předchozí vertex) - vertex smallest se uloží do objektu previous
+                    previous[neighbor.node] = smallest;
+                    // vertex se vloží do Priority Queue s novou vzdáleností jako prioritou
+                    nodes.enqueue(neighbor.node, candidate);
+                }
+            }
+        }
+        // na konec pole path se přidá startovní vertex, pole se převrátí a metoda jej vrátí
+        return path.concat(smallest).reverse();
+    }
+}
+
+// vytvoření graphu
+const graph = new WeightedGraph();
+graph.addVertex("A"); graph.addVertex("B"); graph.addVertex("E");
+graph.addVertex("F"); graph.addVertex("D"); graph.addVertex("C");
+graph.addEdge("A", "B", 4); graph.addEdge("A", "C", 2); graph.addEdge("B", "E", 3);
+graph.addEdge("C", "D", 2); graph.addEdge("D", "E", 3); graph.addEdge("D", "F", 1);
+graph.addEdge("C", "F", 4); graph.addEdge("F", "E", 1);
+
+// zjištění nejkratší cesty z vertexu A k vertexu E
+const cesta = graph.shortestPath("A", "E");
+console.log("Nejkratší cesta z vertexu A k vertexu E je:");
+console.log(cesta);</code></pre>
+                        <div class="code-box__graph code-box__graph--bigger-top-padding">
+                            <div id="weighted-graph-1" class="graph"></div>
+                        </div>
+                        <div class="code-box__dijkstras-algorithm-explanation">
+                            <div class="dijkstra-explanation dijkstra-explanation--no-padding">
+                                <div class="dijkstra-explanation__bottom-part dijkstra-explanation__bottom-part--no-margin">
+                                    <div class="dijkstra-explanation__bottom-part-side">
+                                        <div id="code-distances-object" class="dijkstra-explanation__previous-vertices">
+                                            <div class="dijkstra-explanation__previous-vertices-header">distances</div>
+                                            <div class="dijkstra-explanation__previous-vertices-container">
+                                                {<br>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;A: <span id="code-distance-A">undefined</span>,<br>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;B: <span id="code-distance-B">undefined</span>,<br>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;C: <span id="code-distance-C">undefined</span>,<br>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;D: <span id="code-distance-D">undefined</span>,<br>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;E: <span id="code-distance-E">undefined</span>,<br>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;F: <span id="code-distance-F">undefined</span><br>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="dijkstra-explanation__bottom-part-side">
+                                        <div id="code-previous-object" class="dijkstra-explanation__previous-vertices">
+                                            <div class="dijkstra-explanation__previous-vertices-header">previous</div>
+                                            <div class="dijkstra-explanation__previous-vertices-container">
+                                                {<br>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;A: <span id="code-previous-vertex-A">undefined</span>,<br>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;B: <span id="code-previous-vertex-B">undefined</span>,<br>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;C: <span id="code-previous-vertex-C">undefined</span>,<br>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;D: <span id="code-previous-vertex-D">undefined</span>,<br>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;E: <span id="code-previous-vertex-E">undefined</span>,<br>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;F: <span id="code-previous-vertex-F">undefined</span><br>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="code-box__tree">
+                            <div id="priority-queue-1" class="tree"></div>
+                        </div>
+                        <div id="console-1" class="code-box__console">&gt; </div>
+                    </div>
+                    <p class="paragraph u-mb-small">Předchozí ukázka vizuálně ukazuje Priority Queue, kterou Dijkstrův algoritmus používá. Mohli jste si na ní všimnout jedné zajímavé věci. V ukázce Priority Queue na konci skončí neseřazená. Stalo se to kvůli tomu, že Priority Queue obsahovala více položek se stejnou prioritou a některé položky se tak nemohli umístit na správné místo. Pro dijkstrův algoritmus to tolik nevadí, nebude kvůli tomu fungovat špatně. Pokud byste se ale Priority Queue rozhodli použít někde jinde a budete do ní ukládat více položek se stejnou prioritou, tak je potřeba s těmito problémy počítat.</p>
+                    <p class="paragraph">Doufám že vám vizuální ukázky pomohli Dijkstrův algoritmus pochopit. V příští, poslední části se pustíme do dynamického programování.</p>
+                </main>
+                <div class="article-page__lateral-side">
+                    <h2 class="heading-secondary u-mb-small">Části Tutoriálu</h2>
+                    <nav class="navigation">
+                        <ul>
+                            <li class="navigation__item"><a href="../big-o-notation/" class="navigation__link"><span>1.</span>Big O Notation</a></li>
+                            <li class="navigation__item"><a href="../postup-pri-reseni-problemu/" class="navigation__link"><span>2.</span>Postup při řešení problému</a></li>
+                            <li class="navigation__item"><a href="../rekurze/" class="navigation__link"><span>3.</span>Rekurze</a></li>
+                            <li class="navigation__item"><a href="../vyhledavaci-algoritmy/" class="navigation__link"><span>4.</span>Vyhledávací algoritmy</a></li>
+                            <li class="navigation__item"><a href="../serazovaci-algoritmy/" class="navigation__link"><span>5.</span>Seřazovací algoritmy</a></li>
+                            <li class="navigation__item"><a href="../singly-linked-list/" class="navigation__link"><span>6.</span>Singly Linked List</a></li>
+                            <li class="navigation__item"><a href="../doubly-linked-list/" class="navigation__link"><span>7.</span>Doubly Linked List</a></li>
+                            <li class="navigation__item"><a href="../stack-a-queue/" class="navigation__link"><span>8.</span>Stack a Queue</a></li>
+                            <li class="navigation__item"><a href="../binary-search-tree/" class="navigation__link"><span>9.</span>Binary Search Tree</a></li>
+                            <li class="navigation__item"><a href="../tree-traversing/" class="navigation__link"><span>10.</span>Tree Traversing</a></li>
+                            <li class="navigation__item"><a href="../binary-heap/" class="navigation__link"><span>11.</span>Binary Heap</a></li>
+                            <li class="navigation__item"><a href="../hash-table/" class="navigation__link"><span>12.</span>Hash Table</a></li>
+                            <li class="navigation__item"><a href="../graph/" class="navigation__link"><span>13.</span>Graph</a></li>
+                            <li class="navigation__item"><a href="../graph-traversing/" class="navigation__link"><span>14.</span>Graph Traversing</a></li>
+                            <li class="navigation__item"><a href="../dijkstruv-algoritmus/" class="navigation__link navigation__link--active"><span>15.</span>Dijkstrův algoritmus</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="../media/js/parts/dijkstruvAlgoritmus.js"></script>
+</body>
+</html>

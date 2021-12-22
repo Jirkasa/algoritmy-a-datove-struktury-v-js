@@ -113,6 +113,17 @@ class Vertex {
         this._element.classList.add("graph__vertex--visited");
     }
 
+    setAsUnvisited() {
+        this._element.classList.remove("graph__vertex--visited");
+    }
+
+    setAsActive() {
+        this._element.classList.add("graph__vertex--active");
+    }
+    unsetAsActive() {
+        this._element.classList.remove("graph__vertex--active");
+    }
+
     hasConnectionToVertex(vertex) {
         let hasConnection = false;
         for (let connection of this._connectedVertices) {
@@ -211,6 +222,21 @@ class VisualGraph {
     setVertexAsVisited(vertex) {
         if (!this.adjacencyList[vertex]) return;
         this.adjacencyList[vertex].setAsVisited();
+    }
+
+    setVertexAsUnvisited(vertex) {
+        if (!this.adjacencyList[vertex]) return;
+        this.adjacencyList[vertex].setAsUnvisited();
+    }
+
+    setVertexAsActive(vertex) {
+        if (!this.adjacencyList[vertex]) return;
+        this.adjacencyList[vertex].setAsActive();
+    }
+
+    unsetVertexAsActive(vertex) {
+        if (!this.adjacencyList[vertex]) return;
+        this.adjacencyList[vertex].unsetAsActive();
     }
 
     setEdgeAsDirected(v1, v2) {

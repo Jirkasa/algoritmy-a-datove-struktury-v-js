@@ -26,6 +26,11 @@
         &--visited {
             background-color: @colors[light-red];
         }
+
+        &--active {
+            outline: .3rem solid darken(@colors[light-green], 15%);
+            outline-offset: -.1rem;
+        }
     }
 
     &__vertex-pointer {
