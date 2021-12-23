@@ -23,9 +23,9 @@
                 <h2 class="header__heading">Algoritmy a Datové Struktury v JS</h2>
                 <nav class="header__navigation">
                     <ul>
-                        <li><a href="../big-o-notation/">tutoriál</a></li>
-                        <li><a href="#">something</a></li>
-                        <li><a href="#">something</a></li>
+                        <li><a class="header__navigation-link" href="../">úvod</a></li>
+                        <li><a class="header__navigation-link header__navigation-link--active" href="../big-o-notation/">tutoriál</a></li>
+                        <li><a class="header__navigation-link" href="../prehled/">přehled</a></li>
                     </ul>
                 </nav>
             </div>
@@ -118,19 +118,44 @@ console.log("Šesté číslo ve Fibonacciho posloupnosti je: " + vysledek);</cod
                     <p class="paragraph u-mb-small">Na začátku této části jsem psal, že dynamické programování se dá použít na problémy, které se dají rozdělit na podproblémy, ale řešení těchto podproblémů se musí dát při řešení problému použít opakovaně. U naší funkce toto pravidlo platí. Když se podíváte na následující graf znázorňující volání funkce fib, tak zjistíte, že například pro číslo 4 se funkce fib volá dvakrát.</p>
                     <div class="code-box u-mb-small">
                         <div class="code-box__calculation-structure code-box__calculation-structure--bigger">
-                            <div class="calculation-structure__node calculation-structure__node--root">
-                                <div class="calculation-structure__item">fib(6)</div>
-                                <div class="calculation-structure__node calculation-structure__left-child calculation-structure__left-child--triple-space">
-                                    <div class="calculation-structure__item">fib(5)</div>
-                                    <div class="calculation-structure__node calculation-structure__left-child calculation-structure__left-child--double-space">
-                                        <div class="calculation-structure__item">fib(4)</div>
-                                        <div class="calculation-structure__node calculation-structure__left-child">
+                            <div class="calculation-structure">
+                                <div class="calculation-structure__node calculation-structure__node--root">
+                                    <div class="calculation-structure__item">fib(6)</div>
+                                    <div class="calculation-structure__node calculation-structure__left-child calculation-structure__left-child--triple-space">
+                                        <div class="calculation-structure__item">fib(5)</div>
+                                        <div class="calculation-structure__node calculation-structure__left-child calculation-structure__left-child--double-space">
+                                            <div class="calculation-structure__item">fib(4)</div>
+                                            <div class="calculation-structure__node calculation-structure__left-child">
+                                                <div class="calculation-structure__item">fib(3)</div>
+                                                <div class="calculation-structure__node calculation-structure__child">
+                                                    <div class="calculation-structure__item">1</div>
+                                                </div>
+                                            </div>
+                                            <div class="calculation-structure__node calculation-structure__right-child">
+                                                <div class="calculation-structure__item">fib(2)</div>
+                                                <div class="calculation-structure__node calculation-structure__child">
+                                                    <div class="calculation-structure__item">1</div>
+                                                </div>
+                                            </div>
+                                            <div class="calculation-structure__operation">+</div>
+                                        </div>
+                                        <div class="calculation-structure__node calculation-structure__right-child calculation-structure__right-child--double-space">
                                             <div class="calculation-structure__item">fib(3)</div>
                                             <div class="calculation-structure__node calculation-structure__child">
                                                 <div class="calculation-structure__item">1</div>
                                             </div>
                                         </div>
-                                        <div class="calculation-structure__node calculation-structure__right-child">
+                                        <div class="calculation-structure__operation">+</div>
+                                    </div>
+                                    <div class="calculation-structure__node calculation-structure__right-child calculation-structure__right-child--triple-space">
+                                        <div class="calculation-structure__item">fib(4)</div>
+                                        <div class="calculation-structure__node calculation-structure__left-child calculation-structure__left-child--double-space">
+                                            <div class="calculation-structure__item">fib(3)</div>
+                                            <div class="calculation-structure__node calculation-structure__child">
+                                                <div class="calculation-structure__item">1</div>
+                                            </div>
+                                        </div>
+                                        <div class="calculation-structure__node calculation-structure__right-child calculation-structure__right-child--double-space">
                                             <div class="calculation-structure__item">fib(2)</div>
                                             <div class="calculation-structure__node calculation-structure__child">
                                                 <div class="calculation-structure__item">1</div>
@@ -138,31 +163,8 @@ console.log("Šesté číslo ve Fibonacciho posloupnosti je: " + vysledek);</cod
                                         </div>
                                         <div class="calculation-structure__operation">+</div>
                                     </div>
-                                    <div class="calculation-structure__node calculation-structure__right-child calculation-structure__right-child--double-space">
-                                        <div class="calculation-structure__item">fib(3)</div>
-                                        <div class="calculation-structure__node calculation-structure__child">
-                                            <div class="calculation-structure__item">1</div>
-                                        </div>
-                                    </div>
                                     <div class="calculation-structure__operation">+</div>
                                 </div>
-                                <div class="calculation-structure__node calculation-structure__right-child calculation-structure__right-child--triple-space">
-                                    <div class="calculation-structure__item">fib(4)</div>
-                                    <div class="calculation-structure__node calculation-structure__left-child calculation-structure__left-child--double-space">
-                                        <div class="calculation-structure__item">fib(3)</div>
-                                        <div class="calculation-structure__node calculation-structure__child">
-                                            <div class="calculation-structure__item">1</div>
-                                        </div>
-                                    </div>
-                                    <div class="calculation-structure__node calculation-structure__right-child calculation-structure__right-child--double-space">
-                                        <div class="calculation-structure__item">fib(2)</div>
-                                        <div class="calculation-structure__node calculation-structure__child">
-                                            <div class="calculation-structure__item">1</div>
-                                        </div>
-                                    </div>
-                                    <div class="calculation-structure__operation">+</div>
-                                </div>
-                                <div class="calculation-structure__operation">+</div>
                             </div>
                         </div>
                     </div>
@@ -321,6 +323,9 @@ console.log("Šesté číslo ve Fibonacciho posloupnosti je: " + vysledek);</cod
                 </div>
             </div>
         </div>
+        <footer class="footer">
+            Copyright &copy; by Jiří Satora
+        </footer>
     </div>
 
     <script type="module" src="../media/js/parts/dynamickeProgramovani.js"></script>

@@ -51,6 +51,11 @@
             background-color: darken(@colors[light-green], 15%);
         }
 
+        &:focus-visible {
+            outline: none;
+            background-color: darken(@colors[light-green], 15%);
+        }
+
         svg {
             width: 90%;
             height: 90%;
@@ -71,6 +76,11 @@
                 background-color: darken(@colors[light-orange], 15%);
             }
 
+            &:focus-visible {
+                outline: none;
+                background-color: darken(@colors[light-orange], 15%);
+            }
+
             svg {
                 width: 80%;
                 height: 80%;
@@ -88,6 +98,11 @@
             &:active {
                 background-color: darken(@colors[light-yellow], 15%);
             }
+
+            &:focus-visible {
+                outline: none;
+                background-color: darken(@colors[light-yellow], 15%);
+            }
         }
     }
 
@@ -103,6 +118,9 @@
         &:focus {
             outline: none;
             border-color: @colors[light-green];
+        }
+        &:focus-visible {
+            background-color: shade(lighten(@colors[light-green], 30%), 10%);
         }
     }
 
@@ -192,6 +210,30 @@
 
         text-align: center;
         padding: .5rem;
+
+        overflow-x: auto;
+
+        // width
+        &::-webkit-scrollbar {
+            width: 1.3rem;
+            height: 1.3rem;
+        }
+
+        // track
+        &::-webkit-scrollbar-track {
+            background: darken(@colors[primary], 25%);
+        }
+
+        // handle
+        &::-webkit-scrollbar-thumb {
+            background: darken(@colors[primary], 5%);
+            border-radius: 1px;
+            border: 2px solid lighten(@colors[primary], 10%);
+
+            &:hover {
+                background: darken(@colors[primary], 8%);
+            }
+        }
     }
 
     &__linked-list {
@@ -200,7 +242,31 @@
 
         padding: .5rem;
 
-        min-height: 5rem;
+        min-height: 5rem + 1.3rem;
+
+        overflow-x: auto;
+
+        // width
+        &::-webkit-scrollbar {
+            width: 1.3rem;
+            height: 1.3rem;
+        }
+
+        // track
+        &::-webkit-scrollbar-track {
+            background: darken(@colors[primary], 25%);
+        }
+
+        // handle
+        &::-webkit-scrollbar-thumb {
+            background: darken(@colors[primary], 5%);
+            border-radius: 1px;
+            border: 2px solid lighten(@colors[primary], 10%);
+
+            &:hover {
+                background: darken(@colors[primary], 8%);
+            }
+        }
     }
 
     &__tree {
@@ -209,13 +275,37 @@
 
         padding: 1rem;
 
-        min-height: 18rem;
+        min-height: 18rem + 1.3rem;
+
+        overflow-x: auto;
+
+        // width
+        &::-webkit-scrollbar {
+            width: 1.3rem;
+            height: 1.3rem;
+        }
+
+        // track
+        &::-webkit-scrollbar-track {
+            background: darken(@colors[primary], 25%);
+        }
+
+        // handle
+        &::-webkit-scrollbar-thumb {
+            background: darken(@colors[primary], 5%);
+            border-radius: 1px;
+            border: 2px solid lighten(@colors[primary], 10%);
+
+            &:hover {
+                background: darken(@colors[primary], 8%);
+            }
+        }
 
         &--additional-space-for-variable {
-            min-height: 20rem;
+            min-height: 20rem + 1.3rem;
         }
         &--additional-space-for-variable-and-pointer {
-            min-height: 21rem;
+            min-height: 21rem + 1.3rem;
         }
 
         &--smaller-height {
@@ -231,6 +321,30 @@
         border-top: .3rem solid @colors[primary];
 
         padding: 1rem;
+
+        overflow-x: auto;
+
+        // width
+        &::-webkit-scrollbar {
+            width: 1.3rem;
+            height: 1.3rem;
+        }
+
+        // track
+        &::-webkit-scrollbar-track {
+            background: darken(@colors[primary], 25%);
+        }
+
+        // handle
+        &::-webkit-scrollbar-thumb {
+            background: darken(@colors[primary], 5%);
+            border-radius: 1px;
+            border: 2px solid lighten(@colors[primary], 10%);
+
+            &:hover {
+                background: darken(@colors[primary], 8%);
+            }
+        }
 
         &--bigger-top-padding {
             padding-top: 2rem;
@@ -248,12 +362,36 @@
         background-color: darken(@colors[primary], 20%);
         border-top: .3rem solid @colors[primary];
 
-        min-height: 17rem;
+        min-height: 17rem + 1.3rem;
 
         padding: 1rem;
 
+        overflow-x: auto;
+
+        // width
+        &::-webkit-scrollbar {
+            width: 1.3rem;
+            height: 1.3rem;
+        }
+
+        // track
+        &::-webkit-scrollbar-track {
+            background: darken(@colors[primary], 25%);
+        }
+
+        // handle
+        &::-webkit-scrollbar-thumb {
+            background: darken(@colors[primary], 5%);
+            border-radius: 1px;
+            border: 2px solid lighten(@colors[primary], 10%);
+
+            &:hover {
+                background: darken(@colors[primary], 8%);
+            }
+        }
+
         &--bigger {
-            min-height: 20rem;
+            min-height: 20rem + 1.3rem;
         }
     }
 
