@@ -316,17 +316,18 @@ code.hljs {
   font-size: 1.6rem;
   color: #2d3e50;
   text-decoration: none;
-  padding: 0.8rem 0;
-  padding-right: 0.8rem;
+  padding: 0.5rem 0.8rem;
+  border: 0.2rem solid #e6e6e6;
   border-radius: 0.5rem;
-  transition: all 0.2s, background-color 0.3s;
+  transition: all 0.2s;
+  background-color: #f0f0f0;
 }
 .navigation__link:hover,
 .navigation__link--active:link,
 .navigation__link--active:visited {
   background-color: #2d3e50;
+  border-color: #34485d;
   color: #fff;
-  padding: 0.8rem;
 }
 .navigation__link span {
   font-weight: 700;
@@ -1414,6 +1415,30 @@ code.hljs {
   overflow: hidden;
 }
 .article-page__lateral-side {
-  flex: 0 0 40rem;
+  flex: 0 0 35rem;
   padding-left: 5rem;
+}
+.article-page__sticky-content {
+  position: sticky;
+  top: 0;
+  padding: 1rem 0;
+  padding-right: 0.5rem;
+  max-height: 100vh;
+  overflow-y: auto;
+}
+.article-page__sticky-content::-webkit-scrollbar {
+  width: 1.3rem;
+  height: 1.3rem;
+}
+.article-page__sticky-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+.article-page__sticky-content::-webkit-scrollbar-thumb {
+  background: #f0f0f0;
+  border: 0.2rem solid #dedede;
+  border-radius: 0.3rem;
+  padding-left: 1rem;
+}
+.article-page__sticky-content::-webkit-scrollbar-thumb:hover {
+  background: #e6e6e6;
 }

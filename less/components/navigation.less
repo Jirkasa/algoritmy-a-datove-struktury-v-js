@@ -51,19 +51,20 @@
             color: @colors[dark];
             text-decoration: none;
 
-            padding: .8rem 0;
-            padding-right: .8rem;
+            padding: .5rem .8rem;
 
+            border: .2rem solid darken(@colors[white], 10%);
             border-radius: .5rem;
 
-            transition: all .2s, background-color .3s;
+            transition: all .2s;
+
+            background-color: darken(@colors[white], 6%);
         }
 
         &:hover, &--active:link, &--active:visited {
             background-color: @colors[dark];
+            border-color: lighten(@colors[dark], 4%);
             color: @colors[white];
-
-            padding: .8rem;
         }
 
         span {
