@@ -39,9 +39,9 @@
                     <h1 class="heading-primary u-mb-medium">Graph Traversing</h1>
                     <hr class="horizontal-rule u-mb-medium">
                     <p class="paragraph u-mb-medium">Minulá část byla o datové struktuře jménem Graph. Dozvěděli jste se v ní co to graph je, jaké jsou typy graphů a také jsme si pro graph vytvořili vlastní třídu. V této části si ukážeme, jak můžeme graph procházet.</p>
-                    <h2 class="heading-secondary u-mb-tiny">Co je to Graph Traversing</h2>
+                    <h2 id="co-je-to-graph-traversing" class="heading-secondary u-mb-tiny">Co je to Graph Traversing</h2>
                     <p class="paragraph u-mb-small">Tato část je pojmenovaná jako Graph Traversing. Jak jsem již psal v části <a href="../tree-traversing/" class="anchor">Tree Traversing</a>, v češtině traversing znamená procházení. Ukážeme si tedy, jakými způsoby můžeme graph procházet. Stejně jako u procházení tree, tak i u graphů existují dva hlavní způsoby pro jejich procházení: Breadth First a Depth First. Pro oba tyto způsoby si do naší graph třídy, kterou jsme si vytvořili v minulé části, přidáme metodu. Tyto metody projdou všechny vertexy graphu a na konci vrátí pole, které bude obsahovat vertexy graphu v pořadí, ve kterém byly navštíveny.</p>
-                    <h2 class="heading-secondary u-mb-tiny">Co pro ukázku procházení Graphu potřebujeme</h2>
+                    <h2 id="co-pro-ukazku-prochazeni-graphu-potrebujeme" class="heading-secondary u-mb-tiny">Co pro ukázku procházení Graphu potřebujeme</h2>
                     <p class="paragraph u-mb-small">Jak jsem již psal, pro procházení graphu si v naší graph třídě z minulé části vytvoříme metody. Vytvoříme si celkem 3 metody. Dvě se budou týkat Depth First procházení a třetí Breadth First procházení. Depth First procházení můžeme provádět iterativně nebo rekurzivně. Obě verze si ukážeme, proto pro něj budeme mít dvě metody. Pro iterativní verzi Depth First procházení navíc potřebujeme Stack a pro Breadth First procházení potřebujeme Queue. Obě tyto datové struktury jsme si vytvářeli v části <a href="../stack-a-queue/" class="anchor">Stack a Queue</a>, takže je jen použijeme.</p>
                     <p class="paragraph u-mb-small">Následující ukázka ukazuje startovní kód.</p>
                     <div class="code-box u-mb-medium">
@@ -141,7 +141,7 @@ class Graph {
     }
 }</code></pre>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Depth First Traversing - rekurzivně</h2>
+                    <h2 id="depth-first-traversing-rekurzivne" class="heading-secondary u-mb-tiny">Depth First Traversing - rekurzivně</h2>
                     <p class="paragraph u-mb-small">Jako první si ukážeme Depth First procházení graphu. Depth First u graphu znamená, že se vždy vezme první vertex se kterým je zrovna procházený vertex propojen a pokračuje se dál. Až se najde vertex, který již nemá žádné propojené vertexy, které by se měli procházet, tak se pokračuje směrem zpět a stejným způsobem se procházejí ostatní vertexy, které ještě nebyly navštíveny.</p>
                     <p class="paragraph u-mb-small">Graph nemá žádný počáteční vertex jako tomu bylo u tree. Takže pokud chceme graph procházet, musíme určit odkud se má začít. Proto budou metody pro procházení graphu vždy přijímat vertex, od kterého se má začínat.</p>
                     <p class="paragraph u-mb-small">Depth First procházení můžeme provést rekurzivně nebo iterativně. Jako první si ukážeme rekurzivní verzi. Depth First procházení je u graphu možná složitější si představit než u tree, ale myslím že následující vizuální ukázka vám v tom může pomoct.</p>
@@ -247,7 +247,7 @@ console.log(vysledek);
                         </div>
                         <div id="console-1" class="code-box__console">&gt; </div>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Depth First Traversing - iterativně</h2>
+                    <h2 id="depth-first-traversing-iterativne" class="heading-secondary u-mb-tiny">Depth First Traversing - iterativně</h2>
                     <p class="paragraph u-mb-small">Předchozí ukázka ukazovala Depth First procházení s použitím rekurze. Jde to ale provést i bez ní, budeme k tomu ale potřebovat Stack, který jsme si vytvářeli v části <a href="../stack-a-queue/" class="anchor">Stack a Queue</a>.</p>
                     <p class="paragraph u-mb-small">Iterativní verze Depth First procházení funguje tak, že se na začátku do stacku přidá vertex, od kterého se má graph začít procházet a označí se jako navštívený. Poté se ze stacku postupně získávají vertexy a vertexy, které jsou s nimi propojeny a ještě nebyly navštíveny se přidávají do stacku. To probíhá tak dlouho, dokud se stack nevyprázdní.</p>
                     <p class="paragraph u-mb-small">U iterativní verze Depth First procházení se budou vertexy procházet v jiném pořadí než u rekurzivní verze, pořád se ale jedná o Depth First procházení.</p>
@@ -356,7 +356,7 @@ console.log(vysledek);
                         </div>
                         <div id="console-2" class="code-box__console">&gt; </div>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Breadth First Traversing</h2>
+                    <h2 id="breadth-first-traversing" class="heading-secondary u-mb-tiny">Breadth First Traversing</h2>
                     <p class="paragraph u-mb-small">Druhý způsob, který si pro procházení graphu ukážeme, je Breadth First. U graphu Breadth First znamená nejdříve procházet všechny propojené vertexy vertexu a až poté pokračovat dále.</p>
                     <p class="paragraph u-mb-small">Kód pro Breadth First procházení je hodně podobný iterativní verzi Depth First procházení. Jediný rozdíl je v tom, že se namísto stacku používá queue.</p>
                     <div data-interactive-example-id="3" class="code-box">

@@ -39,10 +39,10 @@
                     <h1 class="heading-primary u-mb-medium">Binary Heap</h1>
                     <hr class="horizontal-rule u-mb-medium">
                     <p class="paragraph u-mb-medium">V této části si ukážeme Binary Heap. Tato datová struktura patří do Tree kategorie jménem Heap. Je to jen další druh stromové datové struktury. Co všechno za datové struktury v kategorii Heap existuje si můžete prohlédnout v <a href="https://en.wikipedia.org/wiki/List_of_data_structures#Heaps" target="_blank" class="anchor">tomto seznamu</a>.</p>
-                    <h2 class="heading-secondary u-mb-tiny">Co je to Binary Heap</h2>
+                    <h2 id="co-je-to-binary-heap" class="heading-secondary u-mb-tiny">Co je to Binary Heap</h2>
                     <p class="paragraph u-mb-small">Binary Heap je datová struktura podobná Binary Search Tree. Narozdíl od něj má ale trochu jiná pravidla. Binary Heap se rozděluje na dva typy: Max Binary Heap a Min Binary Heap. V Max Binary Heap mají potomci menší hodnotu než jejich předci, a v Min Binary Heap mají potomci větší hodnotu než jejich předci. V Binary Heap mezi potomky neexistují žádné podmínky jako tomu je u Binary Search Tree. Všechny node uchovávají tolik potomků, kolik jen mohou a nejdříve se zaplňují potomci nalevo. Než se začnou přidávat potomci na další úroveň, tak se nejdříve musí zaplnit stávající. Co přesně tím myslím potom uvidíte v ukázce.</p>
                     <p class="paragraph u-mb-medium">Binary Heap se používá pro implementování Priority Queue, což je velmi často používaná datová struktura. Také se používá pro algoritmy sloužící pro procházení graphů.</p>
-                    <h2 class="heading-secondary u-mb-tiny">Jakým způsobem jsou v Binary Heap uložená data</h2>
+                    <h2 id="jakym-zpusobem-jsou-v-binary-heap-ulozena-data" class="heading-secondary u-mb-tiny">Jakým způsobem jsou v Binary Heap uložená data</h2>
                     <p class="paragraph u-mb-small">U Binary Search Tree jsme hodnoty ukládali v objektech, vytvořených pomocí třídy Node. U Binary Heap bychom to tak mohli také udělat, ale máme lepší možnost. K ukládání hodnot v Binary Heap můžeme použít pole.</p>
                     <p class="paragraph u-mb-small">Pokud budeme hodnoty v Binary Heap ukládat pomocí pole, tak v tom musíme mít nějaký systém. Hodnoty musí být v poli uložené v nějakém logickém pořadí. Také musíme mít nějaký způsob, jak v poli pro jednotlivé hodnoty budeme získávat potomky a předky.</p>
                     <p class="paragraph u-mb-small">Hodnoty jsou v poli seřazené tímto způsobem: první hodnota v poli je root a další dvě hodnoty v poli jsou její potomci. Pro druhou hodnotu v poli (na indexu 1) jsou potomci na indexu 3 a 4, pro třetí hodnotu v poli (na indexu 2) jsou potomci na indexu 5 a 6, a tak to stále pokračuje. Následující ukázka to vizuálně ukazuje.</p>
@@ -81,7 +81,7 @@
                         <li><b>získání druhého (pravého) potomka: </b>2n+2</li>
                         <li><b>získání předka: </b>(n-1)/2 (bez desetinné části, chceme index)</li>
                     </ul>
-                    <h2 class="heading-secondary u-mb-tiny">Vytvoření základu Max Binary Heap</h2>
+                    <h2 id="vytvoreni-zakladu-max-binary-heap" class="heading-secondary u-mb-tiny">Vytvoření základu Max Binary Heap</h2>
                     <p class="paragraph u-mb-small">Binary Heap může být typu Max nebo Min. V tomto tutoriálu si zkusíme vytvořit Max Binary Heap. Každý potomek tedy bude obsahovat menší hodnotu než jeho předek. Pokud víme jak vytvořit Max Binary Heap, tak je jednoduché předělat jej na Min Binary Heap, proto si teď zkusíme vytvořit jen jeden typ.</p>
                     <p class="paragraph u-mb-small">Pro Max Binary Heap si vytvoříme třídu, která bude obsahovat pole, do kterého si později budeme ukládat hodnoty. Nic víc nepotřebujeme, později si do ní přidáme metody.</p>
                     <div class="code-box u-mb-medium">
@@ -92,7 +92,7 @@ class MaxBinaryHeap {
     }
 }</code></pre>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Metoda insert</h2>
+                    <h2 id="max-binary-heap-metoda-insert" class="heading-secondary u-mb-tiny">Metoda insert</h2>
                     <p class="paragraph u-mb-small">Pro přidání hodnoty do Binary Heap si vytvoříme metodu insert. Tato metoda přidá hodnotu na konec pole a zavolá metodu bubbleUp, která se postará o to, aby se naposledy vložená hodnota umístila v poli na správné místo. U Max Binary Heap platí, že potomci mají vždy menší hodnotu než jejich předek. Metoda bubbleUp tedy zajišťuje, že to tak bude i po vložení hodnoty na konec pole.</p>
                     <div data-interactive-example-id="1" class="code-box u-mb-medium">
                         <div class="code-box__header">
@@ -194,7 +194,7 @@ heap.insert(55);</code></pre>
                             <div id="binary-heap-1" class="tree"></div>
                         </div>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Metoda extractMax</h2>
+                    <h2 id="max-binary-heap-metoda-extract-max" class="heading-secondary u-mb-tiny">Metoda extractMax</h2>
                     <p class="paragraph u-mb-small">Jako druhou metodu si pro naši MaxBinaryHeap třídu vytvoříme metodu extractMax. Tato metoda bude sloužit k odstranění a získání root hodnoty z Binary Heap.</p>
                     <p class="paragraph u-mb-small">Metoda extractMax odstraní z pole values poslední položku a její hodnotu nastaví první položce pole. Po této operaci se zavolá metoda sinkDown, která zajistí, že se první (root) hodnota pole přemístí na takové místo, aby potomci v Binary Heap měli vždy menší hodnotu než jejich předek.</p>
                     <div data-interactive-example-id="2" class="code-box u-mb-small">
@@ -342,10 +342,10 @@ heap.extractMax();</code></pre>
                         </div>
                     </div>
                     <p class="paragraph u-mb-medium">Více metod si již do naší MaxBinaryHeap třídy přidávat nebudeme. Ty hlavní jsme si ukázali a snad jste díky nim pochopili, jak Binary Heap funguje. Pokud byste potřebovali nějaké další, tak si myslím že byste si je asi zvládli vytvořit sami. Teď si ukážeme, jak můžeme Binary Heap použít pro implementování Priority Queue.</p>
-                    <h2 class="heading-secondary u-mb-tiny">Priority Queue</h2>
+                    <h2 id="priority-queue" class="heading-secondary u-mb-tiny">Priority Queue</h2>
                     <p class="paragraph u-mb-small">Binary Heap se často používá pro vytvoření Priority Queue. Jde o datovou strukturu, ve které má každá položka nějakou prioritu. Priority Queue se podobá Queue, kterou jsme si ukazovali v části <a href="../stack-a-queue/" class="anchor">Stack a Queue</a>. Rozdíl je v tom, že v Priority Queue mají položky přiřazenou prioritu a podle toho se uvnitř Priority Queue zařazují.</p>
                     <p class="paragraph u-mb-medium">Priority Queue si můžeme například představit jako frontu lidí na nějaké pohotovosti v nemocnici. Pokud jako první přijde pacient s horečkou a jako druhý přijde pacient s postřelenou rukou, tak pacient s postřelenou rukou dostane vyšší prioritu a dostane se na řadu dříve.</p>
-                    <h2 class="heading-secondary u-mb-tiny">Vytvoření základu Priority Queue</h2>
+                    <h2 id="vytvoreni-zakladu-priority-queue" class="heading-secondary u-mb-tiny">Vytvoření základu Priority Queue</h2>
                     <p class="paragraph u-mb-small">Pro Priority Queue si vytvoříme třídu, která bude stejně jako naše třída pro Max Binary Heap, obsahovat jen pole values, do kterého se budou ukládat položky. Později si do ní přidáme metodu enqueue pro přidání položky a metodu dequeue pro odstranění a získání položky. Namísto hodnot se budou v Priority Queue do pole values ukládat nodes. Takže si pro ně musíme také vytvořit třídu. Node bude obsahovat uchovávanou hodnotu a také prioritu, která bude určovat, kdy se položka dostane na řadu.</p>
                     <div class="code-box u-mb-medium">
                         <pre class="code-box__code"><code>// třída pro node
@@ -363,7 +363,7 @@ class PriorityQueue {
     }
 }</code></pre>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Metoda enqueue</h2>
+                    <h2 id="priority-queue-metoda-enqueue" class="heading-secondary u-mb-tiny">Metoda enqueue</h2>
                     <p class="paragraph u-mb-small">Pro přidání položky do Priority Queue si vytvoříme metodu enqueue. Bude stejná jako metoda insert, kterou jsme si vytvořili pro Max Binary Heap. Narozdíl od něj se ale do pole values bude ukládat nová node.</p>
                     <p class="paragraph u-mb-small">Metoda bubbleUp bude také skoro stejná jako metoda bubbleUp, kterou jsme si vytvořili pro Max Binary Heap. Jediný rozdíl bude v tom, že se bude porovnávat priorita položek namísto jejich hodnot.</p>
                     <div data-interactive-example-id="3" class="code-box u-mb-medium">
@@ -460,7 +460,7 @@ queue.enqueue(22, 1);</code></pre>
                             <div id="priority-queue-1" class="tree"></div>
                         </div>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Metoda dequeue</h2>
+                    <h2 id="priority-queue-metoda-dequeue" class="heading-secondary u-mb-tiny">Metoda dequeue</h2>
                     <p class="paragraph u-mb-small">Pro odstranění a získání položky z PriorityQueue si vytvoříme metodu dequeue. Bude stejná jako metoda extractMax, kterou jsme si vytvořili pro Max Binary Heap. Rozdíl bude jen v metodě sinkDown, kterou metoda dequeue volá. Narozdíl od hodnot položek v poli values se bude porovnávat jejich priorita.</p>
                     <div data-interactive-example-id="4" class="code-box u-mb-small">
                         <div class="code-box__header">
@@ -590,7 +590,7 @@ const polozka3 = queue.dequeue();
                         </div>
                     </div>
                     <p class="paragraph u-mb-medium">Je tu jedna věc, na kterou bych vás měl upozornit. Pokud mají dvě položky v Priority Queue stejnou prioritu, tak není zaručené, že položku, kterou jsme do Priority Queue přidali jako první, také získáme jako první. Pokud bychom to chtěli napravit, tak bychom kromě priority mohli do node ukládat také například čas, kdy jsme položku do Priority Queue vložili. Tento čas bychom potom porovnávali společně s prioritami. Záleží na nás podle čeho chceme položky porovnávat. Můžeme mít klidně více kritérií, záleží na co konkrétně chceme Priority Queue použít.</p>
-                    <h2 class="heading-secondary u-mb-tiny">Big O náročnost Binary Heap</h2>
+                    <h2 id="big-o-narocnost-binary-heap" class="heading-secondary u-mb-tiny">Big O náročnost Binary Heap</h2>
                     <p class="paragraph u-mb-small">Na závěr si ukážeme časovou náročnost některých operací s Binary Heap.</p>
                     <ul class="unordered-list">
                         <li><b>přidávání položek:</b> O(log n)</li>

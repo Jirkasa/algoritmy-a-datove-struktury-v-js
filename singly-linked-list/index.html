@@ -39,9 +39,9 @@
                     <h1 class="heading-primary u-mb-medium">Singly Linked List</h1>
                     <hr class="horizontal-rule u-mb-medium">
                     <p class="paragraph u-mb-medium">V této části se podíváme na Singly Linked List. Ukážeme si jaké má výhody a nevýhody oproti poli a vytvoříme si jej.</p>
-                    <h2 class="heading-secondary u-mb-tiny">Co je to Linked List</h2>
+                    <h2 id="co-je-to-linked-list" class="heading-secondary u-mb-tiny">Co je to Linked List</h2>
                     <p class="paragraph u-mb-medium">Linked List je datová struktura skládající se z nodes, které jsou spolu jedním nebo oběma směry propojeny. Node je objekt, který uchovává hodnotu a odkaz na další položku v linked listu. Popřípadě i předchozí, pokud se jedná o Doubly Linked List. Linked List obsahuje vlastnosti jako je head, tail a length. Head ukazuje na první objekt v linked listu a tail ukazuje na poslední položku v linked listu. Vlastnost length udává počet položek v linked listu. Linked List představuje základ pro jiné datové struktury jako jsou stacky nebo queues.</p>
-                    <h2 class="heading-secondary u-mb-tiny">Porovnání Linked Listu s polem</h2>
+                    <h2 id="porovnani-linked-listu-s-polem" class="heading-secondary u-mb-tiny">Porovnání Linked Listu s polem</h2>
                     <p class="paragraph">Předtím než začneme linked list vytvářet, tak bychom se mohli podívat v čem je jiný oproti poli.</p>
                     <h3 class="heading-tertiary u-mb-tiny">Linked List</h3>
                     <ul class="unordered-list u-mb-small">
@@ -55,7 +55,7 @@
                         <li>Vkládání a odstraňování položek je více náročné na výkon, protože se musí posouvat indexy.</li>
                         <li>Můžeme se rychle dostat k jakékoliv hodnotě pomocí indexu.</li>
                     </ul>
-                    <h2 class="heading-secondary u-mb-tiny">Vytvoření základu Singly Linked Listu</h2>
+                    <h2 id="vytvoreni-zakladu-singly-linked-listu" class="heading-secondary u-mb-tiny">Vytvoření základu Singly Linked Listu</h2>
                     <p class="paragraph u-mb-small">Pro Singly Linked List si vytvoříme třídu, kterou budeme používat k jeho vytvoření. Tato třída bude obsahovat vlastnosti head, tail a length. Vlastnost head bude uchovávat první node v linked listu a vlastnost tail bude uchovávat poslední node v linked listu. Vlastnost length bude uchovávat počet nodes v linked listu.</p>
                     <p class="paragraph u-mb-small">Protože se linked list skládá z nodes, tak si pro ně musíme také vytvořit třídu. Node bude obsahovat vlastnost uchovávající hodnotu a odkaz na další node v linked listu.</p>
                     <div class="code-box u-mb-small">
@@ -107,7 +107,7 @@ list.length = 3; // linked list obsahuje 3 položky</code></pre>
                         </div>
                     </div>
                     <p class="paragraph u-mb-medium">Předchozí ukázka ukazuje vytvoření linked listu a přidání položek (zatím složitější cestou). Na tuto operaci si později vytvoříme metodu. Také si vytvoříme metodu na odstraňování položek, získávání položek a tak dále. Ve zbytku této části si do naší SinglyLinkedList třídy přidáme různé metody. Ukázky budou vždy ukazovat hlavně jen samotnou metodu bez dalšího kódu kolem.</p>
-                    <h2 class="heading-secondary u-mb-tiny">Metoda push</h2>
+                    <h2 id="metoda-push" class="heading-secondary u-mb-tiny">Metoda push</h2>
                     <p class="paragraph u-mb-small">Pole nám nabízejí metodu push, která slouží k přidání položky na konec pole. Stejnou metodu si vytvoříme i pro singly linked list. Bude sloužit k přidání položky na konec linked listu.</p>
                     <div data-interactive-example-id="1" class="code-box u-mb-medium">
                         <div class="code-box__header">
@@ -179,7 +179,7 @@ list.push(12);</code></pre>
                             <div id="linked-list-1" class="linked-list linked-list--bigger-bottom-padding"></div>
                         </div>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Metoda pop</h2>
+                    <h2 id="metoda-pop" class="heading-secondary u-mb-tiny">Metoda pop</h2>
                     <p class="paragraph u-mb-small">Další metodu, kterou si do našeho Singly Linked Listu přidáme, bude metoda pop. U polí tato metoda slouží k odstranění a získání poslední položky pole. U linked listu bude metoda pop fungovat stejně. Odstraní poslední položku linked listu a vrátí ji.</p>
                     <p class="paragraph u-mb-small">U singly linked listu je odstraňování poslední položky trochu těžší, protože jsou jeho nodes propojeny jen jedním směrem. Musíme najít jeho předposlední node, nastavit ji jako tail a nastavit její vlastnost next na null.</p>
                     <div data-interactive-example-id="2" class="code-box u-mb-medium">
@@ -261,7 +261,7 @@ list.pop();</code></pre>
                             <div id="linked-list-2" class="linked-list linked-list--bigger-bottom-padding"></div>
                         </div>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Metoda shift</h2>
+                    <h2 id="metoda-shift" class="heading-secondary u-mb-tiny">Metoda shift</h2>
                     <p class="paragraph u-mb-small">Pomocí metody shift můžeme u pole odstranit a získat jeho první položku. Stejnou metodu si vytvoříme i pro náš Singly Linked List. Odstraní první node linked listu a vrátí ji.</p>
                     <div data-interactive-example-id="3" class="code-box u-mb-medium">
                         <div class="code-box__header">
@@ -333,7 +333,7 @@ list.shift();</code></pre>
                             <div id="linked-list-3" class="linked-list linked-list--bigger-bottom-padding"></div>
                         </div>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Metoda unshift</h2>
+                    <h2 id="metoda-unshift" class="heading-secondary u-mb-tiny">Metoda unshift</h2>
                     <p class="paragraph u-mb-small">Na přidávání položek na začátek pole existuje metoda unshift. U polí je přidávání položky na začátek drahou operací, protože se musí u ostatních položek pole posunout indexy. U linked listu to tak není, protože se nic přeindexovávat nemusí. Při přidávání položky do linked listu se jen vytvoří nová node, nastaví se jako head, a její vlastnost next se nastaví na bývalou head.</p>
                     <div data-interactive-example-id="4" class="code-box u-mb-medium">
                         <div class="code-box__header">
@@ -405,7 +405,7 @@ list.unshift(12);</code></pre>
                             <div id="linked-list-4" class="linked-list linked-list--bigger-bottom-padding"></div>
                         </div>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Metoda get</h2>
+                    <h2 id="metoda-get" class="heading-secondary u-mb-tiny">Metoda get</h2>
                     <p class="paragraph u-mb-small">U polí máme možnost získat požadovanou položku pomocí jejího indexu. Linked listy indexy nemají, ale pokud chceme položku podle předaného indexu přece jenom najít, tak si na to můžeme vytvořit metodu. Získávání specifických položek z linked listu není ale tak efektivní jako u polí, protože se linked list musí postupně projet až k požadované node.</p>
                     <div data-interactive-example-id="5" class="code-box u-mb-medium">
                         <div class="code-box__header">
@@ -474,7 +474,7 @@ const ziskanaNode = list.get(1);</code></pre>
                             <div id="linked-list-5" class="linked-list linked-list--bigger-bottom-padding"></div>
                         </div>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Metoda set</h2>
+                    <h2 id="metoda-set" class="heading-secondary u-mb-tiny">Metoda set</h2>
                     <p class="paragraph u-mb-small">Jako další metodu si do našeho Singly Linked Listu přídáme metodu set. Pomocí této metody půjde nastavit hodnota node na předaném indexu. Vytvoření této metody je jednoduché, protože k získání požadované node použijeme metodu get, kterou jsme si vytvořili předtím. Poté jen změníme hodnotu, kterou node uchovává.</p>
                     <div data-interactive-example-id="6" class="code-box u-mb-medium">
                         <div class="code-box__header">
@@ -539,7 +539,7 @@ list.set(1, false);</code></pre>
                             <div id="linked-list-6" class="linked-list linked-list--bigger-bottom-padding"></div>
                         </div>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Metoda insert</h2>
+                    <h2 id="metoda-insert" class="heading-secondary u-mb-tiny">Metoda insert</h2>
                     <p class="paragraph u-mb-small">Pro přidávání položek do linked listu jsme si zatím vytvořili metody push a unshift. Pomocí těchto metod ale můžeme položku přidat pouze na začátek nebo konec linked listu. Pro přídání položky podle předaného indexu si vytvoříme metodu insert.</p>
                     <div data-interactive-example-id="7" class="code-box u-mb-medium">
                         <div class="code-box__header">
@@ -614,7 +614,7 @@ list.insert(2, 25);</code></pre>
                             <div id="linked-list-7" class="linked-list linked-list--bigger-bottom-padding"></div>
                         </div>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Metoda remove</h2>
+                    <h2 id="metoda-remove" class="heading-secondary u-mb-tiny">Metoda remove</h2>
                     <p class="paragraph u-mb-small">Pro odstraňování položek ze začátku a konce linked listu máme metody shift a pop. Teď si pro náš Singly Linked List vytvoříme metodu, která nám umožní odstranit položku podle předaného indexu.</p>
                     <div data-interactive-example-id="8" class="code-box u-mb-medium">
                         <div class="code-box__header">
@@ -690,7 +690,7 @@ list.remove(1);</code></pre>
                             <div id="linked-list-8" class="linked-list linked-list--bigger-bottom-padding"></div>
                         </div>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Metoda reverse</h2>
+                    <h2 id="metoda-reverse" class="heading-secondary u-mb-tiny">Metoda reverse</h2>
                     <p class="paragraph u-mb-small">Jako poslední metodu si do pro náš Singly Linked List vytvoříme metodu reverse. Jejím zavoláním budeme moci linked list převrátit. Prohodí se tedy head a tail a obrátí se směr propojení linked listu.</p>
                     <div data-interactive-example-id="9" class="code-box u-mb-medium">
                         <div class="code-box__header">
@@ -768,7 +768,7 @@ list.reverse();</code></pre>
                             <div id="linked-list-9" class="linked-list linked-list--bigger-bottom-padding"></div>
                         </div>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Big O náročnost Singly Linked Listu</h2>
+                    <h2 id="big-o-narocnost-singly-linked-listu" class="heading-secondary u-mb-tiny">Big O náročnost Singly Linked Listu</h2>
                     <p class="paragraph u-mb-small">Na závěr bychom se ještě mohli podívat, jaká je časová náročnost některých operací se singly linked listem.</p>
                     <ul class="unordered-list">
                         <li><b>Vkládání hodnot (na začátek a konec):</b> O(1)</li>

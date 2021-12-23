@@ -39,7 +39,7 @@
                     <h1 class="heading-primary u-mb-medium">Hash Table</h1>
                     <hr class="horizontal-rule u-mb-medium">
                     <p class="paragraph u-mb-medium">V této části si ukážeme, co je to Hash Table. Jde o datovou strukturu, kterou má většina programovacích jazyků již zabudovanou v sobě.</p>
-                    <h2 class="heading-secondary u-mb-tiny">Co je to Hash Table</h2>
+                    <h2 id="co-je-to-hash-table" class="heading-secondary u-mb-tiny">Co je to Hash Table</h2>
                     <p class="paragraph u-mb-small">Hash Table (často se mu říká také Hash Map) je datová struktura, která slouží k ukládání hodnot pomocí klíčů. Většina programovacích jazyků ji má již zabudovanou v sobě. JavaScript má objekty a od ES6 také mapy. Objekty nám v JavaScriptu slouží k ukládání hodnot pomocí řetězců, jako klíčů.</p>
                     <div class="code-box u-mb-small">
                         <pre class="code-box__code"><code>// vytvoření objektu clovek
@@ -56,7 +56,7 @@ let jmeno = clovek.jmeno;</code></pre>
                     <p class="paragraph u-mb-small">Narozdíl od polí jsou objekty rychlé při získávání, vkládání i odstraňování položek. U polí se při odstraňování nebo při přidávání položky posouvají indexy, u objektů ne, u těch používáme jako klíče řetězce.</p>
                     <p class="paragraph u-mb-small">Důvod, proč používáme pro objekty jako klíče řetězce je ten, že chceme, aby byl kód čitelný pro člověka. Počítač ale neví, co se například nachází pod klíčem "jmeno", neukládá si data pomocí textových klíčů. Proto musíme mít nějaký kód, který textové řetězce převádí na jinou hodnotu, podle které se počítač může podívat, co se pod daným klíčem nachází.</p>
                     <p class="paragraph u-mb-medium">Vytvářet si vlastní Hash Table sice není užitečné, když v JavaScriptu máme objekty a mapy, ale abychom pochopili, jakým způsobem vlastně zhruba fungují, tak si jej vytvoříme. Nejprve si ale řekneme, co to jsou hashovací funkce.</p>
-                    <h2 class="heading-secondary u-mb-tiny">Hashovací funkce</h2>
+                    <h2 id="hashovaci-funkce" class="heading-secondary u-mb-tiny">Hashovací funkce</h2>
                     <p class="paragraph u-mb-small">Hodnoty pro náš Hash Table, který si později vytvoříme, budeme ukládat v poli. K přístupu k položkám pole se používají indexy, ale u našeho Hash Tablu namísto nich budeme chtít použít řetězce. Proto si budeme muset napsat nějaký kód, který nám řetězce převede na indexy, pomocí kterých budeme moci požadovanou hodnotu v poli získat nebo nastavit. Vytvoříme si na to funkci, která jako parametr vezme řetězec a vrátí nám index. Podle toho, jaký řetězec do funkce předáme jako argument, dostaneme index. Funkci, která tuto operaci provádí, se říká hashovací funkce.</p>
                     <p class="paragraph u-mb-small">Existuje velké množství hashovacích funkcí. Používají se pro různé účely, například také při registraci na webových stránkách. Hesla se v databázi neuchovávají tak jak je zadáme, ale nejdříve se projedou hashovací funkcí, která z nich udělá náhodnou posloupnost znaků. Pokud by se někdo do databáze náhodou dostal, tak by se hesla nedozvěděl, protože jsou zahashovaná.</p>
                     <p class="paragraph u-mb-tiny">Dobrá hashovací funkce by měla splňovat tyto podmínky (nemusí platit pro všechny typy, hlavně pro naše účely):</p>
@@ -89,7 +89,7 @@ console.log("krtek: " + hash("krtek", 10));
                         <div class="code-box__console">&gt; ahoj: 4<br>&gt; algoritmus: 5<br>&gt; jmeno: 7<br>&gt; krtek: 5<br>&gt;</div>
                     </div>
                     <p class="paragraph u-mb-medium">Naše hashovací funkce má jeden problém. Nevygeneruje pro každý řetězec unikátní index, takže například pro řetězec "algoritmus" a "krtek" vygeneruje stejný index. Tento problém je nevyhnutelný a řeší se různými způsoby. Jeden z nich si později ukážeme.</p>
-                    <h2 class="heading-secondary u-mb-tiny">Vytvoření základu Hash Tablu</h2>
+                    <h2 id="vytvoreni-zakladu-hash-tablu" class="heading-secondary u-mb-tiny">Vytvoření základu Hash Tablu</h2>
                     <p class="paragraph u-mb-small">Jak jsem již psal, vytvoříme si vlastní Hash Table. Vytvoříme si pro něj třídu HashTable, která bude uchovávat pole, do kterého později namísto pomocí indexů budeme přistupovat pomocí řetězcových klíčů přes metody, které si pro třídu vytvoříme. Prozatím bude třída obsahovat jen metodu pro hashování, kterou budeme používat v ostatních metodách. Tuto metodu budeme používat jen uvnitř třídy, takže jsme si ji pojmenovali jako _hash. To podtržítko značí, že je metoda privátní a neměli bychom ji používat zvenku třídy. Je to taková zaběhlá konvence.</p>
                     <div class="code-box u-mb-medium">
                         <pre class="code-box__code"><code>// třída pro Hash Table
@@ -113,7 +113,7 @@ class HashTable {
     }
 }</code></pre>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Metoda set</h2>
+                    <h2 id="metoda-set" class="heading-secondary u-mb-tiny">Metoda set</h2>
                     <p class="paragraph u-mb-small">Pro přidání hodnoty do Hash Tablu si vytvoříme metodu set. Tato metoda bude přijímat dva parametry. Prvním bude klíč, pod který chceme vložit hodnotu a druhým bude samotná hodnota.</p>
                     <p class="paragraph u-mb-small">Protože naše hashovací funkce může pro více různých řetězců vrátit stejný index, tak to musíme nějakým způsobem ošetřit. Existuje více strategií pro řešení tohoto problému. Jedna z nich se jmenuje Linear Probing a ta funguje tak, že když najdeme kolizi, tak v poli hledáme další prázdný slot. Můžeme tak mít na jednom indexu uloženou jen jednu hodnotu. Další je například Separate Chaining a tu pro náš Hash Table použijeme.</p>
                     <p class="paragraph u-mb-small">Separate Chaining funguje tak, že v poli nejsou uloženy přímo hodnoty, ale jsou tam uloženy další pole. Tato pole uchovávají ještě další pole, které vždy mají na prvním indexu uložený klíč a na druhém hodnotu. Takže díky tomu můžeme na jednom indexu pole uložit více hodnot. Jak takové pole například vypadá můžete vidět v následující ukázce.</p>
@@ -155,7 +155,7 @@ class HashTable {
     }
 }</code></pre>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Metoda get</h2>
+                    <h2 id="metoda-get" class="heading-secondary u-mb-tiny">Metoda get</h2>
                     <p class="paragraph u-mb-small">Pro získání hodnoty z Hash Tablu si vytvoříme metodu get. Tato metoda na začátku získá index podle předaného klíče a poté pomocí cyklu hledá v poli nacházejícím se na tomto indexu v poli keyMap hledanou hodnotu. Až ji najde tak ji vrátí a pokud ji nenajde, tak se vrátí undefined.</p>
                     <div class="code-box u-mb-medium">
                         <pre class="code-box__code"><code>class HashTable {
@@ -180,7 +180,7 @@ class HashTable {
     }
 }</code></pre>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Metoda keys</h2>
+                    <h2 id="metoda-keys" class="heading-secondary u-mb-tiny">Metoda keys</h2>
                     <p class="paragraph u-mb-small">Jako další metodu si pro náš Hash Table vytvoříme metodu keys, která bude vracet pole klíčů, které Hash Table uchovává. Pole keyMap, které Hash Table uchovává se postupně projede a klíče se přidají do pole, které se na konci metody vrátí. V kódu je použita <a href="http://pole-v-js.4fan.cz/destrukturovani/" target="_blank" class="anchor">destrukturovací syntaxe</a>.</p>
                     <div class="code-box u-mb-medium">
                         <pre class="code-box__code"><code>class HashTable {
@@ -203,7 +203,7 @@ class HashTable {
     }
 }</code></pre>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Metoda values</h2>
+                    <h2 id="metoda-values" class="heading-secondary u-mb-tiny">Metoda values</h2>
                     <p class="paragraph u-mb-small">Poslední metodou, kterou si pro náš Hash Table vytvoříme, bude metoda values. Pomocí této metody budeme moci získat pole hodnot, které Hash Table uchovává. Tato metoda je podobná metodě keys, rozdíl je v tom, že se namísto klíčů vrací hodnoty. Kromě toho metoda values vrací jen unikátní hodnoty, takže má navíc jednu podmínku, která zjišťuje, jestli se již vkládaná hodnota v poli nevyskytuje.</p>
                     <div class="code-box u-mb-medium">
                         <pre class="code-box__code"><code>class HashTable {
@@ -228,7 +228,7 @@ class HashTable {
     }
 }</code></pre>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Big O náročnost Hash Tablu</h2>
+                    <h2 id="big-o-narocnost-hash-tablu" class="heading-secondary u-mb-tiny">Big O náročnost Hash Tablu</h2>
                     <p class="paragraph u-mb-small">Na závěr si ještě ukážeme časovou náročnost některých operací s Hash Tablem. Všechny jsou O(1).</p>
                     <ul class="unordered-list">
                         <li><b>vkládání hodnot:</b> O(1)</li>

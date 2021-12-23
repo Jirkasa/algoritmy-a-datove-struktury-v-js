@@ -39,9 +39,9 @@
                     <h1 class="heading-primary u-mb-medium">Doubly Linked List</h1>
                     <hr class="horizontal-rule u-mb-medium">
                     <p class="paragraph u-mb-medium">V minulé části jsme si ukázali Singly Linked List. V této části se podíváme na Doubly Linked List, který má narozdíl od Singly Linked Listu propojené nodes oběma směry.</p>
-                    <h2 class="heading-secondary u-mb-tiny">Co je to Doubly Linked List</h2>
+                    <h2 id="co-je-to-doubly-linked-list" class="heading-secondary u-mb-tiny">Co je to Doubly Linked List</h2>
                     <p class="paragraph u-mb-medium">Doubly Linked List je stejná datová struktura jako Singly Linked List. Narozdíl od něj je ale Doubly Linked List složen z nodes, které jsou propojeny oběma směry. Takže každá node obsahuje vlastnosti, které odkazují na další i předchozí node v linked listu. Díky tomu může doubly linked list provádět některé operace rychleji, ale zabere více paměti, protože se v nodes musí ukládat také odkaz na jejich předchozí node.</p>
-                    <h2 class="heading-secondary u-mb-tiny">Vytvoření základu Doubly Linked Listu</h2>
+                    <h2 id="vytvoreni-zakladu-doubly-linked-listu" class="heading-secondary u-mb-tiny">Vytvoření základu Doubly Linked Listu</h2>
                     <p class="paragraph u-mb-small">Stejně jako pro Singly Linked List si vytvoříme třídu i pro Doubly Linked List. Konstruktor Doubly Linked Listu bude úplně stejný jako ten pro Singly Linked List. Změna bude jen v tom, že node bude uchovávat také vlastnost prev, ve které se bude ukládat odkaz na předchozí node.</p>
                     <div class="code-box u-mb-small">
                         <pre class="code-box__code"><code>// třída pro node
@@ -99,7 +99,7 @@ list.length = 3;</code></pre>
                         </div>
                     </div>
                     <p class="paragraph u-mb-medium">Stejně jako v minulé části, předchozí ukázka ukazuje vytvoření linked listu a přidání položek zatím složitější cestou. Později si na to vytvoříme metodu. Ve zbytku části si do naší Doubly Linked List třídy postupně přidáme stejné metody, které jsme si vytvářeli pro Singly Linked List.</p>
-                    <h2 class="heading-secondary u-mb-tiny">Metoda push</h2>
+                    <h2 id="metoda-push" class="heading-secondary u-mb-tiny">Metoda push</h2>
                     <p class="paragraph u-mb-small">Jako první si do naší DoublyLinkedList třídy přidáme metodu push. S její pomocí budeme na konec linked listu moci přidat novou hodnotu. Bude stejná jako ta pro Singly Linked List, akorát bude mít jeden řádek navíc, který bude nastavovat vlastnost prev nově přidané node na předchozí node.</p>
                     <div data-interactive-example-id="1" class="code-box u-mb-medium">
                         <div class="code-box__header">
@@ -173,7 +173,7 @@ list.push(12);</code></pre>
                             <div id="linked-list-1" class="linked-list linked-list--bigger-bottom-padding"></div>
                         </div>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Metoda pop</h2>
+                    <h2 id="metoda-pop" class="heading-secondary u-mb-tiny">Metoda pop</h2>
                     <p class="paragraph u-mb-small">Jako další metodu si pro náš Doubly Linked List vytvoříme metodu pop, která bude sloužit k odstranění a získání poslední položky v linked listu. Narozdíl od Singly Linked Listu bude jednodušší, protože máme u každé node přístup k předchozí node. Díky tomu můžeme jen nastavit tail na předchozí node aktuálního tailu namísto procházení celého linked listu a hledání předposlední položky.</p>
                     <div data-interactive-example-id="2" class="code-box u-mb-medium">
                         <div class="code-box__header">
@@ -252,7 +252,7 @@ list.pop();</code></pre>
                             <div id="linked-list-2" class="linked-list linked-list--bigger-bottom-padding"></div>
                         </div>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Metoda shift</h2>
+                    <h2 id="metoda-shift" class="heading-secondary u-mb-tiny">Metoda shift</h2>
                     <p class="paragraph u-mb-small">Dále si do naší DoublyLinkedList třídy přidáme metodu shift, která bude sloužit k odstranění a získání první položky linked listu. Protože nodes v Doubly Linked Listu obsahují odkaz také na jejich předcházející node, tak jej nové head budeme muset nastavit na null.</p>
                     <div data-interactive-example-id="3" class="code-box u-mb-medium">
                         <div class="code-box__header">
@@ -331,7 +331,7 @@ list.shift();</code></pre>
                             <div id="linked-list-3" class="linked-list linked-list--bigger-bottom-padding"></div>
                         </div>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Metoda unshift</h2>
+                    <h2 id="metoda-unshift" class="heading-secondary u-mb-tiny">Metoda unshift</h2>
                     <p class="paragraph u-mb-small">Metodu shift pro odstraňování položek ze začátku doubly linked listu máme. Teď si vytvoříme metodu unshift, pomocí které budeme naopak přidávat položky na začátek doubly linked listu.</p>
                     <div data-interactive-example-id="4" class="code-box u-mb-medium">
                         <div class="code-box__header">
@@ -406,7 +406,7 @@ list.unshift(12);</code></pre>
                             <div id="linked-list-4" class="linked-list linked-list--bigger-bottom-padding"></div>
                         </div>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Metoda get</h2>
+                    <h2 id="metoda-get" class="heading-secondary u-mb-tiny">Metoda get</h2>
                     <p class="paragraph u-mb-small">Stejně jako pro Singly Linked List, tak i pro Doubly Linked List si vytvoříme metodu get, pomocí které budeme moci získat požadovanou node z linked listu podle předaného indexu. Vlastně bychom ani nemuseli pro Doubly Linked List vytvářet novou, mohli bychom zkopírovat tu, kterou jsme vytvořili pro Singly Linked List. Tím bychom ale nevyužili toho, že v Doubly Linked Listu nodes obsahují odkazy také na předchozí nodes. Pokud by například linked list obsahoval 50 nodes a chtěli bychom získat předposlední node, tak bychom museli projet celý list, než bychom se k ní dostali. Kdybychom ale využili toho, že nodes obsahují odkazy také na předchozí položky a procházeli bychom linked list od konce, dostali bychom se k ní mnohem rychleji.</p>
                     <p class="paragraph u-mb-small">Takže si pro Doubly Linked List vytvoříme novou metodu get, která zjistí prostřední index podle počtu položek v linked listu a porovná jestli je předaný index větší nebo menší než tento index. Pokud bude předaný index menší než prostřední index, tak se bude linked list procházet od začátku, a když větší tak se bude procházet od konce.</p>
                     <div data-interactive-example-id="5" class="code-box u-mb-medium">
@@ -489,7 +489,7 @@ const ziskanaNode = list.get(3);</code></pre>
                             <div id="linked-list-5" class="linked-list linked-list--bigger-bottom-padding"></div>
                         </div>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Metoda set</h2>
+                    <h2 id="metoda-set" class="heading-secondary u-mb-tiny">Metoda set</h2>
                     <p class="paragraph u-mb-small">Další metoda, kterou si do naší DoublyLinkedList třídy přidáme, bude metoda set. Bude úplně stejná jako ta pro Singly Linked List, kterou jsme vytvořili v minulé části. Získáme node pomocí metody get podle předaného indexu a změníme jí hodnotu, kterou uchovává.</p>
                     <div data-interactive-example-id="6" class="code-box u-mb-medium">
                         <div class="code-box__header">
@@ -554,7 +554,7 @@ list.set(1, false);</code></pre>
                             <div id="linked-list-6" class="linked-list linked-list--bigger-bottom-padding"></div>
                         </div>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Metoda insert</h2>
+                    <h2 id="metoda-insert" class="heading-secondary u-mb-tiny">Metoda insert</h2>
                     <p class="paragraph u-mb-small">Pro přidávání položek do linked listu podle předaného indexu si vytvoříme metodu insert. Bude podobná její verzi pro Singly Linked List, ale narozdíl od ní musí nově přidanou položku napojit také druhým směrem.</p>
                     <div data-interactive-example-id="7" class="code-box u-mb-medium">
                         <div class="code-box__header">
@@ -632,7 +632,7 @@ list.insert(2, 25);</code></pre>
                             <div id="linked-list-7" class="linked-list linked-list--bigger-bottom-padding"></div>
                         </div>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Metoda remove</h2>
+                    <h2 id="metoda-remove" class="heading-secondary u-mb-tiny">Metoda remove</h2>
                     <p class="paragraph u-mb-small">Poslední metodu, kterou si pro náš Doubly Linked List vytvoříme bude metoda remove, pomocí které budeme moci z linked listu odstranit položku podle předaného indexu.</p>
                     <div data-interactive-example-id="8" class="code-box u-mb-medium">
                         <div class="code-box__header">
@@ -712,7 +712,7 @@ list.remove(1);</code></pre>
                             <div id="linked-list-8" class="linked-list linked-list--bigger-bottom-padding"></div>
                         </div>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Big O náročnost Doubly Linked Listu</h2>
+                    <h2 id="big-o-narocnost-doubly-linked-listu" class="heading-secondary u-mb-tiny">Big O náročnost Doubly Linked Listu</h2>
                     <p class="paragraph u-mb-small">Na závěr této části se ještě podíváme, jaká je čásová náročnost některých operací s doubly linked listem.</p>
                     <ul class="unordered-list">
                         <li><b>Vkládání hodnot (na začátek a konec):</b> O(1)</li>

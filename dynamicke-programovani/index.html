@@ -39,10 +39,10 @@
                     <h1 class="heading-primary u-mb-medium">Dynamické programování</h1>
                     <hr class="horizontal-rule u-mb-medium">
                     <p class="paragraph u-mb-medium">V této poslední části se pustíme do dynamického programování. Pod tímto názvem si možná můžete představit něco trochu jiného, než co to ve skutečnosti je. V této části se to dozvíte.</p>
-                    <h2 class="heading-secondary u-mb-tiny">Co je to dynamické programování</h2>
+                    <h2 id="co-je-to-dynamicke-programovani" class="heading-secondary u-mb-tiny">Co je to dynamické programování</h2>
                     <p class="paragraph u-mb-small">Dynamické programování je metoda pro řešení problému. Spočívá v tom, že se řešený problém rozdělý na menší podproblémy. Tyto podproblémy se potom zvlášť řeší a ukládá se jejich výsledek, aby se nemuseli řešit znovu. Tato metoda se nedá použít na všechny problémy, ale u některých problémů na které ji použít můžeme, dokáže hodně zlepšit efektivitu našeho kódu.</p>
                     <p class="paragraph u-mb-medium">Dynamické programování můžeme použít jen na problémy, které se dají rozdělit na podproblémy, ale řešení těchto podproblémů se musí dát použít v problému opakovaně. Kromě toho musí problém mít optimální podstrukturu. To znamená, že se jeho optimální řešení musí dát zkonstruovat z optimálních řešení jeho podproblémů. Pokud to moc nechápete, tak nevadí, až se do dynamického programování pustíme, možná to pochopíte.</p>
-                    <h2 class="heading-secondary u-mb-tiny">Jaký problém vyřešíme</h2>
+                    <h2 id="jaky-problem-vyresime" class="heading-secondary u-mb-tiny">Jaký problém vyřešíme</h2>
                     <p class="paragraph u-mb-small">Abychom si ukázali použití dynamického programování, tak si vyřešíme nějaký problém. Budeme chtít napsat funkci, která vrátí požadované číslo z Fibonacciho posloupnosti. Jedná se o matematickou posloupnost, začínající čísly 0 a 1. Každé další číslo je ve Fibonacciho posloupnosti součet dvou předcházejících čísel. Takže třetí číslo ve Fibonacciho posloupnosti bude 1, čtvrté 2, páté 3, šesté 5, a tak dále. Následující ukázka začátek Fibonacciho posloupnosti ukazuje.</p>
                     <div class="sequence-illustration u-mb-medium">
                         <div class="sequence-illustration__item">0<div class="sequence-illustration__index">1</div></div>
@@ -56,7 +56,7 @@
                         <div class="sequence-illustration__item">21<div class="sequence-illustration__index">9</div></div>
                         <div class="sequence-illustration__item">...</div>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Vyřešení problému bez dynamického programování</h2>
+                    <h2 id="vyreseni-problemu-bez-dynamickeho-programovani" class="heading-secondary u-mb-tiny">Vyřešení problému bez dynamického programování</h2>
                     <p class="paragraph u-mb-small">Než si ukážeme vytvoření funkce pro získání čísla z Fibonacciho posloupnosti pomocí dynamického programování, tak si ji nejdříve naprogramujeme bez dynamického programování. Alespoň uvidíme, jak nám dynamické programování může náš kód v některých případech udělat mnohem efektivnějším.</p>
                     <p class="paragraph u-mb-small">Následující ukázka ukazuje funkci fib, která pro získání požadovaného čísla z Fibonacciho posloupnosti používá rekurzy. Víme že první číslo Fibonacciho posloupnosti je 0, a druhé a třetí číslo je 1. Pokud do funkce tedy předáme hodnotu od 1 do 3, tak můžeme hned vrátit 0 nebo 1. Pokud ale do funkce předáme větší číslo než je 3, tak nevíme jaké pro něj máme vrátit Fibonacciho číslo. Víme ale, že Fibonacciho číslo získáme sečtením dvou předešlých čísel ve Fibonacciho posloupnosti a zavoláme tedy funkci fib rekurzivně pro dvě předešlá čísla, vrácené hodnoty sečteme a vrátíme výsledek.</p>
                     <div data-interactive-example-id="1" class="code-box u-mb-medium">
@@ -113,7 +113,7 @@ console.log("Šesté číslo ve Fibonacciho posloupnosti je: " + vysledek);</cod
                         </div>
                         <div id="console-1" class="code-box__console">&gt; </div>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Vyřešení problému pomocí dynamického programování</h2>
+                    <h2 id="vyreseni-problemu-pomoci-dynamickeho-programovani" class="heading-secondary u-mb-tiny">Vyřešení problému pomocí dynamického programování</h2>
                     <p class="paragraph u-mb-small">Předchozí ukázka kódu ukazovala vytvoření funkce bez dynamického programování. Tento kód je ale velmi náročný, má časovou náročnost O(2<sup>n</sup>). Pokud se podíváte na graf z části <a href="../big-o-notation/" class="anchor">Big O Notation</a>, tak můžete vidět, že časová náročnost velmi vzroste i při malém zvýšení čísla. Raději si ani nezkoušejte volat funkci fib z minulé ukázky s nějakým větším číslem (např. 100), pokud si nechcete zasekat prohlížeč. Tento problém ale můžeme u naší funkce vyřešit pomocí dynamického programování.</p>
                     <p class="paragraph u-mb-small">Na začátku této části jsem psal, že dynamické programování se dá použít na problémy, které se dají rozdělit na podproblémy, ale řešení těchto podproblémů se musí dát při řešení problému použít opakovaně. U naší funkce toto pravidlo platí. Když se podíváte na následující graf znázorňující volání funkce fib, tak zjistíte, že například pro číslo 4 se funkce fib volá dvakrát.</p>
                     <div class="code-box u-mb-small">
@@ -232,7 +232,7 @@ console.log("Šesté číslo ve Fibonacciho posloupnosti je: " + vysledek);</cod
                         <div id="console-2" class="code-box__console">&gt; </div>
                     </div>
                     <p class="paragraph u-mb-medium">V předchozí ukázce jsme pro funkci na získání čísla z Fibonacciho posloupnosti použili dynamické programování. Zapamatovávali jsme si výsledky operací, které jsme provedli, abychom je mohli v budoucnu použít a nezískávat je znovu. Díky tomu jsme snížili časovou náročnost naší funkce na O(n), což je o dost lepší než O(2<sup>n</sup>).</p>
-                    <h2 class="heading-secondary u-mb-tiny">Top-Down vs. Bottom-Up</h2>
+                    <h2 id="top-down-vs-bottom-up" class="heading-secondary u-mb-tiny">Top-Down vs. Bottom-Up</h2>
                     <p class="paragraph u-mb-small">K dynamickému programování existují dva přístupy: Top-Down a Bottom-Up. Top-Down přístup jsme již použili a znamená to, že začneme u nejsložitějšího problému a řešíme stále jednodušší podproblémy. Nejprve funkci fib zavoláme s nějakým číslem, pro které chceme získat Fibonacciho číslo a poté se ve funkci funkce fib rekurzivně volá pro stále menší čísla. Bottom-Up je opakem Top-Down. Bottom-Up znamená, že začneme s nejjednodušším podproblémem a řešíme stále složitější problémy. Pokud bychom tedy chtěli naši funkci fib předělat na Bottom-Up přístup, tak musíme nejdříve začít s výpočtem nejmenších Fibonacciho čísel a postupovat směrem nahoru k číslu, pro které chceme Fibonacciho číslo získat.</p>
                     <p class="paragraph u-mb-small">Následující ukázka ukazuje, jak bychom mohli naši funkci fib předělat, aby používala Bottom-Up přístup. Namísto rekurze je použit cyklus, který postupně zaplňuje pole, které se na začátku funkce vytváří, Fibonacciho posloupností.</p>
                     <div data-interactive-example-id="3" class="code-box u-mb-small">

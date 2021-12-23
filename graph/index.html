@@ -39,7 +39,7 @@
                     <h1 class="heading-primary u-mb-medium">Graph</h1>
                     <hr class="horizontal-rule u-mb-medium">
                     <p class="paragraph u-mb-medium">V této části se podíváme na Graph. Jedná se o velmi užitečnou datovou strukturu, která má mnoho použití.</p>
-                    <h2 class="heading-secondary u-mb-tiny">Co je to Graph</h2>
+                    <h2 id="co-je-to-graph" class="heading-secondary u-mb-tiny">Co je to Graph</h2>
                     <p class="paragraph u-mb-small">Graph je datová struktura, skládající se z nodes, které jsou spolu různě propojeny. Mohou být propojeny jakkoliv, neexistuje žádné pravidlo jak by měli být propojeny. U linked listu byly nodes propojeny za sebou, u tree nodes tvořili stromovou strukturu, ale u graphu mohou být propojeny různě.</p>
                     <p class="paragraph u-mb-small">Graph má různá využití. Například Google Mapy používají graph pro nalezení nejkratší cesty z jednoho místa na druhé. Uživatelé sociálních sítí také představují graph. Mají různé přátele, kteří mají další přátele a dohromady tedy tvoří v podstatě graph.</p>
                     <p class="paragraph u-mb-small">Následující ukázka ukazuje, jak si můžete graph například představit.</p>
@@ -48,7 +48,7 @@
                             <div class="graph" id="first-graph"></div>
                         </div>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Terminologie</h2>
+                    <h2 id="terminologie" class="heading-secondary u-mb-tiny">Terminologie</h2>
                     <p class="paragraph u-mb-small">Existuje pár pojmů, které se u graphů používají. Některé z nich možná v této části použiji. Zde jsou vysvětleny:</p>
                     <ul class="unordered-list u-mb-medium">
                         <li><b>vertex</b> - představuje node graphu</li>
@@ -56,7 +56,7 @@
                         <li><b>weighted/unweighted</b> - graphy, které mají u edgů přiřazené hodnoty jsou weighted, a ty které u edgů nemají přiřazené hodnoty jsou unweighted</li>
                         <li><b>directed/undirected</b> - u undirected graphu jsou vertexy propojeny oběma směry; u directed graphu jsou vertexy propojeny jen jedním směrem</li>
                     </ul>
-                    <h2 class="heading-secondary u-mb-tiny">Typy Graphů</h2>
+                    <h2 id="typy-graphu" class="heading-secondary u-mb-tiny">Typy Graphů</h2>
                     <p class="paragraph u-mb-small">Existují různé typy graphů. Zde se můžete podívat na <a href="https://en.wikipedia.org/wiki/List_of_data_structures#Graphs" target="_blank" class="anchor">jejich seznam</a>. Tady si hlavně ukážeme, co je to directed/undirected graph a weighted/unweighted graph, a že třeba i Tree je graph.</p>
                     <h3 class="heading-tertiary u-mb-tiny">Tree</h3>
                     <p class="paragraph u-mb-small">Mezi graphy se dá zařadit datová struktura Tree, o které jste se mohli dočíst v části <a href="../binary-search-tree/" class="anchor">Binary Search Tree</a>. Jedná se o graph, ve kterém jsou dva vertexy vždy propojeny jen jednou cestou. Neexistuje jiná cesta, jak se dostat z jednoho vertexu na nějaký jiný.</p>
@@ -122,7 +122,7 @@
                             <div id="directed-graph" class="graph"></div>
                         </div>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Jakým způsobem je Graph reprezentován</h2>
+                    <h2 id="jakym-zpusobem-je-graph-reprezentovan" class="heading-secondary u-mb-tiny">Jakým způsobem je Graph reprezentován</h2>
                     <p class="paragraph u-mb-small">Pro reprezentaci Graphu existují dva standardní způsoby: Adjacency List a Adjacency Matrix. Oba mají své výhody a nevýhody.</p>
                     <h3 class="heading-tertiary u-mb-tiny">Adjacency Matrix</h3>
                     <p class="paragraph u-mb-small">Jedním ze způsobů jak reprezentovat graph, je použít tabulku (matici) ve které si zaznamenáváme, které vertexy jsou spolu propojeny. Takovou tabulku si můžeme vytvořit jako pole polí.</p>
@@ -254,8 +254,7 @@
                             </ul>
                         </div>
                     </div>
-                    <!-- ještě napsat co v této části použijeme (a budu dělat undirected graph) -->
-                    <h2 class="heading-secondary u-mb-tiny">Vytvoření základu Graphu</h2>
+                    <h2 id="vytvoreni-zakladu-graphu" class="heading-secondary u-mb-tiny">Vytvoření základu Graphu</h2>
                     <p class="paragraph u-mb-small">Pro ukázku graphu si vytvoříme undirected graph, jeho vertexy tedy budou propojeny oběma směry. K jeho reprezentaci použijeme Adjacency List, který se u většinu graphů hodí více než Adjacency Matrix. Vytvoříme si třídu jménem Graph, která bude Adjacency List uchovávat. Nic víc v této třídě zatím nepotřebujeme, později si do ní přidáme metody pro interakci s graphem.</p>
                     <div class="code-box u-mb-medium">
                         <pre class="code-box__code"><code>// třída pro Graph
@@ -265,7 +264,7 @@ class Graph {
     }
 }</code></pre>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Metoda addVertex</h2>
+                    <h2 id="metoda-add-vertex" class="heading-secondary u-mb-tiny">Metoda addVertex</h2>
                     <p class="paragraph u-mb-small">Pro přidání vertexu do graphu si vytvoříme metodu addVertex. Bude obsahovat pouze jeden řádek, který pro vertex vytvoří v adjacency listu pole. Toto pole bude sloužit k uchování vertexů, ke kterým se vertex napojí.</p>
                     <p class="paragraph u-mb-small">Pravděpodobně by bylo lepší použít namísto pole linked list, ale pro jednoduchost jsem použil jen pole. Myslím že byste si kód zvládli předělat, pokud byste chtěli namísto pole použít linked list.</p>
                     <div data-interactive-example-id="1" class="code-box u-mb-medium">
@@ -330,7 +329,7 @@ graph.addVertex("F");</code></pre>
                             <div id="graph-1" class="graph"></div>
                         </div>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Metoda addEdge</h2>
+                    <h2 id="metoda-add-edge" class="heading-secondary u-mb-tiny">Metoda addEdge</h2>
                     <p class="paragraph u-mb-small">Pro propojení dvou vertexů ve graphu si vytvoříme metodu addEdge. Tato metoda vezme jako parametr dva vertexy a vzájemně je propojí jejich přidáním do adjacency listu. Do pole prvního vertexu se přidá druhý vertex a do pole druhého vertexu se přidá první vertex.</p>
                     <div data-interactive-example-id="2" class="code-box u-mb-medium">
                         <div class="code-box__header">
@@ -404,7 +403,7 @@ graph.addEdge("B", "D");</code></pre>
                             <div id="graph-2" class="graph"></div>
                         </div>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Metoda removeEdge</h2>
+                    <h2 id="metoda-remove-edge" class="heading-secondary u-mb-tiny">Metoda removeEdge</h2>
                     <p class="paragraph u-mb-small">Pro odstranění propojení mezi dvěma vertexy si vytvoříme metodu removeEdge. Tato metoda vezme jako parametr dva vertexy. V adjacency listu pro první vertex odstraní druhý vertex a v adjacency listu pro druhý vertex odstraní první vertex.</p>
                     <p class="paragraph u-mb-small">V kódu jsou použity metody findIndex a splice, které se týkají polí. Pokud nevíte jak fungují, můžete se podívat třeba zde: <a href="http://pole-v-js.4fan.cz/metody/#hledani-polozky-v-poli" target="_blank" class="anchor">findIndex</a>, <a href="http://pole-v-js.4fan.cz/metody/#pridavani-a-odebirani-polozek" target="_blank" class="anchor">splice</a>.</p>
                     <div data-interactive-example-id="3" class="code-box u-mb-medium">
@@ -480,7 +479,7 @@ graph.removeEdge("D", "F");</code></pre>
                             <div id="graph-3" class="graph"></div>
                         </div>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Metoda removeVertex</h2>
+                    <h2 id="metoda-remove-vertex" class="heading-secondary u-mb-tiny">Metoda removeVertex</h2>
                     <p class="paragraph u-mb-small">Pro odstranění vertexu graphu si vytvoříme metodu removeVertex. Tato metoda přijme vertex, který se má odstranit, odstraní jeho propojení s jinými vertexy v graphu pomocí metody removeEdge, a odstraní jeho pole z adjacency listu pomocí operátoru delete.</p>
                     <p class="paragraph u-mb-small">Operátor delete v JavaScriptu slouží k odstranění vlastnosti objektu.</p>
                     <div data-interactive-example-id="4" class="code-box u-mb-small">

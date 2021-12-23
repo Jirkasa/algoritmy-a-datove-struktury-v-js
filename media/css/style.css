@@ -10,6 +10,7 @@ html {
 }
 body {
   box-sizing: border-box;
+  background-color: #117964;
 }
 body {
   font-family: 'Open Sans', sans-serif;
@@ -220,6 +221,7 @@ code.hljs {
   width: 100%;
   margin: 0 auto;
   max-width: 180rem;
+  background-color: #fff;
 }
 .header {
   height: 9.5rem;

@@ -39,7 +39,7 @@
                     <h1 class="heading-primary u-mb-medium">Rekurze</h1>
                     <hr class="horizontal-rule u-mb-medium">
                     <p class="paragraph u-mb-medium">V této části se podíváme na to, co je to rekurze. Je to věc, která vám ze začátku možná může přijít trochu složitější a matoucí, obzvlášť u složitějších algoritmů. Ale občas si jejím použitím můžeme ušetřit práci.</p>
-                    <h2 class="heading-secondary u-mb-tiny">Co je to rekurze</h2>
+                    <h2 id="co-je-to-rekurze" class="heading-secondary u-mb-tiny">Co je to rekurze</h2>
                     <p class="paragraph u-mb-small">Rekurze je proces, při kterém funkce volá sama sebe. Nevím co bych k tomu dodal. Následující ukázka ji ukazuje:</p>
                     <div data-interactive-example-id="1" class="code-box u-mb-medium">
                         <div class="code-box__header">
@@ -94,7 +94,7 @@ pozdrav(3);</code></pre>
                         </div>
                         <div id="console-1" class="code-box__console">&gt; </div>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Call Stack</h2>
+                    <h2 id="call-stack" class="heading-secondary u-mb-tiny">Call Stack</h2>
                     <p class="paragraph u-mb-small">Důvod proč rekurze funguje je ten, že JavaScript má v sobě zabudovaný mechanismus, kterému se říká Call Stack. Je to takové místo, kam si JavaScript ukládá na jakém místě se zrovna nachází. Pokud zavoláme nějakou funkci, tak si JavaScript musí nějakým způsobem pamatovat, kde předtím skončil aby se tam po vykonání funkce mohl vrátit. Když nějakou funkci zavoláme, tak si ji JavaScript přidá na Call Stack. Ten si můžeme představit jako na sobě naskládané papíry v nějaké krabici. Pokud do krabice přidáme papír, musíme jej přidat na ostatní papíry v krabici, které se tam už nacházejí. A pokud si budeme chtít z krabice papír vzít, tak si můžeme vzít jen ten, který jsme tam vložili naposled. Takže když JavaScript narazí na příkaz, který mu říká že má jít vykonat nějakou funkci, přidá si ji na Call Stack. A když JavaScript dokončí provádění funkce, tak z Call Stacku odstraní poslední funkci, kterou do něj vložil.</p>
                     <p class="paragraph u-mb-small">Následující ukázka Call Stack vizuálně ukazuje. Napravo od ukázky kódu se nachází box, ve kterém si můžete při spuštění ukázky prohlédnou, jak se Call Stack zaplňuje. V ukázce se volá funkce, která vypíše průměr dvou předaných čísel. Tato funkce volá jinou funkci, která zase volá ještě jinou funkci. Díky tomu si můžete prohlédnout, jak se Call Stack postupně zaplňuje.</p>
                     <div data-interactive-example-id="2" class="code-box u-mb-medium">
@@ -152,7 +152,7 @@ vypisPrumer(3, 5);</code></pre>
                         </div>
                         <div id="console-2" class="code-box__console">&gt; </div>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Příklad použití rekurze</h2>
+                    <h2 id="priklad-pouziti-rekurze" class="heading-secondary u-mb-tiny">Příklad použití rekurze</h2>
                     <p class="paragraph u-mb-small">Jako příklad použití rekurze bychom si mohli zkusit vytvořit funkci, která vypočítá faktoriál (např. faktoriál 5 je 1 * 2 * 3 * 4 * 5). Pro tuto operaci by namísto rekurze bylo lepší použít cyklus, ale pro ukázku rekurze se výpočet faktoriálu hodí.</p>
                     <div data-interactive-example-id="3" class="code-box u-mb-medium">
                         <div class="code-box__header">

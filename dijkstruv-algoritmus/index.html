@@ -39,10 +39,10 @@
                     <h1 class="heading-primary u-mb-medium">Dijkstrův algoritmus</h1>
                     <hr class="horizontal-rule u-mb-medium">
                     <p class="paragraph u-mb-medium">V této části si ukážeme Dijkstrův algoritmus. Jedná se o jeden z nejznámějších algoritmů a je široce používaný.</p>
-                    <h2 class="heading-secondary u-mb-tiny">Co je to Dijkstrův algoritmus</h2>
+                    <h2 id="co-je-to-dijkstruv-algoritmus" class="heading-secondary u-mb-tiny">Co je to Dijkstrův algoritmus</h2>
                     <p class="paragraph u-mb-small">Dijkstrův algoritmus je algoritmus pro hledání nejkratší cesty v graphu z jednoho vertexu na druhý. Vytvořil jej holandský programátor, fyzik, esejista (a nevím co dalšího ještě byl...) <a href="https://cs.wikipedia.org/wiki/Edsger_Dijkstra" target="_blank" class="anchor">Edsger Dijkstra</a>, po kterém je tento algoritmus pojmenován. Byl to velmi chytrý a vlivný člověk a hodně jeho objevů a algoritmů se běžně používá dodnes.</p>
                     <p class="paragraph u-mb-medium">Nalezení nejkratší cesty v graphu se hodí na různé věci. Můžeme například chtít nalézt nejkratší cestu z jednoho místa na mapě na druhé a tak dále.</p>
-                    <h2 class="heading-secondary u-mb-tiny">Vytvoření Weighted Graphu</h2>
+                    <h2 id="vytvoreni-weighted-graphu" class="heading-secondary u-mb-tiny">Vytvoření Weighted Graphu</h2>
                     <p class="paragraph u-mb-small">Dijkstrův algoritmus pracuje s weighted graphy. Edge graphu tedy musí mít přidělenou nějakou hodnotu. V minulých částech jsme si vytvářeli jen obyčejný unweighted graph, takže si pro ukázku Dijkstrova algoritmu musíme weighted graph vytvořit. Vlastně nám jen stačí si naši třídu pro graph trochu poupravit. Protože budeme chtít uchovávat i hodnotu edgů, tak budeme při propojování vertexů muset do adjacency listu kromě samotných vertexů vkládat také hodnotu propojení (edge). Takže namísto samotných vertexů budeme v polích v adjacency listu ukládat objekty, které budou obsahovat vertex, se kterým je vertex, kterému pole patří propojený a hodnotu tohoto propojení.</p>
                     <p class="paragraph u-mb-small">Následující ukázka ukazuje třídu pro weighted graph, která vznikla upravením třídy pro graph, který jsme vytvářeli v minulých částech. Metoda addVertex zůstala stejná, metody removeEdge a removeVertex se změnili jen lehce a v metodě addEdge se teď do adjacency listu namísto samotného vertexu přidává objekt.</p>
                     <div class="code-box u-mb-medium">
@@ -84,7 +84,7 @@
     }
 }</code></pre>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Jak Dijkstrův algoritmus funguje</h2>
+                    <h2 id="jak-dijkstruv-algoritmus-funguje" class="heading-secondary u-mb-tiny">Jak Dijkstrův algoritmus funguje</h2>
                     <p class="paragraph u-mb-small">Než si do naší WeightedGraph třídy přidáme metodu pro nalezení nejkratší cesty z jednoho vertexu na druhý, tak si vysvětlíme, jak vůbec Dijkstrův algoritmus funguje. Pro tento účel jsem vytvořil následující vizuální ukázku, protože v textu se to vysvětluje špatně.</p>
                     <div data-interactive-example-id="1" class="code-box u-mb-medium">
                         <div class="code-box__header">
@@ -167,7 +167,7 @@
                             </div>
                         </div>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Dijkstrův algoritmus používá Priority Queue</h2>
+                    <h2 id="dijkstruv-algoritmus-pouziva-priority-queue" class="heading-secondary u-mb-tiny">Dijkstrův algoritmus používá Priority Queue</h2>
                     <p class="paragraph u-mb-small">K vytvoření Dijkstrova algoritmu potřebujeme Priority Queue. Tu jsme vytvářeli v části <a href="../binary-heap/" class="anchor">Binary Heap</a>. Vytvořili jsme si Priority Queue, která je postavená na Max Binary Heap, ale pro Dijkstrův algoritmus potřebujeme Priority Queue, která je postavená na Min Binary Heap. Položky s nižší prioritou by měli mít v Priority Queue přednost. Budeme si tedy muset naši Priority Queue upravit tak, aby byla postavená na Min Binary Heap. Jediná věc, kterou v naší třídě budeme muset změnit jsou porovnávací znaménka v podmínkách u metod bubbleUp a sinkDown.</p>
                     <p class="paragraph u-mb-small">Navíc si do naší PriorityQueue třídy přidáme ještě vlastnost length, abychom mohli jednoduše zjistit, kolik Priority Queue obsahuje položek. Následující ukázka upravenou třídu pro Priority Queue ukazuje.</p>
                     <div class="code-box u-mb-medium">
@@ -258,7 +258,7 @@ class PriorityQueue {
     }
 }</code></pre>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Implementace Dijkstrova algoritmu</h2>
+                    <h2 id="implementace-dijkstrova-algoritmu" class="heading-secondary u-mb-tiny">Implementace Dijkstrova algoritmu</h2>
                     <p class="paragraph u-mb-small">Ukázali jsme si jak Dijkstrův algoritmus funguje a protože k jeho implementaci potřebujeme Priority Queue postavenou na Min Binary Heap, upravili jsme si naši Priority Queue třídu. Teď už se můžeme pustit do samotného kódu Dijkstrova algoritmu. Následující ukázka jej ukazuje.</p>
                     <div data-interactive-example-id="2" class="code-box u-mb-small">
                         <div class="code-box__header">

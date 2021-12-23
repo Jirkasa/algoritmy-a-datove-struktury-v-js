@@ -39,9 +39,9 @@
                     <h1 class="heading-primary u-mb-medium">Stack a Queue</h1>
                     <hr class="horizontal-rule u-mb-medium">
                     <p class="paragraph u-mb-medium">V této části si ukážeme datové struktury Stack a Queue. Tyto datové struktury jsou podobné linked listům, o kterých byly poslední dvě části. Také používají nodes, které jsou spolu propojeny.</p>
-                    <h2 class="heading-secondary u-mb-tiny">Stack</h2>
+                    <h2 id="stack" class="heading-secondary u-mb-tiny">Stack</h2>
                     <p class="paragraph u-mb-small">Stack je LIFO datová struktura. LIFO je zkratka pro Last In First Out, což v češtině znamená poslední dovnitř, první ven. Položku, kterou tedy do stacku vložíme jako poslední, dostaneme ze stacku jako první. Stack si tedy můžeme například představit jako krabici, do které na sebe vkládáme papíry. Pokud potom budeme z krabice chtít vzít papír, tak si vezmeme poslední, který jsme tam vložili.</p>
-                    <h3 class="heading-tertiary u-mb-tiny">Vytvoření Stacku</h3>
+                    <h3 id="vytvoreni-stacku" class="heading-tertiary u-mb-tiny">Vytvoření Stacku</h3>
                     <p class="paragraph u-mb-small">Existuje více cest jak stack vytvořit. Klidně můžeme použít i pole, pokud se nám pro stack nechce vytvářet třída. Pokud budeme chtít do pole, které používáme jako stack vložit hodnotu, můžeme použít metodu push, která slouží k vložení hodnoty na konec pole. K získání poslední vložené položky ze stacku bychom potom mohli použít metodu pop, která slouží k odstranění a získání poslední položky pole. Nebo bychom mohli také nové hodnoty vkládat a získávat ze začátku pole pomocí metod unshift a shift. To by ale bylo pomalejší, protože by se u všech položek pole museli vždy měnit indexy. Proto je lepší vkládat a získávat položky pole z jeho konce, aby se indexy nemuseli měnit.</p>
                     <div class="code-box u-mb-small">
                         <pre class="code-box__code"><code>// vytvoření stacku
@@ -76,7 +76,7 @@ class Stack {
     }
 }</code></pre>
                     </div>
-                    <h3 class="heading-tertiary u-mb-tiny">Metoda push</h3>
+                    <h3 id="stack-metoda-push" class="heading-tertiary u-mb-tiny">Metoda push</h3>
                     <p class="paragraph u-mb-small">Pro vložení položky do stacku si vytvoříme metodu push. V této metodě se předaná položka připojí na začátek linked listu (nodes ve stacku jsou projené stejně jako v Singly Linked Listu) a nastaví se jako poslední přidaná položka.</p>
                     <div data-interactive-example-id="1" class="code-box u-mb-small">
                         <div class="code-box__header">
@@ -149,7 +149,7 @@ stack.push(true);</code></pre>
                             <div id="linked-list-1" class="linked-list linked-list--bigger-bottom-padding"></div>
                         </div>
                     </div>
-                    <h3 class="heading-tertiary u-mb-tiny">Metoda pop</h3>
+                    <h3 id="stack-metoda-pop" class="heading-tertiary u-mb-tiny">Metoda pop</h3>
                     <p class="paragraph u-mb-small">Pro získání a odstranění hodnoty ze stacku si vytvoříme metodu pop. Tato metoda odstraní ze stacku naposledy vloženou hodnotu a vrátí ji.</p>
                     <div data-interactive-example-id="2" class="code-box u-mb-small">
                         <div class="code-box__header">
@@ -229,11 +229,11 @@ let hodnota3 = stack.pop();</code></pre>
                         </div>
                     </div>
                     <p class="paragraph u-mb-small">Pokud bychom chtěli, tak bychom si pro stack mohli vytvořit ještě nějaké další metody. Například metodu peek, která by sloužila jen k získání poslední vložené položky bez jejího odstranění. Myslím ale, že díky metodám push a pop teď víte jak stack funguje a dle potřeby byste si nějaké další metody přidali sami.</p>
-                    <h3 class="heading-tertiary u-mb-tiny">Big O náročnost Stacku</h3>
+                    <h3 id="big-o-narocnost-stacku" class="heading-tertiary u-mb-tiny">Big O náročnost Stacku</h3>
                     <p class="paragraph u-mb-medium">U stacku nás zajímá jen jaká je časová náročnost vkládání položky a její získávání a odstraňování. Časová náročnost těchto operací je O(1).</p>
-                    <h2 class="heading-secondary u-mb-tiny">Queue</h2>
+                    <h2 id="queue" class="heading-secondary u-mb-tiny">Queue</h2>
                     <p class="paragraph u-mb-small">Queue je FIFO datová struktura. FIFO je zkratka pro First In First Out, což v češtině znamená první dovnitř, první ven. Položku, kterou tedy do queue vložíme jako první, dostaneme z queue také jako první. Slovo queue do češtiny přeložíme jako fronta, takže si queue můžeme představit jako nějakou frontu lidí. Člověk, který přišel nejdříve a je ve frontě první, se dostane na řadu jako první a odejde také jako první.</p>
-                    <h3 class="heading-tertiary u-mb-tiny">Vytvoření Queue</h3>
+                    <h3 id="vytvoreni-queue" class="heading-tertiary u-mb-tiny">Vytvoření Queue</h3>
                     <p class="paragraph u-mb-small">Existuje více cest jak queue vytvořit. Dalo by se například použít i pole. Pro vkládání hodnot bychom mohli použít metodu unshift, a pro získávání hodnot metodu pop. Pole ale obsahuje indexy, které by se při přidávání nové hodnoty do pole museli posouvat. Časová náročnost pro vkládání hodnoty by tedy byla O(n). Tuto jednoduchou a neefektivní cestu vytvoření queue ukazuje následující ukázka.</p>
                     <div class="code-box u-mb-small">
                         <pre class="code-box__code"><code>// vytvoření queue
@@ -269,7 +269,7 @@ class Queue {
     }
 }</code></pre>
                     </div>
-                    <h3 class="heading-tertiary u-mb-tiny">Metoda enqueue</h3>
+                    <h3 id="queue-metoda-enqueue" class="heading-tertiary u-mb-tiny">Metoda enqueue</h3>
                     <p class="paragraph u-mb-small">Pro vložení položky do queue si vytvoříme metodu enqueue. Protože naše Queue třída používá Singly Linked List, tak budeme nové položky přidávat na konec linked listu, abychom je potom pomocí metody dequeue mohli rychleji získat ze začátku linked listu. U Singly Linked Listu je totiž časová náročnost pro odstraňování položek z konce linked listu O(n), protože jsou nodes propojeny jen jedním směrem a musíme se nejdříve dostat k předposlední node.</p>
                     <div data-interactive-example-id="3" class="code-box u-mb-small">
                         <div class="code-box__header">
@@ -342,7 +342,7 @@ queue.enqueue(true);</code></pre>
                             <div id="linked-list-3" class="linked-list linked-list--bigger-bottom-padding"></div>
                         </div>
                     </div>
-                    <h3 class="heading-tertiary u-mb-tiny">Metoda dequeue</h3>
+                    <h3 id="queue-metoda-dequeue" class="heading-tertiary u-mb-tiny">Metoda dequeue</h3>
                     <p class="paragraph u-mb-small">Pro získání položky z queue si vytvoříme metodu dequeue. Tato metoda odstraní první node v linked listu a vrátí její hodnotu.</p>
                     <div data-interactive-example-id="4" class="code-box u-mb-small">
                         <div class="code-box__header">
@@ -426,7 +426,7 @@ const hodnota3 = queue.dequeue();</code></pre>
                         </div>
                     </div>
                     <p class="paragraph u-mb-small">Pokud bychom chtěli, tak bychom si pro queue mohli vytvořit nějaké další metody. Po předchozích ukázkách metod enqueue a dequeue už asi víte jak queue funguje a tak byste si dle potřeby případně vytvořili nějaké sami.</p>
-                    <h3 class="heading-tertiary u-mb-tiny">Big O náročnost Queue</h3>
+                    <h3 id="big-o-narocnost-queue" class="heading-tertiary u-mb-tiny">Big O náročnost Queue</h3>
                     <p class="paragraph">Co se týče časové náročnosti queue, tak nás zajímá jen vkládání položky a její získávání a odstraňování. Časová náročnost těchto operací je O(1).</p>
                 </main>
                 <div class="article-page__lateral-side">

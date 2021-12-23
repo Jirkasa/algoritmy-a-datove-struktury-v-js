@@ -39,14 +39,14 @@
                     <h1 class="heading-primary u-mb-medium">Big O Notation</h1>
                     <hr class="horizontal-rule u-mb-medium">
                     <p class="paragraph u-mb-medium">V první části tohoto tutoriálu se podíváme, co je to Big O Notation.</p>
-                    <h2 class="heading-secondary u-mb-tiny">Co je to Big O Notation</h2>
+                    <h2 id="co-je-to-big-o-notation" class="heading-secondary u-mb-tiny">Co je to Big O Notation</h2>
                     <p class="paragraph u-mb-small">I když je tento tutoriál o algoritmech a datových strukturách, Big O Notation mezi ně nepatří. Big O Notation představuje jen takový způsob, pomocí kterého můžeme zapsat, jakou má nějaký kód časovou nebo paměťovou náročnost. Slouží tedy jen jako taková informace na kterou se můžeme podívat a zjistit, jak náročný je nějaký kód.</p>
                     <p class="paragraph u-mb-tiny">Pomocí Big O Notation zjišťujeme tyto dvě vlastnosti:</p>
                     <ul class="unordered-list u-mb-medium">
                         <li><b>časová náročnost</b> - jak dlouho provedení kódu trvá</li>
                         <li><b>paměťová náročnost</b> - jak velkou část paměti kód zabere</li>
                     </ul>
-                    <h2 class="heading-secondary u-mb-tiny">Testování rychlosti kódu</h2>
+                    <h2 id="testovani-rychlosti-kodu" class="heading-secondary u-mb-tiny">Testování rychlosti kódu</h2>
                     <p class="paragraph u-mb-small">Občas si můžeme chtít zjistit, jakou dobu zhruba trvá provedení nějakého kódu, který jsme napsali. K tomu můžeme použít funkci performance.now, která vrací čas v milisekundách od otevření webové stránky. Nejprve ji zavoláme před provedením nějakého kódu, u kterého chceme změřit jak dlouho bude trvat a podruhé tuto funkci zavoláme po jeho provedení. Čas, který tato funkce vrací si uložíme do proměnných, které od sebe po dokončení kódu odečteme. Tím získáme, jak dlouho provedení nějakého kódu trvá.</p>
                     <div class="code-box u-mb-small" data-interactive-example-id="1">
                         <div class="code-box__header">
@@ -84,7 +84,7 @@ console.log(`Provedení kódu trvalo ${cas2 - cas1} milisekund.`);</code></pre>
                         <div class="code-box__console" id="console-1">&gt;</div>
                     </div>
                     <p class="paragraph u-mb-medium">Čas, který tímto způsobem získáme ale není vůbec přesný. Pokud budeme dobu běhu stejného kódu měřit vícekrát, tak nám vždy vyjde jiný čas. Navíc se doba běhu kódu na různých zařízeních bude lišit. I když ale tento způsob měření není přesný, tak to neznamená že bychom jej nemohli používat. Občas se může hodit si jen tak změřit, jakou dobu zhruba trvá provedení nějakého kódu. Je to ale jen taková informace pro nás. Pokud bychom chtěli časovou náročnost kódu stanovit v nezávislosti na tom, na jakém zařízení a za jakých podmínek se bude kód spouštět, můžeme to stanovit pomocí Big O Notation.</p>
-                    <h2 class="heading-secondary u-mb-tiny">Zápis Big O Notation</h2>
+                    <h2 id="zapis-big-o-notation" class="heading-secondary u-mb-tiny">Zápis Big O Notation</h2>
                     <p class="paragraph u-mb-small">Big O Notation píšeme takto: O(nějaký výraz). Uvnitř závorek specifikujeme jakou časovou nebo paměťovou náročnost kód má. Tu nemusíme specifikovat přesně. Pokud má kód časovou náročnost O(10n), tak stačí napsat jen O(n).</p>
                     <p class="paragraph u-mb-tiny">Zde jsou popsány tři Big O výrazy, které se často používají:</p>
                     <ul class="unordered-list u-mb-small">
@@ -93,8 +93,8 @@ console.log(`Provedení kódu trvalo ${cas2 - cas1} milisekund.`);</code></pre>
                         <li><b>O(n<sup>2</sup>)</b> - čím větší číslo bude na vstupu, tím pomaleji kód poběží (velké rozdíly se objeví i při malé změně čísla)</li>
                     </ul>
                     <p class="paragraph u-mb-small">Kromě těchto jednoduchých výrazů se občas také používají nějaké složitější. Používají se například také logaritmy. Pokud jste ale stejně jako já už zapomněli, co to vlastně ty logaritmy jsou, nebo jste se o nich nikdy neučili, vůbec to nevadí. Na následujícím obrázku je graf, který ukazuje různé Big O náročnosti. Pokud v dalších částech tutoriálu narazíte na nějakou Big O Notation, u které nebudete vědět jak náročná je, tak se na tento graf můžete podívat. Nemusíme být na Big O Notation experti, jen potřebujeme vědět co to je a popřípadě si na tomto grafu najít, jak náročný nějaký algoritmus je.</p>
-                    <img src="../media//img/BigOComplexityChart.jpeg" alt="Graf Big O náročnosti" class="image u-mb-medium u-mb-medium">
-                    <h2 class="heading-secondary u-mb-tiny">Big O Notation objektů a polí</h2>
+                    <img id="graf" src="../media//img/BigOComplexityChart.jpeg" alt="Graf Big O náročnosti" class="image u-mb-medium u-mb-medium">
+                    <h2 id="big-o-notation-objektu-a-poli" class="heading-secondary u-mb-tiny">Big O Notation objektů a polí</h2>
                     <p class="paragraph u-mb-small">Jen tak pro zajímavost bychom si zde mohli uvést Big O Notation týkající se operací s objekty a poli.</p>
                     <h3 class="heading-tertiary u-mb-tiny">Objekty</h3>
                     <ul class="unordered-list u-mb-small">

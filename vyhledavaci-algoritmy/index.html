@@ -39,7 +39,7 @@
                     <h1 class="heading-primary u-mb-medium">Vyhledávací algoritmy</h1>
                     <hr class="horizontal-rule u-mb-medium">
                     <p class="paragraph u-mb-medium">V této části si ukážeme dva vyhledávací algoritmy, které můžeme použít při hledání hodnot v poli. Jeden z nich pravděpodobně znáte a ten druhý byl už vlastně ukázaný v části 'Postup při řešení problému'.</p>
-                    <h2 class="heading-secondary u-mb-tiny">Linear Search</h2>
+                    <h2 id="linear-search" class="heading-secondary u-mb-tiny">Linear Search</h2>
                     <p class="paragraph u-mb-small">Asi nejjednodušší způsob hledání položky v poli je celé pole projet for cyklem a ptát se jestli se nějaká položka rovná hledané hodnotě. Tento způsob ukazuje následující ukázka:</p>
                     <div class="code-box u-mb-small">
                         <pre class="code-box__code"><code>function linearSearch(pole, hodnota) {
@@ -57,7 +57,7 @@ console.log("Hledaná položka se nachází na indexu: " + index);</code></pre>
                         <div class="code-box__console">&gt; Hledaná položka se nachází na indexu: 2</div>
                     </div>
                     <p class="paragraph u-mb-medium">Časová náročnost tohoto způsobu je O(n), protože čím více má pole položek, tím více může (ale nemusí) proběhnout cyklů. Pokud pole, ve kterém vyhledáváme není seřazené, tak pravděpodobně neexistuje lepší způsob jak vyhledávat, pokud ale je tak ano.</p>
-                    <h2 class="heading-secondary u-mb-tiny">Binary Search</h2>
+                    <h2 id="binary-search" class="heading-secondary u-mb-tiny">Binary Search</h2>
                     <p class="paragraph u-mb-small">Tento algoritmus slouží pro vyhledávání položky v seřazeném poli. Díky tomu, že hledáme hodnotu v seřazeném poli, tak nemusíme celé pole projíždět for cyklem jako u předchozího algoritmu. Můžeme se zeptat, jestli je hledaná položka nižší nebo vyšší než prostřední položka pole a podle toho se přesunout doprostřed levé části pole nebo pravé části pole. Tuto operaci můžeme několikrát opakovat a nakonec se k hledané položce dostaneme nebo dojdeme k závěru že hledaná položka v poli není.</p>
                     <p class="paragraph u-mb-small">Binary Search algoritmus byl již ukázan v části <a href="../postup-pri-reseni-problemu/index.html#divide-and-conquer" class="anchor">postup při řešení problému</a>, ale rozhodl jsem se ho v této části ukázat ještě jednou a přidat k němu menší vizualizaci, která vám možná pomůže jej lépe pochopit.</p>
                     <div data-interactive-example-id="1" class="code-box u-mb-small">

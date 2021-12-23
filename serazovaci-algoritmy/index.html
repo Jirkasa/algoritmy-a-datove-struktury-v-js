@@ -39,7 +39,7 @@
                     <h1 class="heading-primary u-mb-medium">Seřazovací algoritmy</h1>
                     <hr class="horizontal-rule u-mb-medium">
                     <p class="paragraph u-mb-medium">V této části si ukážeme algoritmy, které slouží k seřazování. V JavaScriptu máme pro seřazování polí k dispozici metodu sort, občas se nám ale může hodit napsat si svoji vlastní a efektivnější. Podíváme se tu celkem na 6 seřazovacích algoritmů: bubble, selection, insertion, merge, quick a radix sort.</p>
-                    <h2 class="heading-secondary u-mb-tiny">Bubble Sort</h2>
+                    <h2 id="bubble-sort" class="heading-secondary u-mb-tiny">Bubble Sort</h2>
                     <p class="paragraph u-mb-small">První seřazovací algoritmus, který si ukážeme je Bubble Sort. Tento algoritmus spočívá v tom, že se postupně projíždí celé pole a vždy se porovnávají dvě položky vedle sebe, které se podle podmínky prohodí nebo zůstanou tak jak jsou. Takto se pole projíždí tak dlouho, dokud se celé neseřadí.</p>
                     <div data-interactive-example-id="1" class="code-box u-mb-small">
                         <div class="code-box__header">
@@ -118,7 +118,7 @@ console.log(serazenePole);</code></pre>
                         <div id="console-1" class="code-box__console">&gt; </div>
                     </div>
                     <p class="paragraph u-mb-medium">Časová náročnost Bubble Sort algoritmu je O(n<sup>2</sup>). Samozřejmě záleží na tom, jak moc je seřazované pole již seřazené. U některých polí může proběhnout méně cyklů, u některých více.</p>
-                    <h2 class="heading-secondary u-mb-tiny">Selection Sort</h2>
+                    <h2 id="selection-sort" class="heading-secondary u-mb-tiny">Selection Sort</h2>
                     <p class="paragraph u-mb-small">Teď si ukážeme Selection Sort. Tento algoritmus funguje tak, že se seřazené položky hromadí na začátku pole a při procházení pole se vždy najde nejmenší položka, která se k seřazeným položkám na konci cyklu přidá.</p>
                     <div data-interactive-example-id="2" class="code-box u-mb-small">
                         <div class="code-box__header">
@@ -201,7 +201,7 @@ console.log(serazenePole);</code></pre>
                         <div id="console-2" class="code-box__console">&gt; </div>
                     </div>
                     <p class="paragraph u-mb-medium">Časová náročnost Selection Sort algoritmu je O(n<sup>2</sup>), ale narozdíl od Bubble Sort, který má časovou náročnost také O(n<sup>2</sup>), se položky přehazují jen po projetí pole.</p>
-                    <h2 class="heading-secondary u-mb-tiny">Insertion Sort</h2>
+                    <h2 id="insertion-sort" class="heading-secondary u-mb-tiny">Insertion Sort</h2>
                     <p class="paragraph u-mb-small">Jako další seřazovací algoritmus si ukážeme Insertion Sort. Tento algoritmus funguje tak, že se prochází celé pole a vždy se každá položka zařadí směrem na začátek, kde se nachází již dříve seřazené položky.</p>
                     <div data-interactive-example-id="3" class="code-box u-mb-small">
                         <div class="code-box__header">
@@ -278,7 +278,7 @@ console.log(serazenePole);</code></pre>
                         <div id="console-3" class="code-box__console">&gt; </div>
                     </div>
                     <p class="paragraph u-mb-medium">Časová náročnost Insertion Sort algoritmu je O(n<sup>2</sup>). Je vhodné jej použít na seřazování polí, která jsou již skoro seřazená.</p>
-                    <h2 class="heading-secondary u-mb-tiny">Merge Sort</h2>
+                    <h2 id="merge-sort" class="heading-secondary u-mb-tiny">Merge Sort</h2>
                     <p class="paragraph u-mb-small">Tento algoritmus funguje tak, že se pole postupně dělí dokud nevzniknou pole o jedné položce, a ty se poté zase seskládají dohromady a pole se tak seřadí. Nebudu to tu v textu rozebírat, myslím že v interaktivní ukázce to pochopíte mnohem lépe. Nejdříve bych tu chtěl ale ještě ukázat funkci, která slouží ke spojení dvou seřazených polí, a zároveň zajišťuje aby byla pole i nadále seřazená. Samotná funkce provádějící Merge Sort algoritmus je docela krátká, ale využívá právě tuto funkci.</p>
                     <div data-interactive-example-id="4" class="code-box u-mb-small">
                         <div class="code-box__header">
@@ -513,7 +513,7 @@ console.log(serazenePole);</code></pre>
                         <div id="console-5" class="code-box__console">&gt; </div>
                     </div>
                     <p class="paragraph u-mb-medium">Časová náročnost Merge Sort algoritmu je O(n log n). Narozdíl od předchozí algoritmů, to jak je pole již seřazené nemá žádný vliv, protože Merge Sort stejně celé pole rozdělí na více polí o jedné položce. U předchozích algoritmů jsme si ani neuváděli paměťovou náročnost, protože byla O(1). U Merge Sort to tak není, protože vytváříme nová pole a paměťová náročnost je tak O(n).</p>
-                    <h2 class="heading-secondary u-mb-tiny">Quick Sort</h2>
+                    <h2 id="quick-sort" class="heading-secondary u-mb-tiny">Quick Sort</h2>
                     <p class="paragraph u-mb-small">Jako další seřazovací algortimus si ukážeme Quick Sort. Stejně jako Merge Sort používá pomocnou funkci. Jejím úkolem je v předaném poli (nebo jeho části) určit položku, před kterou se umístí ostatní položky pole, které jsou menší než tato položka. Index této položky se na konci funkce vrátí, říká se mu pivot. Funkce tedy uřčí pivot, před něj umístí menší položky, za ním zůstanou větší položky a pivot vrátí. Jako pivot se vždy vybere první položka předaného pole (nebo jeho části). Existuje také Random Quick Sort algoritmus, který pivot vybere náhodně, ale ten si tu ukazovat nebudeme.</p>
                     <p class="paragraph u-mb-small">Stejně jako u Merge Sort se pojďme nejprve podívat na pomocnou funkci pivot:</p>
                     <div data-interactive-example-id="6" class="code-box u-mb-small">
@@ -732,7 +732,7 @@ console.log(serazenePole);</code></pre>
                     </div>
                     <p class="paragraph u-mb-small">Doufám že vám předchozí interaktivní ukázka pomohla Quick Sort algortimus pochopit. Je to podle mě asi nejtěžší seřazovací algoritmus, který je v této části ukázaný.</p>
                     <p class="paragraph u-mb-medium">Čásová náročnost Quick Sort algoritmu je O(n log n). Ale záleží na seřazovaném poli, pokud nám bude funkce pivot například pořád vracet index 0, tak je to O(n<sup>2</sup>). Quick Sort sice pracuje jen s polem, který mu předáme, ale jeho paměťová náročnost je kvůli rekurzy O(log n).</p>
-                    <h2 class="heading-secondary u-mb-tiny">Radix Sort</h2>
+                    <h2 id="radix-sort" class="heading-secondary u-mb-tiny">Radix Sort</h2>
                     <p class="paragraph u-mb-small">Jako poslední seřazující algoritmus si ukážeme Radix Sort. Jde o speciální algoritmus, který nikdy neporovnává hodnoty mezi položkami pole. Využívá faktu, že větší číslo je zapsáno s více číslicemi.</p>
                     <p class="paragraph u-mb-small">Pro vytvoření Radix Sort algoritmu potřebujeme pár pomocných funkcí. Potřebujeme funkci, pomocí které získáme potřebnou číslici z předaného čísla a funkci na získání největšího počtu číslic nějakého čísla v poli. Funkce, které potřebujeme ukazuje následující ukázka. Vůbec nemusíte zkoumat jak fungují, kdybyste je potřebovali, tak si je můžete najít na Stack Overflow nebo někde jinde. Důležité je jen abyste věděli k čemu slouží.</p>
                     <div class="code-box u-mb-small">

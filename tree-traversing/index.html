@@ -39,10 +39,10 @@
                     <h1 class="heading-primary u-mb-medium">Tree Traversing</h1>
                     <hr class="horizontal-rule u-mb-medium">
                     <p class="paragraph u-mb-medium">V minulé části jsme si vytvořili Binary Search Tree a zkusili jsme si v něm hledat hodnoty. Díky tomu, že je Binary Search Tree seřazený, je hledání hodnot celkem jednoduché. Pokud ale chceme hledat hodnotu v tree, který není seřazený, tak už to je trochu složitější. Existuje více cest jak hledat hodnotu v tree, který není seřazený. V této části si ukážeme celkem čtyři metody, které k tomu můžeme použít.</p>
-                    <h2 class="heading-secondary u-mb-tiny">Co je to Tree Traversing</h2>
+                    <h2 id="co-je-to-tree-traversing" class="heading-secondary u-mb-tiny">Co je to Tree Traversing</h2>
                     <p class="paragraph u-mb-small">Tato část je pojmenovaná jako Tree Traversing. V češtině traversing znamená procházení. Ukážeme si tu tedy, jakými způsoby můžeme tree procházet. Vytvoříme si na to celkem čtyři metody, a každá metoda bude pro procházení tree používat jiný algoritmus. Tyto metody budou hodnoty procházených nodes ukládat do pole a to potom vrátí. Pokud byste ale tyto metody chtěli použít k vyhledávání node, tak si je můžete trochu poupravit. Cílem této části je jen ukázat, jakými způsoby se dá tree procházet a chtěl jsem aby se vždy projel celý tree.</p>
                     <p class="paragraph u-mb-medium">Existují dva hlavní způsoby pro procházení tree: Breadth First Search a Depth First Search. Breadth First Search prochází tree horizontálně a Depth First Search spíš vertikálně. Jak přesně tyto algoritmy fungují si tu později ukážeme. U Depth First Search navíc existují tři hlavní verze: InOrder, PreOrder a PostOrder. Všechny tyto verze si v této části ukážeme.</p>
-                    <h2 class="heading-secondary u-mb-tiny">Co pro ukázku procházení tree použijeme</h2>
+                    <h2 id="co-pro-ukazku-prochazeni-tree-pouzijeme" class="heading-secondary u-mb-tiny">Co pro ukázku procházení tree použijeme</h2>
                     <p class="paragraph u-mb-small">Abychom si mohli ukázat různé způsoby procházení tree, tak k tomu musíme mít nějaký tree vytvořený. V minulé části jsme si vytvořili třídu pro Binary Search Tree, kterou teď můžeme použít. Přidáme si do ní metody pro ukázku různých způsobů procházení tree. Binary Search Tree je sice seřazený, ale metody, které si pro něj vytvoříme by fungovali i kdyby seřazený nebyl. Binary Search Tree z minulé části používáme hlavně proto, abychom nemuseli vytvářet nějaký nový tree.</p>
                     <p class="paragraph u-mb-small">Další věc, kterou budeme potřebovat, je Queue. Budeme ji potřebovat pro Breadth First Search. Queue jsme si ukazovali v části <a href="../stack-a-queue/" class="anchor">Stack a Queue</a>.</p>
                     <p class="paragraph u-mb-small">Následující ukázka ukazuje startovní kód. Protože Queue i BinarySearchTree třídy používali stejně pojmenované třídy pro node, tak je Node třída pro Queue přejmenována na QueueNode.</p>
@@ -138,7 +138,7 @@ class BinarySearchTree {
     }
 }</code></pre>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Breadth First Search</h2>
+                    <h2 id="breadth-first-search" class="heading-secondary u-mb-tiny">Breadth First Search</h2>
                     <p class="paragraph u-mb-small">První algoritmus pro procházení tree, který si ukážeme, je Breadth First Search. Tento algoritmus prochází tree horizontálně. Začne se u root a dále se tree postupně prochází dolů. Vždy se nejprve projdou nodes na stejné úrovni a poté se pokračuje dál.</p>
                     <p class="paragraph u-mb-small">Tento algoritmus používá datovou strukturu Queue, do které se postupně přidávají nodes, které se mají procházet. Na začátku se do queue přidá root node. Poté se spustí cyklus, který se opakuje tak dlouho, dokud queue není prázdná. V každém cyklu se vždy z queue vezme jedna node a její potomci se do queue přidají. Tímto způsobem se postupně projde celý tree.</p>
                     <div data-interactive-example-id="1" class="code-box u-mb-medium">
@@ -229,7 +229,7 @@ console.log(vysledek);</code></pre>
                         </div>
                         <div id="console-1" class="code-box__console">&gt; </div>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Depth First Search - PreOrder</h2>
+                    <h2 id="depth-first-search-pre-order" class="heading-secondary u-mb-tiny">Depth First Search - PreOrder</h2>
                     <p class="paragraph u-mb-small">Druhý algoritmus, který si pro procházení tree ukážeme, je Depth First Search. Tento algoritmus má tři verze: PreOrder, PostOrder a InOrder. Tyto verze se liší jen umístěním jednoho řádku kódu. Jako první si ukážeme PreOrder.</p>
                     <p class="paragraph u-mb-small">Depth First Search algoritmus funguje tak, že se tree začne procházet od root node dolů směrem doleva. Jakmile se narazí na konec větve, tak se pokračuje zpátky nahoru, přičemž se procházejí potomci napravo. Pro ty se tato operace také provádí a postupně se tak projde celý tree.</p>
                     <p class="paragraph u-mb-small">Rozdíl mezi všemi třemi verzemi Depth First Search algoritmu je umístění kódu, který v našem případě přidává hodnotu node do pole. U PreOrder verze se hodnota uloží hned, jak se na node narazí a než se pokračuje v procházení dál.</p>
@@ -320,7 +320,7 @@ console.log(vysledek);</code></pre>
                         </div>
                         <div id="console-2" class="code-box__console">&gt; </div>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Depth First Search - PostOrder</h2>
+                    <h2 id="depth-first-search-post-order" class="heading-secondary u-mb-tiny">Depth First Search - PostOrder</h2>
                     <p class="paragraph u-mb-small">V předchozí ukázce jsme si ukázali PreOrder verzi Depth First Search algoritmu. Teď si ukážeme PostOrder verzi. Ta se od PreOrder verze liší tím, že se nejprve prochází potomci node a až poté se hodnota node uloží do pole. Hodnota node se tedy do pole uloží až při vracení zpět nahoru.</p>
                     <p class="paragraph u-mb-small">Jediný rozdíl v kódu pro PreOrder a PostOrder verzi je umístění řádku kódu, který vkládá hodnotu node do pole.</p>
                     <div data-interactive-example-id="3" class="code-box u-mb-medium">
@@ -402,7 +402,7 @@ console.log(vysledek);</code></pre>
                         </div>
                         <div id="console-3" class="code-box__console">&gt; </div>
                     </div>
-                    <h2 class="heading-secondary u-mb-tiny">Depth First Search - InOrder</h2>
+                    <h2 id="depth-first-search-in-order" class="heading-secondary u-mb-tiny">Depth First Search - InOrder</h2>
                     <p class="paragraph u-mb-small">Poslední verze Depth First Search algoritmu, kterou si ukážeme, je InOrder. Ta funguje tak, že se nejprve prochází levý potomek node, potom se hodnota node uloží do pole a poté se prochází pravý potomek node.</p>
                     <p class="paragraph u-mb-small">Jediný rozdíl v kódu oproti verzím PreOrder a PostOrder je opět umístění řádku kódu, který vkládá hodnotu node do pole.</p>
                     <div data-interactive-example-id="4" class="code-box">
