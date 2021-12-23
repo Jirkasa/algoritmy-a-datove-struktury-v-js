@@ -102,6 +102,8 @@ pre code.hljs::-webkit-scrollbar-thumb:hover {
 }
 code.hljs {
   padding: 0.3rem 0.5rem;
+  font-size: 1.6rem;
+  line-height: 1.84rem;
 }
 /*!
    Theme: Agate
