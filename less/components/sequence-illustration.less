@@ -1,0 +1,30 @@
+.sequence-illustration {
+    border: .2rem solid darken(@colors[primary], 20%);
+    border-collapse: collapse;
+    border-radius: .4rem;
+
+    margin: 0 auto;
+    display: table;
+
+    color: @colors[dark-grey];
+    background-color: tint(@colors[primary], 80%);
+
+    &__item {
+        font-size: 1.7rem;
+        border: .2rem solid darken(@colors[primary], 20%);
+
+        padding: .3rem .7rem;
+
+        display: table-cell;
+        position: relative;
+    }
+
+    &__index {
+        position: absolute;
+        top: 0;
+        right: .2rem;
+
+        font-size: .8rem;
+        font-weight: 700;
+    }
+}

@@ -42,11 +42,11 @@
                     <h2 class="heading-secondary u-mb-tiny">Linear Search</h2>
                     <p class="paragraph u-mb-small">Asi nejjednodušší způsob hledání položky v poli je celé pole projet for cyklem a ptát se jestli se nějaká položka rovná hledané hodnotě. Tento způsob ukazuje následující ukázka:</p>
                     <div class="code-box u-mb-small">
-                        <pre class="code-box__code"><code>function linearSearch(pole, hodnota){
-    for(let i = 0; i &lt; pole.length; i++){
+                        <pre class="code-box__code"><code>function linearSearch(pole, hodnota) {
+    for (let i = 0; i &lt; pole.length; i++) {
         // pokud se hledaná hodnota nachází na tomto indexu pole,
         // tak jsme hodnotu našli a vrátíme její index
-        if(pole[i] === hodnota) return i;
+        if (pole[i] === hodnota) return i;
     }
     // pokud jsme hledanou hodnotu v poli nenašli, vrátíme -1
     return -1
@@ -101,7 +101,7 @@ console.log("Hledaná položka se nachází na indexu: " + index);</code></pre>
     let max = pole.length - 1;
     let middle = Math.trunc((min + max) / 2);
 
-    while(pole[middle] !== hodnota && min &lt;= max) {
+    while (pole[middle] !== hodnota && min &lt;= max) {
         // zmenšení místa, které vymezují proměnné min a max
         // o polovinu, podle toho, kde se položka nachází
         if (hodnota &lt; pole[middle]) {
@@ -155,6 +155,7 @@ console.log("Hledaná položka se nachází na indexu: " + index);</code></pre>
                             <li class="navigation__item"><a href="../graph/" class="navigation__link"><span>13.</span>Graph</a></li>
                             <li class="navigation__item"><a href="../graph-traversing/" class="navigation__link"><span>14.</span>Graph Traversing</a></li>
                             <li class="navigation__item"><a href="../dijkstruv-algoritmus/" class="navigation__link"><span>15.</span>Dijkstrův algoritmus</a></li>
+                            <li class="navigation__item"><a href="../dynamicke-programovani/" class="navigation__link"><span>16.</span>Dynamické programování</a></li>
                         </ul>
                     </nav>
                 </div>

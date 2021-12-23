@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=yes maximum-scale=2.2 minimum-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../media/css/style.css">
+
+    <script src="../media/js/libraries/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    <title>Algoritmy a Datové Struktury v JS - Dynamické programování</title>
+</head>
+<body>
+    <div class="page">
+        <header class="header">
+            <div class="header__content">
+                <h2 class="header__heading">Algoritmy a Datové Struktury v JS</h2>
+                <nav class="header__navigation">
+                    <ul>
+                        <li><a href="../big-o-notation/">tutoriál</a></li>
+                        <li><a href="#">something</a></li>
+                        <li><a href="#">something</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <div class="heading-section">
+            Dynamické programování
+        </div>
+        <div class="article-page">
+            <div class="article-page__content">
+                <main class="article-page__main-side">
+                    <h1 class="heading-primary u-mb-medium">Dynamické programování</h1>
+                    <hr class="horizontal-rule u-mb-medium">
+                    <p class="paragraph u-mb-medium">V této poslední části se pustíme do dynamického programování. Pod tímto názvem si možná můžete představit něco trochu jiného, než co to ve skutečnosti je. V této části se to dozvíte.</p>
+                    <h2 class="heading-secondary u-mb-tiny">Co je to dynamické programování</h2>
+                    <p class="paragraph u-mb-small">Dynamické programování je metoda pro řešení problému. Spočívá v tom, že se řešený problém rozdělý na menší podproblémy. Tyto podproblémy se potom zvlášť řeší a ukládá se jejich výsledek, aby se nemuseli řešit znovu. Tato metoda se nedá použít na všechny problémy, ale u některých problémů na které ji použít můžeme, dokáže hodně zlepšit efektivitu našeho kódu.</p>
+                    <p class="paragraph u-mb-medium">Dynamické programování můžeme použít jen na problémy, které se dají rozdělit na podproblémy, ale řešení těchto podproblémů se musí dát použít v problému opakovaně. Kromě toho musí problém mít optimální podstrukturu. To znamená, že se jeho optimální řešení musí dát zkonstruovat z optimálních řešení jeho podproblémů. Pokud to moc nechápete, tak nevadí, až se do dynamického programování pustíme, možná to pochopíte.</p>
+                    <h2 class="heading-secondary u-mb-tiny">Jaký problém vyřešíme</h2>
+                    <p class="paragraph u-mb-small">Abychom si ukázali použití dynamického programování, tak si vyřešíme nějaký problém. Budeme chtít napsat funkci, která vrátí požadované číslo z Fibonacciho posloupnosti. Jedná se o matematickou posloupnost, začínající čísly 0 a 1. Každé další číslo je ve Fibonacciho posloupnosti součet dvou předcházejících čísel. Takže třetí číslo ve Fibonacciho posloupnosti bude 1, čtvrté 2, páté 3, šesté 5, a tak dále. Následující ukázka začátek Fibonacciho posloupnosti ukazuje.</p>
+                    <div class="sequence-illustration u-mb-medium">
+                        <div class="sequence-illustration__item">0<div class="sequence-illustration__index">1</div></div>
+                        <div class="sequence-illustration__item">1<div class="sequence-illustration__index">2</div></div>
+                        <div class="sequence-illustration__item">1<div class="sequence-illustration__index">3</div></div>
+                        <div class="sequence-illustration__item">2<div class="sequence-illustration__index">4</div></div>
+                        <div class="sequence-illustration__item">3<div class="sequence-illustration__index">5</div></div>
+                        <div class="sequence-illustration__item">5<div class="sequence-illustration__index">6</div></div>
+                        <div class="sequence-illustration__item">8<div class="sequence-illustration__index">7</div></div>
+                        <div class="sequence-illustration__item">13<div class="sequence-illustration__index">8</div></div>
+                        <div class="sequence-illustration__item">21<div class="sequence-illustration__index">9</div></div>
+                        <div class="sequence-illustration__item">...</div>
+                    </div>
+                    <h2 class="heading-secondary u-mb-tiny">Vyřešení problému bez dynamického programování</h2>
+                    <p class="paragraph u-mb-small">Než si ukážeme vytvoření funkce pro získání čísla z Fibonacciho posloupnosti pomocí dynamického programování, tak si ji nejdříve naprogramujeme bez dynamického programování. Alespoň uvidíme, jak nám dynamické programování může náš kód v některých případech udělat mnohem efektivnějším.</p>
+                    <p class="paragraph u-mb-small">Následující ukázka ukazuje funkci fib, která pro získání požadovaného čísla z Fibonacciho posloupnosti používá rekurzy. Víme že první číslo Fibonacciho posloupnosti je 0, a druhé a třetí číslo je 1. Pokud do funkce tedy předáme hodnotu od 1 do 3, tak můžeme hned vrátit 0 nebo 1. Pokud ale do funkce předáme větší číslo než je 3, tak nevíme jaké pro něj máme vrátit Fibonacciho číslo. Víme ale, že Fibonacciho číslo získáme sečtením dvou předešlých čísel ve Fibonacciho posloupnosti a zavoláme tedy funkci fib rekurzivně pro dvě předešlá čísla, vrácené hodnoty sečteme a vrátíme výsledek.</p>
+                    <div data-interactive-example-id="1" class="code-box u-mb-medium">
+                        <div class="code-box__header">
+                            <div class="code-box__icon">
+                                <svg>
+                                    <use xlink:href="../media/img/icon-sprite.svg#icon-cogs"></use>
+                                </svg>
+                            </div>
+                            <div class="code-box__buttons-container">
+                                <button class="code-box__button code-box__button--move" data-interactive-example-move-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-forward3"></use>
+                                    </svg>
+                                </button>
+                                <select class="code-box__speed-input" data-interactive-example-speed-input="true">
+                                    <option value="0.25">0.25</option>
+                                    <option value="0.5">0.5</option>
+                                    <option value="0.75">0.75</option>
+                                    <option selected value="1">1</option>
+                                    <option value="1.25">1.25</option>
+                                    <option value="1.5">1.5</option>
+                                    <option value="1.75">1.75</option>
+                                </select>
+                                <button class="code-box__button" data-interactive-example-play-button="true">
+                                    <span>
+                                        <svg>
+                                            <use xlink:href="../media/img/icon-sprite.svg#icon-play3"></use>
+                                        </svg>
+                                    </span>
+                                </button>
+                                <button class="code-box__button code-box__button--reset" data-interactive-example-reset-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-loop2"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <pre id="code-1" class="code-box__code"><code>function fib(n) {
+    // první číslo ve Fibonacciho posloupnosti je 0, tak se vrátí, pokud je n 1
+    if (n === 1) return 0;
+    // druhé a třetí číslo ve Fibonacciho posloupnosti je 1, tak se vrátí, pokud je n 2 nebo 3
+    if (n &lt;= 3) return 1;
+    // n-té číslo ve Fibonacciho posloupnosti se rovná součtu dvou předchozích čísel ve Fibonacciho
+    // posloupnosti, takže funkce vrátí součet dvou předchozích čísel ve Fibonacciho posloupnosti
+    return fib(n-1) + fib(n-2);
+}
+
+const vysledek = fib(6);
+console.log("Šesté číslo ve Fibonacciho posloupnosti je: " + vysledek);</code></pre>
+                        <div class="code-box__calculation-structure">
+                            <div id="calculation-structure-1" class="calculation-structure">
+                            </div>
+                        </div>
+                        <div id="console-1" class="code-box__console">&gt; </div>
+                    </div>
+                    <h2 class="heading-secondary u-mb-tiny">Vyřešení problému pomocí dynamického programování</h2>
+                    <p class="paragraph u-mb-small">Předchozí ukázka kódu ukazovala vytvoření funkce bez dynamického programování. Tento kód je ale velmi náročný, má časovou náročnost O(2<sup>n</sup>). Pokud se podíváte na graf z části <a href="../big-o-notation/" class="anchor">Big O Notation</a>, tak můžete vidět, že časová náročnost velmi vzroste i při malém zvýšení čísla. Raději si ani nezkoušejte volat funkci fib z minulé ukázky s nějakým větším číslem (např. 100), pokud si nechcete zasekat prohlížeč. Tento problém ale můžeme u naší funkce vyřešit pomocí dynamického programování.</p>
+                    <p class="paragraph u-mb-small">Na začátku této části jsem psal, že dynamické programování se dá použít na problémy, které se dají rozdělit na podproblémy, ale řešení těchto podproblémů se musí dát při řešení problému použít opakovaně. U naší funkce toto pravidlo platí. Když se podíváte na následující graf znázorňující volání funkce fib, tak zjistíte, že například pro číslo 4 se funkce fib volá dvakrát.</p>
+                    <div class="code-box u-mb-small">
+                        <div class="code-box__calculation-structure code-box__calculation-structure--bigger">
+                            <div class="calculation-structure__node calculation-structure__node--root">
+                                <div class="calculation-structure__item">fib(6)</div>
+                                <div class="calculation-structure__node calculation-structure__left-child calculation-structure__left-child--triple-space">
+                                    <div class="calculation-structure__item">fib(5)</div>
+                                    <div class="calculation-structure__node calculation-structure__left-child calculation-structure__left-child--double-space">
+                                        <div class="calculation-structure__item">fib(4)</div>
+                                        <div class="calculation-structure__node calculation-structure__left-child">
+                                            <div class="calculation-structure__item">fib(3)</div>
+                                            <div class="calculation-structure__node calculation-structure__child">
+                                                <div class="calculation-structure__item">1</div>
+                                            </div>
+                                        </div>
+                                        <div class="calculation-structure__node calculation-structure__right-child">
+                                            <div class="calculation-structure__item">fib(2)</div>
+                                            <div class="calculation-structure__node calculation-structure__child">
+                                                <div class="calculation-structure__item">1</div>
+                                            </div>
+                                        </div>
+                                        <div class="calculation-structure__operation">+</div>
+                                    </div>
+                                    <div class="calculation-structure__node calculation-structure__right-child calculation-structure__right-child--double-space">
+                                        <div class="calculation-structure__item">fib(3)</div>
+                                        <div class="calculation-structure__node calculation-structure__child">
+                                            <div class="calculation-structure__item">1</div>
+                                        </div>
+                                    </div>
+                                    <div class="calculation-structure__operation">+</div>
+                                </div>
+                                <div class="calculation-structure__node calculation-structure__right-child calculation-structure__right-child--triple-space">
+                                    <div class="calculation-structure__item">fib(4)</div>
+                                    <div class="calculation-structure__node calculation-structure__left-child calculation-structure__left-child--double-space">
+                                        <div class="calculation-structure__item">fib(3)</div>
+                                        <div class="calculation-structure__node calculation-structure__child">
+                                            <div class="calculation-structure__item">1</div>
+                                        </div>
+                                    </div>
+                                    <div class="calculation-structure__node calculation-structure__right-child calculation-structure__right-child--double-space">
+                                        <div class="calculation-structure__item">fib(2)</div>
+                                        <div class="calculation-structure__node calculation-structure__child">
+                                            <div class="calculation-structure__item">1</div>
+                                        </div>
+                                    </div>
+                                    <div class="calculation-structure__operation">+</div>
+                                </div>
+                                <div class="calculation-structure__operation">+</div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="paragraph u-mb-small">Dynamické programování spočívá v tom, že si pamatujeme řešení podproblémů a když se stejný podproblém vyskytne znovu, tak už pro něj máme řešení a nemusíme jej řešit ještě jednou. Náš kód můžeme předělat tak, aby se výsledky volání funkce fib někam ukládali a když potom budeme funkci fib volat ještě jednou, s argumentem se kterým jsme ji již v minulosti volali, tak se jen najde výsledek a hned se vrátí.</p>
+                    <p class="paragraph u-mb-small">Předěláme si funkci fib tak, aby jako parametr kromě čísla přijímala také pole uchovávající výsledky jejího volání. Tento parametr bude volitelný, takže pokud jej při volání funkce nepředáme, nastaví se jako nové prázdné pole. Do tohoto pole budeme uvnitř funkce fib ukládat výsledky jejího volání a když funkci fib budeme ve funkci rekurzivně volat, tak budeme pole předávat (pole se předává adresou, nevytváří se nové). Když později zjistíme, že jsme funkci fib s nějakým parametrem již volali, tak můžeme v poli jen najít výsledek a vrátit jej.</p>
+                    <div data-interactive-example-id="2" class="code-box u-mb-small">
+                        <div class="code-box__header">
+                            <div class="code-box__icon">
+                                <svg>
+                                    <use xlink:href="../media/img/icon-sprite.svg#icon-cogs"></use>
+                                </svg>
+                            </div>
+                            <div class="code-box__buttons-container">
+                                <button class="code-box__button code-box__button--move" data-interactive-example-move-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-forward3"></use>
+                                    </svg>
+                                </button>
+                                <select class="code-box__speed-input" data-interactive-example-speed-input="true">
+                                    <option value="0.25">0.25</option>
+                                    <option value="0.5">0.5</option>
+                                    <option value="0.75">0.75</option>
+                                    <option selected value="1">1</option>
+                                    <option value="1.25">1.25</option>
+                                    <option value="1.5">1.5</option>
+                                    <option value="1.75">1.75</option>
+                                </select>
+                                <button class="code-box__button" data-interactive-example-play-button="true">
+                                    <span>
+                                        <svg>
+                                            <use xlink:href="../media/img/icon-sprite.svg#icon-play3"></use>
+                                        </svg>
+                                    </span>
+                                </button>
+                                <button class="code-box__button code-box__button--reset" data-interactive-example-reset-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-loop2"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <pre id="code-2" class="code-box__code"><code>// funkce fib nyní bere jako parametr také pole (odkaz na pole v paměti), které uchovává výsledky volání funkce fib
+function fib(n, memo = []) {
+    // pokud se funkce fib s tímto parametrem již v minulosti volala, tak se jen vrátí výsledek uložený v poli memo
+    if (memo[n] !== undefined) return memo[n];
+    if (n === 1) return 0;
+    if (n &lt;= 3) return 1;
+    const result = fib(n-1, memo) + fib(n-2, memo);
+    // výsledek volání funkce fib s argumentem n se uloží do pole memo pod indexem n
+    memo[n] = result;
+    return result;
+}
+
+const vysledek = fib(6);
+console.log("Šesté číslo ve Fibonacciho posloupnosti je: " + vysledek);</code></pre>
+                        <div class="code-box__array">
+                            <div id="visual-array-1" class="array array--no-padding">
+                                <div class="array__bracket array__bracket--first">[</div><div class="array__item-container"></div><div class="array__bracket array__bracket--last">]</div>
+                            </div>
+                        </div>
+                        <div class="code-box__calculation-structure">
+                            <div id="calculation-structure-2" class="calculation-structure">
+                            </div>
+                        </div>
+                        <div id="console-2" class="code-box__console">&gt; </div>
+                    </div>
+                    <p class="paragraph u-mb-medium">V předchozí ukázce jsme pro funkci na získání čísla z Fibonacciho posloupnosti použili dynamické programování. Zapamatovávali jsme si výsledky operací, které jsme provedli, abychom je mohli v budoucnu použít a nezískávat je znovu. Díky tomu jsme snížili časovou náročnost naší funkce na O(n), což je o dost lepší než O(2<sup>n</sup>).</p>
+                    <h2 class="heading-secondary u-mb-tiny">Top-Down vs. Bottom-Up</h2>
+                    <p class="paragraph u-mb-small">K dynamickému programování existují dva přístupy: Top-Down a Bottom-Up. Top-Down přístup jsme již použili a znamená to, že začneme u nejsložitějšího problému a řešíme stále jednodušší podproblémy. Nejprve funkci fib zavoláme s nějakým číslem, pro které chceme získat Fibonacciho číslo a poté se ve funkci funkce fib rekurzivně volá pro stále menší čísla. Bottom-Up je opakem Top-Down. Bottom-Up znamená, že začneme s nejjednodušším podproblémem a řešíme stále složitější problémy. Pokud bychom tedy chtěli naši funkci fib předělat na Bottom-Up přístup, tak musíme nejdříve začít s výpočtem nejmenších Fibonacciho čísel a postupovat směrem nahoru k číslu, pro které chceme Fibonacciho číslo získat.</p>
+                    <p class="paragraph u-mb-small">Následující ukázka ukazuje, jak bychom mohli naši funkci fib předělat, aby používala Bottom-Up přístup. Namísto rekurze je použit cyklus, který postupně zaplňuje pole, které se na začátku funkce vytváří, Fibonacciho posloupností.</p>
+                    <div data-interactive-example-id="3" class="code-box u-mb-small">
+                        <div class="code-box__header">
+                            <div class="code-box__icon">
+                                <svg>
+                                    <use xlink:href="../media/img/icon-sprite.svg#icon-cogs"></use>
+                                </svg>
+                            </div>
+                            <div class="code-box__buttons-container">
+                                <button class="code-box__button code-box__button--move" data-interactive-example-move-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-forward3"></use>
+                                    </svg>
+                                </button>
+                                <select class="code-box__speed-input" data-interactive-example-speed-input="true">
+                                    <option value="0.25">0.25</option>
+                                    <option value="0.5">0.5</option>
+                                    <option value="0.75">0.75</option>
+                                    <option selected value="1">1</option>
+                                    <option value="1.25">1.25</option>
+                                    <option value="1.5">1.5</option>
+                                    <option value="1.75">1.75</option>
+                                </select>
+                                <button class="code-box__button" data-interactive-example-play-button="true">
+                                    <span>
+                                        <svg>
+                                            <use xlink:href="../media/img/icon-sprite.svg#icon-play3"></use>
+                                        </svg>
+                                    </span>
+                                </button>
+                                <button class="code-box__button code-box__button--reset" data-interactive-example-reset-button="true">
+                                    <svg>
+                                        <use xlink:href="../media/img/icon-sprite.svg#icon-loop2"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <pre id="code-3" class="code-box__code"><code>function fib(n) {
+    // do tohoto pole se budou postupně ukládat Fibonacciho čísla
+    const fibNums = [0, 1, 1];
+    // protože má první Fibonacciho číslo v poli fibNums index 0, tak se číslo n sníží o 1
+    n--;
+    // tento cyklus postupně zaplní pole fibNums Fibonacciho posloupností až k číslu, pro které se má Fibonacciho číslo získat
+    for (let i = 3; i &lt;= n; i++) {
+        // do pole fibNums se přidá další číslo z Fibonacciho posloupnosti sečtením dvou posledních položek pole
+        fibNums[i] = fibNums[i-1] + fibNums[i-2];
+    }
+    // vrácení požadovaného Fibonacciho čísla z pole fibNums
+    return fibNums[n];
+}
+
+const vysledek = fib(6);
+console.log("Šesté číslo ve Fibonacciho posloupnosti je: " + vysledek);</code></pre>
+                        <div class="code-box__array">
+                            <div id="visual-array-2" class="array array--no-padding">
+                                <div class="array__bracket array__bracket--first">[</div><div class="array__item-container"></div><div class="array__bracket array__bracket--last">]</div>
+                            </div>
+                        </div>
+                        <div id="console-3" class="code-box__console">&gt; </div>
+                    </div>
+                    <p class="paragraph">Myslím že Bottom-Up přístup se pro naši funkci hodí více. Vypadá lépe a navíc zabere méně paměti, protože nepoužívá rekurzy. Vlastně by mohla využít ještě méně paměti, protože v podstatě vždy potřebujeme znát jen poslední dvě čísla ve Fibonacciho posloupnosti abychom mohli vypočítat další. Tím už se ale zabývat nebudeme, cílem bylo jen ukázat rozdíl mezi Top-Down a Bottom-Up přístupem při dynamickém programování.</p>
+                </main>
+                <div class="article-page__lateral-side">
+                    <h2 class="heading-secondary u-mb-small">Části Tutoriálu</h2>
+                    <nav class="navigation">
+                        <ul>
+                            <li class="navigation__item"><a href="../big-o-notation/" class="navigation__link"><span>1.</span>Big O Notation</a></li>
+                            <li class="navigation__item"><a href="../postup-pri-reseni-problemu/" class="navigation__link"><span>2.</span>Postup při řešení problému</a></li>
+                            <li class="navigation__item"><a href="../rekurze/" class="navigation__link"><span>3.</span>Rekurze</a></li>
+                            <li class="navigation__item"><a href="../vyhledavaci-algoritmy/" class="navigation__link"><span>4.</span>Vyhledávací algoritmy</a></li>
+                            <li class="navigation__item"><a href="../serazovaci-algoritmy/" class="navigation__link"><span>5.</span>Seřazovací algoritmy</a></li>
+                            <li class="navigation__item"><a href="../singly-linked-list/" class="navigation__link"><span>6.</span>Singly Linked List</a></li>
+                            <li class="navigation__item"><a href="../doubly-linked-list/" class="navigation__link"><span>7.</span>Doubly Linked List</a></li>
+                            <li class="navigation__item"><a href="../stack-a-queue/" class="navigation__link"><span>8.</span>Stack a Queue</a></li>
+                            <li class="navigation__item"><a href="../binary-search-tree/" class="navigation__link"><span>9.</span>Binary Search Tree</a></li>
+                            <li class="navigation__item"><a href="../tree-traversing/" class="navigation__link"><span>10.</span>Tree Traversing</a></li>
+                            <li class="navigation__item"><a href="../binary-heap/" class="navigation__link"><span>11.</span>Binary Heap</a></li>
+                            <li class="navigation__item"><a href="../hash-table/" class="navigation__link"><span>12.</span>Hash Table</a></li>
+                            <li class="navigation__item"><a href="../graph/" class="navigation__link"><span>13.</span>Graph</a></li>
+                            <li class="navigation__item"><a href="../graph-traversing/" class="navigation__link"><span>14.</span>Graph Traversing</a></li>
+                            <li class="navigation__item"><a href="../dijkstruv-algoritmus/" class="navigation__link"><span>15.</span>Dijkstrův algoritmus</a></li>
+                            <li class="navigation__item"><a href="../dynamicke-programovani/" class="navigation__link navigation__link--active"><span>16.</span>Dynamické programování</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="../media/js/parts/dynamickeProgramovani.js"></script>
+</body>
+</html>

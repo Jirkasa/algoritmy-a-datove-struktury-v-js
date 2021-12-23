@@ -97,7 +97,8 @@ class VisualArray {
     pushItem(value) {
         const itemEl = document.createElement("div");
         itemEl.classList.add("array__item");
-        itemEl.innerText = value;
+        if (value !== "&nbsp;") itemEl.innerText = value;
+        else itemEl.innerHTML = value;
 
         this._itemContainer.appendChild(itemEl);
         this._itemElements.push(itemEl);

@@ -19,6 +19,7 @@ function initExamples(config) {
         const visualDijkstraExplanation = example.visualDijkstraExplanation;
         const visualObject = example.visualObject;
         const visualObjects = example.visualObjects;
+        const calculationStructure = example.calculationStructure;
         const playButton = codeBox.querySelector('button[data-interactive-example-play-button]');
         const resetButton = codeBox.querySelector('button[data-interactive-example-reset-button]');
         const speedInput = codeBox.querySelector('select[data-interactive-example-speed-input]');
@@ -90,6 +91,7 @@ function initExamples(config) {
             if (visualDijkstraExplanation) visualDijkstraExplanation.reset();
             if (visualObject) visualObject.reset();
             if (visualObjects) visualObjects.reset();
+            if (calculationStructure) calculationStructure.reset();
 
             // update play button icon
             playIcon.style.display = "none";
@@ -118,6 +120,7 @@ function initExamples(config) {
             if (visualDijkstraExplanation) visualDijkstraExplanation.reset();
             if (visualObject) visualObject.reset();
             if (visualObjects) visualObjects.reset();
+            if (calculationStructure) calculationStructure.reset();
 
             // update play button icon
             if (playButton) {

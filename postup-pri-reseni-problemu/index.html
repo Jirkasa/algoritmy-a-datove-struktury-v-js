@@ -161,13 +161,13 @@ console.log("Výsledek: " + vysledek);</code></pre>
                     <p class="paragraph u-mb-small">Jako příklad si pojďme napsat funkci, která vrátí dvě čísla v seřazeném poli, jejichž sečtením dostaneme nulu. Mohli bychom ji napsat například takto:</p>
                     <div class="code-box u-mb-small">
                         <pre class="code-box__code"><code>// tato funkce vrátí dvě čísla ze seřazeného pole, jejichž sečtením získáme nulu
-function soucetNula(pole){
+function soucetNula(pole) {
     // pole se celé projede od začátku do konce
-    for(let i = 0; i &lt; pole.length; i++){
+    for (let i = 0; i &lt; pole.length; i++) {
         // pole se projede od indexu i po konec
-        for(let j = i+1; j &lt; pole.length; j++){
+        for (let j = i+1; j &lt; pole.length; j++) {
             // pokud se hodnota na indexu i + hodnota na indexu j rovná 0, tak jsme našli výsledek
-            if(pole[i] + pole[j] === 0){
+            if (pole[i] + pole[j] === 0) {
                 return [pole[i], pole[j]];
             }
         }
@@ -346,6 +346,7 @@ console.log("Vyhledaný index: " + index);</code></pre>
                             <li class="navigation__item"><a href="../graph/" class="navigation__link"><span>13.</span>Graph</a></li>
                             <li class="navigation__item"><a href="../graph-traversing/" class="navigation__link"><span>14.</span>Graph Traversing</a></li>
                             <li class="navigation__item"><a href="../dijkstruv-algoritmus/" class="navigation__link"><span>15.</span>Dijkstrův algoritmus</a></li>
+                            <li class="navigation__item"><a href="../dynamicke-programovani/" class="navigation__link"><span>16.</span>Dynamické programování</a></li>
                         </ul>
                     </nav>
                 </div>
