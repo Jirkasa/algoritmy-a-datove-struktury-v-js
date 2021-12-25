@@ -1501,6 +1501,75 @@ code.hljs {
   width: calc(16.66591rem - 2.1rem);
   transform: rotate(0.22388rad);
 }
+.button-primary:link,
+.button-primary:visited {
+  display: inline-block;
+  font-size: 1.6rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: #fff;
+  background-color: #1bbc9b;
+  padding: 1rem 1.5rem;
+  border-radius: 0.4rem;
+  transition: all 0.1s;
+}
+.button-primary:hover {
+  background-color: #158f76;
+}
+.button-primary:active {
+  background-color: #13826b;
+}
+.button-primary--bigger:link,
+.button-primary--bigger:visited {
+  font-size: 1.7rem;
+  font-weight: normal;
+  text-transform: uppercase;
+}
+.welcome-section {
+  height: calc(100vh - 9.5rem);
+  background-color: #247d76;
+  background-image: linear-gradient(rgba(58, 56, 53, 0.3), rgba(58, 56, 53, 0.3)), url("../../media/img/CodeBackground.jpg");
+  background-size: cover;
+}
+.welcome-section__content {
+  height: 100%;
+  width: 100%;
+  max-width: 120rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.welcome-section__heading {
+  font-size: 5.5rem;
+  font-weight: 300;
+  color: #fff;
+}
+.welcome-section__heading span {
+  font-weight: 700;
+}
+.welcome-section__text {
+  font-size: 1.8rem;
+  font-weight: 300;
+  color: #fff;
+  line-height: 1.6;
+  width: 100%;
+  max-width: 80rem;
+  margin: 3rem auto 4rem;
+}
+.welcome-section__icon {
+  margin-top: 4rem;
+  margin-bottom: 2rem;
+  width: 4.5rem;
+  height: 4.5rem;
+}
+.welcome-section__icon svg {
+  width: 100%;
+  height: 100%;
+  fill: #fff;
+}
 .article-page {
   padding: 0 3rem;
 }

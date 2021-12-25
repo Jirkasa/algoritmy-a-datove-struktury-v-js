@@ -103,15 +103,15 @@
     if (text1.length !== text2.length) return false;
 
     // postupně se projedou znaky v textu 1
-    for (let i = 0; i < text1.length; i++) {
+    for (let i = 0; i &lt; text1.length; i++) {
         // spočítá se počet aktuálního znaku v prvním textu
         let pocetAktualnihoZnakuVText1 = 0;
-        for (let j = 0; j < text1.length; j++) {
+        for (let j = 0; j &lt; text1.length; j++) {
             if (text1[i] === text1[j]) pocetAktualnihoZnakuVText1++;
         }
         // spočítá se počet aktuálního znaku v druhém textu
         let pocetAktualnihoZnakuVText2 = 0;
-        for (let j = 0; j < text1.length; j++) {
+        for (let j = 0; j &lt; text1.length; j++) {
             if (text1[i] === text2[j]) pocetAktualnihoZnakuVText2++;
         }
         // pokud se počty znaků neshodují, nejedná se o anagram
@@ -288,7 +288,7 @@ console.log("Vyhledaný index: " + index);</code></pre>
                         <div class="code-box__console" id="console-1">&gt; Vyhledaný index: 3</div>
                     </div>
                     <p class="paragraph u-mb-small">Protože hledáme hodnotu v seřazeném poli, tak není potřeba projíždět celé pole for cyklem, jak to ukazuje předchozí ukázka. Můžeme se zeptat, jestli je hledaná položka nižší nebo vyšší než prostřední položka pole a podle toho se přesunout doprostřed levé části pole nebo pravé části pole. Tuto operaci můžeme několikrát opakovat a dostaneme se k hledané položce mnohem rychleji. Jedná se vlastně o Binary Search algoritmus. Následující ukázka jej ukazuje.</p>
-                    <div class="code-box u-mb-small">
+                    <div class="code-box u-mb-medium">
                         <pre class="code-box__code"><code>// tato funkce vrací index položky v poli, která obsahuje předanou hodnotu
 function vyhledatVSerazenemPoli(pole, hodnota) {
     // v těchto proměnných se budou ukládat hranice, které vymezují místo, které rozdělíme
@@ -325,6 +325,9 @@ function vyhledatVSerazenemPoli(pole, hodnota) {
 let index = vyhledatVSerazenemPoli([1, 3, 4, 6, 7, 9], 6);
 console.log("Vyhledaný index: " + index);</code></pre>
                         <div class="code-box__console" id="console-1">&gt; Vyhledaný index: 3</div>
+                    </div>
+                    <div class="u-text-center">
+                        <a href="../rekurze/" class="button-primary">pokračovat na další část</a>
                     </div>
                 </main>
                 <div class="article-page__lateral-side">
