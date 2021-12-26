@@ -7,6 +7,7 @@
 }
 html {
   font-size: 62.5%;
+  scroll-behavior: smooth;
 }
 body {
   box-sizing: border-box;
@@ -25,6 +26,12 @@ body {
   font-weight: normal;
   color: #444;
 }
+.heading-secondary--light {
+  color: #fff;
+}
+.heading-secondary--big {
+  font-size: 2.8rem;
+}
 .heading-tertiary {
   font-size: 2.1rem;
   font-weight: normal;
@@ -39,6 +46,9 @@ body {
   font-size: 1.6rem;
   color: #444;
   line-height: 1.4;
+}
+.paragraph--bigger-line-height {
+  line-height: 1.6;
 }
 .unordered-list,
 .ordered-list {
@@ -1519,11 +1529,100 @@ code.hljs {
 .button-primary:active {
   background-color: #13826b;
 }
+.button-primary--medium:link,
+.button-primary--medium:visited {
+  font-size: 1.6rem;
+  font-weight: normal;
+  text-transform: uppercase;
+}
 .button-primary--bigger:link,
 .button-primary--bigger:visited {
   font-size: 1.7rem;
   font-weight: normal;
   text-transform: uppercase;
+}
+.video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%;
+  /* 16:9 */
+  height: 0;
+}
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0.4rem solid #1bbc9b;
+  background-color: #1bbc9b;
+  border-radius: 0.4rem;
+}
+.chapter-box {
+  background-color: #2d3e50;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  position: relative;
+}
+.chapter-box__icon {
+  background-color: #455f7a;
+  height: 17rem;
+  position: relative;
+}
+.chapter-box__icon svg,
+.chapter-box__icon img {
+  width: 13rem;
+  height: 13rem;
+  fill: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.chapter-box__name {
+  height: 5rem;
+  font-size: 1.7rem;
+  color: #fff;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0.5rem 1rem;
+}
+.chapter-box__overlay-link {
+  font-size: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0.2rem solid transparent;
+  border-radius: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.chapter-box__overlay-link svg {
+  position: absolute;
+  left: 50%;
+  top: 8.5rem;
+  transform: translate(-50%, -50%);
+  width: 8rem;
+  height: 8rem;
+  fill: #fff;
+}
+.chapter-box__overlay-link::before {
+  content: "";
+  width: 100%;
+  height: 16.8rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(45, 62, 80, 0.4);
+  backdrop-filter: blur(2px);
+}
+.chapter-box__overlay-link:hover {
+  opacity: 1;
+  border-color: #fff;
 }
 .welcome-section {
   height: calc(100vh - 9.5rem);
@@ -1569,6 +1668,66 @@ code.hljs {
   width: 100%;
   height: 100%;
   fill: #fff;
+}
+.introduction-section {
+  background-color: #fff;
+  padding: 5rem 3rem;
+}
+.introduction-section__content {
+  width: 100%;
+  max-width: 120rem;
+  margin: 0 auto;
+}
+.introduction-section__text {
+  font-size: 1.6rem;
+  color: #444;
+  line-height: 1.6;
+  columns: 2;
+}
+.chapters-section {
+  background-color: #1bbc9b;
+  padding: 5rem 3rem;
+}
+.chapters-section__content {
+  width: 100%;
+  max-width: 120rem;
+  margin: 0 auto;
+}
+.chapters-section__text {
+  font-size: 1.6rem;
+  color: #fff;
+  line-height: 1.6;
+  text-align: center;
+  width: 100%;
+  max-width: 80rem;
+  margin: 0 auto;
+}
+.chapters-section__chapters {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 22rem;
+  gap: 2.5rem;
+  margin-top: 2rem;
+}
+.course-section {
+  background-color: #fff;
+  padding: 5rem 3rem;
+}
+.course-section__content {
+  width: 100%;
+  max-width: 120rem;
+  margin: 0 auto;
+}
+.course-section__main-content {
+  display: flex;
+}
+.course-section__text-side {
+  flex: 0 0 47%;
+}
+.course-section__video-side {
+  flex: 0 0 53%;
+  padding-left: 3rem;
 }
 .article-page {
   padding: 0 3rem;

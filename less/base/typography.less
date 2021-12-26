@@ -14,6 +14,14 @@ body {
     font-weight: normal;
 
     color: @colors[dark-grey];
+
+    &--light {
+        color: @colors[white];
+    }
+
+    &--big {
+        font-size: 2.8rem;
+    }
 }
 
 .heading-tertiary {
@@ -35,6 +43,10 @@ body {
 
     color: @colors[dark-grey];
     line-height: 1.4;
+
+    &--bigger-line-height {
+        line-height: 1.6;
+    }
 }
 
 .unordered-list, .ordered-list {
