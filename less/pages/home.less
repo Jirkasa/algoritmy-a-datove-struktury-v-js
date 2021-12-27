@@ -1,9 +1,13 @@
 .welcome-section {
     height: ~"calc(100vh - 9.5rem)";
+    min-height: 50rem;
+    max-height: 75rem;
 
     background-color: average(@colors[primary], @colors[dark]);
     background-image: linear-gradient(rgba(58, 56, 53, 0.3), rgba(58, 56, 53, 0.3)), url("../../media/img/CodeBackground.jpg");
     background-size: cover;
+
+    padding: 0 3rem;
 
     &__content {
         height: 100%;
@@ -73,6 +77,13 @@
         color: @colors[dark-grey];
         line-height: 1.6;
         columns: 2;
+        column-gap: 3rem;
+
+        #respond-phone(
+            {
+                columns: 1;
+            }
+        );
     }
 }
 
@@ -106,6 +117,16 @@
         gap: 2.5rem;
 
         margin-top: 2rem;
+
+        @media (max-width: #pxToEm(720)[]) {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        @media (max-width: #pxToEm(565)[]) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        @media (max-width: #pxToEm(390)[]) {
+            grid-template-columns: 1fr;
+        }
     }
 }
 
@@ -121,14 +142,33 @@
 
     &__main-content {
         display: flex;
+
+        @media (max-width: #pxToEm(1040)[]) {
+            flex-direction: column;
+        }
     }
 
     &__text-side {
         flex: 0 0 47%;
+
+        @media (max-width: #pxToEm(1040)[]) {
+            columns: 2;
+            column-gap: 3rem;
+        }
+        #respond-phone(
+            {
+                columns: 1;
+            }
+        );
     }
 
     &__video-side {
         flex: 0 0 53%;
         padding-left: 3rem;
+
+        @media (max-width: #pxToEm(1040)[]) {
+            padding-left: 0;
+            padding-top: 3rem;
+        }
     }
 }

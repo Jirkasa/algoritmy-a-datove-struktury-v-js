@@ -21,6 +21,7 @@
         <header class="header">
             <div class="header__content">
                 <h2 class="header__heading">Algoritmy a Datové Struktury v JS</h2>
+                <input type="checkbox" id="header-nav-checkbox" class="nav-toggle-checkbox">
                 <nav class="header__navigation">
                     <ul>
                         <li><a class="header__navigation-link" href="../">úvod</a></li>
@@ -28,6 +29,9 @@
                         <li><a class="header__navigation-link" href="../prehled/">přehled</a></li>
                     </ul>
                 </nav>
+                <label for="header-nav-checkbox" class="nav-toggle-button">
+                    <div class="nav-toggle-button__icon"></div>
+                </label>
             </div>
         </header>
         <div class="heading-section">
@@ -333,6 +337,7 @@ console.log("Vyhledaný index: " + index);</code></pre>
                 <div class="article-page__lateral-side">
                     <div class="article-page__sticky-content">
                         <h2 class="heading-secondary u-mb-small">Části Tutoriálu</h2>
+                        <input type="checkbox" id="chapters-navigation-checkbox" class="chapter-nav-checkbox">
                         <nav class="navigation">
                             <ul>
                                 <li class="navigation__item"><a href="../big-o-notation/" class="navigation__link"><span>1.</span>Big O Notation</a></li>
@@ -353,6 +358,11 @@ console.log("Vyhledaný index: " + index);</code></pre>
                                 <li class="navigation__item"><a href="../dynamicke-programovani/" class="navigation__link"><span>16.</span>Dynamické programování</a></li>
                             </ul>
                         </nav>
+                        <label for="chapters-navigation-checkbox" class="chapter-nav-button">
+                            <svg>
+                                <use xlink:href="../media/img/icon-sprite.svg#icon-angle-double-left"></use>
+                            </svg>
+                        </label>
                     </div>
                 </div>
             </div>

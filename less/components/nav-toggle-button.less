@@ -1,0 +1,82 @@
+.nav-toggle-button {
+    border: .3rem solid average(@colors[primary], @colors[dark]);
+    border-radius: .6rem;
+    // background-color: lighten(average(@colors[primary], @colors[dark]), 60%);
+    // background-color: lighten(@colors[primary], 45%);
+    background-color: average(@colors[primary], @colors[dark]);
+    height: 4rem;
+    width: 4rem;
+
+    cursor: pointer;
+
+    position: relative;
+
+    display: none;
+
+    @media (max-width: @header-nav-breakpoint) {
+        display: block;
+    }
+
+    &__icon {
+        #center-pos-abs();
+
+        width: 85%;
+        height: .3rem;
+        // background-color: average(@colors[primary], @colors[dark]);
+        background-color: @colors[white];
+        border-radius: .2rem;
+
+        transition: transform .3s, background-color .2s;
+
+        &::before, &::after {
+            content: "";
+
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            
+            width: 100%;
+            height: 100%;
+
+            // background-color: average(@colors[primary], @colors[dark]);
+            background-color: @colors[white];
+            border-radius: .2rem;
+
+            transition: all .3s;
+        }
+        &::before {
+            bottom: 1rem;
+        }
+        &::after {
+            top: 1rem;
+        }
+    }
+}
+
+.nav-toggle-checkbox {
+    display: none;
+
+    @media (max-width: @header-nav-breakpoint) {
+        &:checked {
+            & ~ .nav-toggle-button .nav-toggle-button__icon {
+                transform: translate(-50%, -50%) rotate(90deg);
+                background-color: transparent;
+    
+                &::before {
+                    transform: translate(-50%, 1rem) rotate(45deg);
+                }
+                &::after {
+                    transform: translate(-50%, -1rem) rotate(-225deg);
+                }
+            }
+    
+            & + .header__navigation {
+                transform: perspective(80rem);
+
+                &::before {
+                    box-shadow: none;
+                }
+            }
+        }
+    }
+}

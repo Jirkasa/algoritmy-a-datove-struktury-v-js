@@ -3,8 +3,25 @@
     background-color: @colors[white];
     background-image: linear-gradient(60deg, lighten(@colors[dark], 68%) 60%, transparent 60%);
 
-
     padding: 0 3rem;
+
+    position: relative;
+
+    @media (max-width: #pxToEm(820)[]) {
+        background-image: linear-gradient(60deg, lighten(@colors[dark], 68%) 63%, transparent 63%);
+    }
+    @media (max-width: @header-nav-breakpoint) {
+        background-image: linear-gradient(60deg, lighten(@colors[dark], 68%) 82%, transparent 82%);
+    }
+    @media (max-width: #pxToEm(615)[]) {
+        background-image: linear-gradient(60deg, lighten(@colors[dark], 68%) 80%, transparent 80%);
+    }
+    @media (max-width: #pxToEm(500)[]) {
+        background-image: linear-gradient(60deg, lighten(@colors[dark], 68%) 75%, transparent 75%);
+    }
+    @media (max-width: #pxToEm(375)[]) {
+        background-image: linear-gradient(70deg, lighten(@colors[dark], 68%) 72%, transparent 72%);
+    }
 
     &__content {
         width: 100%;
@@ -22,10 +39,85 @@
         font-size: 3rem;
 
         color: @colors[dark-grey];
+
+        padding-right: 5rem;
+        line-height: 1.2;
+
+        @media (max-width: #pxToEm(540)[]) {
+            padding-right: 20rem;
+        }
+        @media (max-width: #pxToEm(500)[]) {
+            padding-right: 15rem;
+        }
+        @media (max-width: #pxToEm(460)[]) {
+            padding-right: 10rem;
+        }
+        @media (max-width: #pxToEm(420)[]) {
+            padding-right: 5rem;
+        }
+        @media (max-width: #pxToEm(375)[]) {
+            font-size: 2.5rem;
+
+            padding-right: 3rem;
+        }
+        @media (max-width: #pxToEm(320)[]) {
+            font-size: 2.2rem;
+
+            padding-right: 3rem;
+        }
     }
 
     &__navigation {
         flex: 0 0;
+
+        display: block;
+
+        @media (max-width: @header-nav-breakpoint) {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            transform-origin: right;
+            transform: perspective(80rem) rotateY(90deg);
+
+            background-color: @colors[white];
+            padding: 1rem;
+
+            border: .3rem solid darken(@colors[white], 15%);
+            border-right: none;
+            border-bottom-left-radius: .6rem;
+            border-top-left-radius: .6rem;
+
+            transition: transform .3s ease-in;
+            transform-style: preserve-3d;
+
+            &::before {
+                display: block;
+                content: "";
+                position: absolute;
+                left: 0;
+                top: -.3rem;
+
+                box-sizing: content-box;
+
+                height: 100%;
+                border: .3rem solid darken(@colors[white], 15%);
+                width: .5rem;
+                transform-origin: left;
+                transform: rotateY(-270deg) perspective(80rem);
+
+                background-color: darken(@colors[white], 15%);
+                border-top-right-radius: .3rem;
+                border-bottom-right-radius: .3rem;
+
+                box-shadow: 0 0 .5rem rgba(@colors[black], .2);
+
+                transition: all .3s ease-in;
+            }
+
+            a {
+                display: block;
+            }
+        }
 
         ul {
             list-style: none;
@@ -37,7 +129,6 @@
                 margin-right: 1rem;
             }
         }
-
     }
 
     &__navigation-link {

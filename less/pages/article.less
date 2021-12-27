@@ -1,6 +1,10 @@
 .article-page {
     padding: 0 3rem;
 
+    @media (max-width: #pxToEm(460)[]) {
+        padding: 0 2rem;
+    }
+
     &__content {
         width: 100%;
         margin: 0 auto;
@@ -20,6 +24,15 @@
     &__lateral-side {
         flex: 0 0 35rem;
         padding-left: 3rem;
+
+        @media (max-width: #pxToEm(1250)[]) {
+            flex: 0 0 29rem;
+        }
+        @media (max-width: @navigation-breakpoint) {
+            flex: 0 0 0;
+            width: 0;
+            padding: 0;
+        }
     }
 
     &__sticky-content {
@@ -51,6 +64,13 @@
 
             &:hover {
                 background: darken(@colors[white], 10%);
+            }
+        }
+
+        @media (max-width: @navigation-breakpoint) {
+            overflow: visible;
+            h2 {
+                display: none;
             }
         }
     }
