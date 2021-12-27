@@ -29,8 +29,13 @@
 
         color: @colors[white];
 
+        animation: moveInRight .7s cubic-bezier(.98,-0.06,.78,.84) both;
+
         span {
+            display: inline-block;
             font-weight: 700;
+
+            animation: bounceInRight .5s .7s linear both;
         }
     }
 
@@ -44,6 +49,8 @@
         width: 100%;
         max-width: 80rem;
         margin: 3rem auto 4rem;
+
+        animation: moveInUp .4s .7s cubic-bezier(.07,1.08,.7,.99) both;
     }
 
     &__icon {
@@ -52,6 +59,8 @@
 
         width: 4.5rem;
         height: 4.5rem;
+
+        animation: moveInUp .2s .9s cubic-bezier(.98,-0.06,.78,.84) both;
 
         svg {
             width: 100%;

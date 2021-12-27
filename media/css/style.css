@@ -255,6 +255,58 @@ code.hljs {
   background: #555;
   color: inherit;
 }
+@keyframes moveInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes bounceInRight {
+  0% {
+    opacity: 0;
+  }
+  2% {
+    opacity: 1;
+  }
+  25% {
+    transform: translateX(3rem);
+  }
+  50% {
+    transform: translateX(0);
+  }
+  75% {
+    transform: translateX(1.3rem);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+@keyframes moveInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(3rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes scaleIn {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
 .page {
   width: 100%;
   margin: 0 auto;
@@ -1744,6 +1796,9 @@ code.hljs {
   font-weight: normal;
   text-transform: uppercase;
 }
+.button-primary--animated {
+  animation: scaleIn 0.4s 1s cubic-bezier(0.28, 0.55, 0.46, 1.27) both;
+}
 .video-wrapper {
   position: relative;
   padding-bottom: 56.25%;
@@ -1953,9 +2008,12 @@ code.hljs {
   font-size: 5.5rem;
   font-weight: 300;
   color: #fff;
+  animation: moveInRight 0.7s cubic-bezier(0.98, -0.06, 0.78, 0.84) both;
 }
 .welcome-section__heading span {
+  display: inline-block;
   font-weight: 700;
+  animation: bounceInRight 0.5s 0.7s linear both;
 }
 .welcome-section__text {
   font-size: 1.8rem;
@@ -1965,12 +2023,14 @@ code.hljs {
   width: 100%;
   max-width: 80rem;
   margin: 3rem auto 4rem;
+  animation: moveInUp 0.4s 0.7s cubic-bezier(0.07, 1.08, 0.7, 0.99) both;
 }
 .welcome-section__icon {
   margin-top: 4rem;
   margin-bottom: 2rem;
   width: 4.5rem;
   height: 4.5rem;
+  animation: moveInUp 0.2s 0.9s cubic-bezier(0.98, -0.06, 0.78, 0.84) both;
 }
 .welcome-section__icon svg {
   width: 100%;
