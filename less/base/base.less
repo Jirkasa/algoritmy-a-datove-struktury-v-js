@@ -32,3 +32,9 @@ body {
     background-color: darken(@colors[primary], 15%);
     overflow-x: hidden;
 }
+
+::selection {
+    background-color: rgba(average(@colors[primary], @colors[dark]), .8);
+    color: @colors[white];
+    text-shadow: .2rem .2rem .2rem rgba(@colors[black], .4);
+}

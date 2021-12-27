@@ -36,6 +36,11 @@ body {
   background-color: #117964;
   overflow-x: hidden;
 }
+::selection {
+  background-color: rgba(36, 125, 118, 0.8);
+  color: #fff;
+  text-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.4);
+}
 body {
   font-family: 'Open Sans', sans-serif;
 }
@@ -319,6 +324,7 @@ code.hljs {
   color: #444;
   padding-right: 5rem;
   line-height: 1.2;
+  user-select: none;
 }
 @media (max-width: 33.75em) {
   .header__heading {
@@ -355,6 +361,7 @@ code.hljs {
 .header__navigation {
   flex: 0 0;
   display: block;
+  user-select: none;
 }
 @media (max-width: 45em) {
   .header__navigation {
@@ -431,6 +438,7 @@ code.hljs {
   color: #fff;
   text-align: center;
   padding: 3.5rem 3rem;
+  user-select: none;
 }
 .two-sides {
   display: flex;
@@ -450,6 +458,9 @@ code.hljs {
   .two-sides__side h4 {
     text-align: left !important;
   }
+}
+.navigation {
+  user-select: none;
 }
 @media (max-width: 68.125em) {
   .navigation {
@@ -1713,6 +1724,7 @@ code.hljs {
   padding: 1rem 1.5rem;
   border-radius: 0.4rem;
   transition: all 0.1s;
+  user-select: none;
 }
 .button-primary:hover {
   background-color: #158f76;
@@ -1779,6 +1791,7 @@ code.hljs {
   justify-content: center;
   text-align: center;
   padding: 0.5rem 1rem;
+  user-select: none;
 }
 .chapter-box__overlay-link {
   font-size: 0;
