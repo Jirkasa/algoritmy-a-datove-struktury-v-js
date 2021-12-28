@@ -1,188 +1,21 @@
-import Console from "../modules/console.js";
-import LineHighlighter from "../modules/lineHighlighter.js";
-import Timer from "../modules/timer.js";
-import CallStack from "../modules/callStack.js";
-import initExamples from "../modules/interactiveExample.js";
-
-const config = [
-    {
-        exampleId: 1,
-        console: new Console("console-1"),
-        lineHighlighter: new LineHighlighter("code-1"),
-        timer: new Timer(),
-        callStack: new CallStack("call-stack-1"),
-        code: async function() {
-            let proceed;
-
-            const pozdrav = async function(pocet) {
-                this.callStack.push("pozdrav");
-
-                this.lineHighlighter.highlight(2);
-                proceed = await this.timer.wait(500); if (!proceed) return;
-                this.lineHighlighter.clear();
-                if (pocet <= 0) {
-                    this.callStack.pop();
-                    return;
-                }
-
-
-                this.console.log("ahoj");
-                this.lineHighlighter.highlight(3);
-                proceed = await this.timer.wait(500); if (!proceed) return;
-                this.lineHighlighter.clear();
-
-                this.lineHighlighter.highlight(6);
-                proceed = await this.timer.wait(500); if (!proceed) return;
-                this.lineHighlighter.clear();
-                await pozdrav.call(this, pocet-1);
-
-                this.callStack.pop();
-            }
-
-            this.lineHighlighter.highlight(9);
-            proceed = await this.timer.wait(500); if (!proceed) return;
-            this.lineHighlighter.clear();
-
-            await pozdrav.call(this, 3);
-
-            this.finish();
-        }
-    },
-    {
-        exampleId: 2,
-        console: new Console("console-2"),
-        lineHighlighter: new LineHighlighter("code-2"),
-        timer: new Timer(),
-        callStack: new CallStack("call-stack-2"),
-        code: async function() {
-            let proceed = true;
-
-            const soucet = async (cislo1, cislo2) => {
-                this.callStack.push("soucet");
-
-                this.lineHighlighter.highlight(1);
-                proceed = await this.timer.wait(500); if (!proceed) return;
-                this.lineHighlighter.clear();
-
-                this.callStack.pop();
-
-                return cislo1 + cislo2;
-            };
-            const prumer = async (cislo1, cislo2) => {
-                this.callStack.push("prumer");
-
-                this.lineHighlighter.highlight(4);
-                proceed = await this.timer.wait(500); if (!proceed) return;
-                this.lineHighlighter.clear();
-
-                const result = await soucet(cislo1, cislo2) / 2;
-
-                if (!proceed) return;
-
-                this.lineHighlighter.highlight(4);
-                proceed = await this.timer.wait(500); if (!proceed) return;
-                this.lineHighlighter.clear();
-
-                this.callStack.pop();
-
-                return result;
-            };
-            const vypisPrumer = async (cislo1, cislo2) => {
-                this.callStack.push("vypisPrumer");
-
-                this.lineHighlighter.highlight(7);
-                proceed = await this.timer.wait(500); if (!proceed) return;
-                this.lineHighlighter.clear();
-
-                const vysledek = await prumer(cislo1, cislo2);
-
-                if (!proceed) return;
-
-                this.lineHighlighter.highlight(7);
-                proceed = await this.timer.wait(500); if (!proceed) return;
-                this.lineHighlighter.clear();
-
-                this.console.log("Průměr: " + vysledek);
-
-                this.lineHighlighter.highlight(8);
-                proceed = await this.timer.wait(500); if (!proceed) return;
-                this.lineHighlighter.clear();
-
-                this.callStack.pop();
-            }
-
-            this.lineHighlighter.highlight(11);
-            proceed = await this.timer.wait(500); if (!proceed) return;
-            this.lineHighlighter.clear();
-
-            await vypisPrumer(3, 5);
-
-            this.finish();
-        }
-    },
-    {
-        exampleId: 3,
-        console: new Console("console-3"),
-        lineHighlighter: new LineHighlighter("code-3"),
-        timer: new Timer(),
-        callStack: new CallStack("call-stack-3"),
-        code: async function() {
-            let proceed = true;
-
-            const factorial = async (n) => {
-                this.callStack.push("factorial");
-
-                this.lineHighlighter.highlight(1);
-                proceed = await this.timer.wait(500); if (!proceed) return;
-                this.lineHighlighter.clear();
-
-                if (n === 0 || n === 1){
-
-                    this.lineHighlighter.highlight(3);
-                    proceed = await this.timer.wait(500); if (!proceed) return;
-                    this.lineHighlighter.clear();
-
-                    this.callStack.pop();
-                    return 1;
-                } else {
-                    this.lineHighlighter.highlight(7);
-                    proceed = await this.timer.wait(500); if (!proceed) return;
-                    this.lineHighlighter.clear();
-
-                    const result = n * await factorial(n-1);
-
-                    if (!proceed) return;
-
-                    this.lineHighlighter.highlight(7);
-                    proceed = await this.timer.wait(500); if (!proceed) return;
-                    this.lineHighlighter.clear();
-
-                    this.callStack.pop();
-                    return result;
-                }
-            }
-
-            this.lineHighlighter.highlight(11);
-            proceed = await this.timer.wait(500); if (!proceed) return;
-            this.lineHighlighter.clear();
-
-            const vysledek = await factorial(5);
-
-            if (!proceed) return this.finish();
-
-            this.lineHighlighter.highlight(11);
-            proceed = await this.timer.wait(500); if (!proceed) return;
-            this.lineHighlighter.clear();
-            
-            this.console.log("Faktoriál 5 je: " + vysledek);
-
-            this.lineHighlighter.highlight(12);
-            proceed = await this.timer.wait(500); if (!proceed) return;
-            this.lineHighlighter.clear();
-
-            this.finish();
-        }
-    }
-];
-
-initExamples(config);
+function asyncGeneratorStep(gen,resolve,reject,_next,_throw,key,arg){try{var info=gen[key](arg);var value=info.value}catch(error){reject(error);return}if(info.done)resolve(value);else Promise.resolve(value).then(_next,_throw)}
+function _asyncToGenerator(fn){return function(){var self=this,args=arguments;return new Promise(function(resolve,reject){var gen=fn.apply(self,args);function _next(value){asyncGeneratorStep(gen,resolve,reject,_next,_throw,"next",value)}function _throw(err){asyncGeneratorStep(gen,resolve,reject,_next,_throw,"throw",err)}_next(undefined)})}}var Console=InteractiveExample.Console;var LineHighlighter=InteractiveExample.LineHighlighter;var Timer=InteractiveExample.Timer;var CallStack=InteractiveExample.CallStack;
+var initExamples=InteractiveExample.initExamples;
+var config=[{exampleId:1,console:new Console("console-1"),lineHighlighter:new LineHighlighter("code-1"),timer:new Timer,callStack:new CallStack("call-stack-1"),code:function(){var _code=_asyncToGenerator(regeneratorRuntime.mark(function _callee2(){var proceed,pozdrav;return regeneratorRuntime.wrap(function _callee2$(_context2){while(1)switch(_context2.prev=_context2.next){case 0:pozdrav=function(){var _ref=_asyncToGenerator(regeneratorRuntime.mark(function _callee(pocet){return regeneratorRuntime.wrap(function _callee$(_context){while(1)switch(_context.prev=_context.next){case 0:this.callStack.push("pozdrav");
+this.lineHighlighter.highlight(2);_context.next=4;return this.timer.wait(500);case 4:proceed=_context.sent;if(proceed){_context.next=7;break}return _context.abrupt("return");case 7:this.lineHighlighter.clear();if(!(pocet<=0)){_context.next=11;break}this.callStack.pop();return _context.abrupt("return");case 11:this.console.log("ahoj");this.lineHighlighter.highlight(3);_context.next=15;return this.timer.wait(500);case 15:proceed=_context.sent;if(proceed){_context.next=18;break}return _context.abrupt("return");
+case 18:this.lineHighlighter.clear();this.lineHighlighter.highlight(6);_context.next=22;return this.timer.wait(500);case 22:proceed=_context.sent;if(proceed){_context.next=25;break}return _context.abrupt("return");case 25:this.lineHighlighter.clear();_context.next=28;return pozdrav.call(this,pocet-1);case 28:this.callStack.pop();case 29:case "end":return _context.stop()}},_callee,this)}));return function pozdrav(_x){return _ref.apply(this,arguments)}}();this.lineHighlighter.highlight(9);_context2.next=
+4;return this.timer.wait(500);case 4:proceed=_context2.sent;if(proceed){_context2.next=7;break}return _context2.abrupt("return");case 7:this.lineHighlighter.clear();_context2.next=10;return pozdrav.call(this,3);case 10:this.finish();case 11:case "end":return _context2.stop()}},_callee2,this)}));function code(){return _code.apply(this,arguments)}return code}()},{exampleId:2,console:new Console("console-2"),lineHighlighter:new LineHighlighter("code-2"),timer:new Timer,callStack:new CallStack("call-stack-2"),
+code:function(){var _code2=_asyncToGenerator(regeneratorRuntime.mark(function _callee6(){var _this=this;var proceed,soucet,prumer,vypisPrumer;return regeneratorRuntime.wrap(function _callee6$(_context6){while(1)switch(_context6.prev=_context6.next){case 0:proceed=true;soucet=function(){var _ref2=_asyncToGenerator(regeneratorRuntime.mark(function _callee3(cislo1,cislo2){return regeneratorRuntime.wrap(function _callee3$(_context3){while(1)switch(_context3.prev=_context3.next){case 0:_this.callStack.push("soucet");
+_this.lineHighlighter.highlight(1);_context3.next=4;return _this.timer.wait(500);case 4:proceed=_context3.sent;if(proceed){_context3.next=7;break}return _context3.abrupt("return");case 7:_this.lineHighlighter.clear();_this.callStack.pop();return _context3.abrupt("return",cislo1+cislo2);case 10:case "end":return _context3.stop()}},_callee3)}));return function soucet(_x2,_x3){return _ref2.apply(this,arguments)}}();prumer=function(){var _ref3=_asyncToGenerator(regeneratorRuntime.mark(function _callee4(cislo1,
+cislo2){var result;return regeneratorRuntime.wrap(function _callee4$(_context4){while(1)switch(_context4.prev=_context4.next){case 0:_this.callStack.push("prumer");_this.lineHighlighter.highlight(4);_context4.next=4;return _this.timer.wait(500);case 4:proceed=_context4.sent;if(proceed){_context4.next=7;break}return _context4.abrupt("return");case 7:_this.lineHighlighter.clear();_context4.next=10;return soucet(cislo1,cislo2);case 10:_context4.t0=_context4.sent;result=_context4.t0/2;if(proceed){_context4.next=
+14;break}return _context4.abrupt("return");case 14:_this.lineHighlighter.highlight(4);_context4.next=17;return _this.timer.wait(500);case 17:proceed=_context4.sent;if(proceed){_context4.next=20;break}return _context4.abrupt("return");case 20:_this.lineHighlighter.clear();_this.callStack.pop();return _context4.abrupt("return",result);case 23:case "end":return _context4.stop()}},_callee4)}));return function prumer(_x4,_x5){return _ref3.apply(this,arguments)}}();vypisPrumer=function(){var _ref4=_asyncToGenerator(regeneratorRuntime.mark(function _callee5(cislo1,
+cislo2){var vysledek;return regeneratorRuntime.wrap(function _callee5$(_context5){while(1)switch(_context5.prev=_context5.next){case 0:_this.callStack.push("vypisPrumer");_this.lineHighlighter.highlight(7);_context5.next=4;return _this.timer.wait(500);case 4:proceed=_context5.sent;if(proceed){_context5.next=7;break}return _context5.abrupt("return");case 7:_this.lineHighlighter.clear();_context5.next=10;return prumer(cislo1,cislo2);case 10:vysledek=_context5.sent;if(proceed){_context5.next=13;break}return _context5.abrupt("return");
+case 13:_this.lineHighlighter.highlight(7);_context5.next=16;return _this.timer.wait(500);case 16:proceed=_context5.sent;if(proceed){_context5.next=19;break}return _context5.abrupt("return");case 19:_this.lineHighlighter.clear();_this.console.log("Pr\u016fm\u011br: "+vysledek);_this.lineHighlighter.highlight(8);_context5.next=24;return _this.timer.wait(500);case 24:proceed=_context5.sent;if(proceed){_context5.next=27;break}return _context5.abrupt("return");case 27:_this.lineHighlighter.clear();_this.callStack.pop();
+case 29:case "end":return _context5.stop()}},_callee5)}));return function vypisPrumer(_x6,_x7){return _ref4.apply(this,arguments)}}();this.lineHighlighter.highlight(11);_context6.next=7;return this.timer.wait(500);case 7:proceed=_context6.sent;if(proceed){_context6.next=10;break}return _context6.abrupt("return");case 10:this.lineHighlighter.clear();_context6.next=13;return vypisPrumer(3,5);case 13:this.finish();case 14:case "end":return _context6.stop()}},_callee6,this)}));function code(){return _code2.apply(this,
+arguments)}return code}()},{exampleId:3,console:new Console("console-3"),lineHighlighter:new LineHighlighter("code-3"),timer:new Timer,callStack:new CallStack("call-stack-3"),code:function(){var _code3=_asyncToGenerator(regeneratorRuntime.mark(function _callee8(){var _this2=this;var proceed,factorial,vysledek;return regeneratorRuntime.wrap(function _callee8$(_context8){while(1)switch(_context8.prev=_context8.next){case 0:proceed=true;factorial=function(){var _ref5=_asyncToGenerator(regeneratorRuntime.mark(function _callee7(n){var result;
+return regeneratorRuntime.wrap(function _callee7$(_context7){while(1)switch(_context7.prev=_context7.next){case 0:_this2.callStack.push("factorial");_this2.lineHighlighter.highlight(1);_context7.next=4;return _this2.timer.wait(500);case 4:proceed=_context7.sent;if(proceed){_context7.next=7;break}return _context7.abrupt("return");case 7:_this2.lineHighlighter.clear();if(!(n===0||n===1)){_context7.next=20;break}_this2.lineHighlighter.highlight(3);_context7.next=12;return _this2.timer.wait(500);case 12:proceed=
+_context7.sent;if(proceed){_context7.next=15;break}return _context7.abrupt("return");case 15:_this2.lineHighlighter.clear();_this2.callStack.pop();return _context7.abrupt("return",1);case 20:_this2.lineHighlighter.highlight(7);_context7.next=23;return _this2.timer.wait(500);case 23:proceed=_context7.sent;if(proceed){_context7.next=26;break}return _context7.abrupt("return");case 26:_this2.lineHighlighter.clear();_context7.t0=n;_context7.next=30;return factorial(n-1);case 30:_context7.t1=_context7.sent;
+result=_context7.t0*_context7.t1;if(proceed){_context7.next=34;break}return _context7.abrupt("return");case 34:_this2.lineHighlighter.highlight(7);_context7.next=37;return _this2.timer.wait(500);case 37:proceed=_context7.sent;if(proceed){_context7.next=40;break}return _context7.abrupt("return");case 40:_this2.lineHighlighter.clear();_this2.callStack.pop();return _context7.abrupt("return",result);case 43:case "end":return _context7.stop()}},_callee7)}));return function factorial(_x8){return _ref5.apply(this,
+arguments)}}();this.lineHighlighter.highlight(11);_context8.next=5;return this.timer.wait(500);case 5:proceed=_context8.sent;if(proceed){_context8.next=8;break}return _context8.abrupt("return");case 8:this.lineHighlighter.clear();_context8.next=11;return factorial(5);case 11:vysledek=_context8.sent;if(proceed){_context8.next=14;break}return _context8.abrupt("return",this.finish());case 14:this.lineHighlighter.highlight(11);_context8.next=17;return this.timer.wait(500);case 17:proceed=_context8.sent;
+if(proceed){_context8.next=20;break}return _context8.abrupt("return");case 20:this.lineHighlighter.clear();this.console.log("Faktori\u00e1l 5 je: "+vysledek);this.lineHighlighter.highlight(12);_context8.next=25;return this.timer.wait(500);case 25:proceed=_context8.sent;if(proceed){_context8.next=28;break}return _context8.abrupt("return");case 28:this.lineHighlighter.clear();this.finish();case 30:case "end":return _context8.stop()}},_callee8,this)}));function code(){return _code3.apply(this,arguments)}
+return code}()}];initExamples(config);

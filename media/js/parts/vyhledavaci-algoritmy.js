@@ -1,104 +1,12 @@
-import Console from "../modules/console.js";
-import LineHighlighter from "../modules/lineHighlighter.js";
-import Timer from "../modules/timer.js";
-import VisualArray from "../modules/visualArray.js";
-import initExamples from "../modules/interactiveExample.js";
-
-const config = [
-    {
-        exampleId: 1,
-        console: new Console("console-1"),
-        lineHighlighter: new LineHighlighter("code-1"),
-        timer: new Timer(),
-        visualArray: new VisualArray("visual-array-1", 8, true, true, [{id: "array-pointer-1", index: 0, hide: true}]),
-        code: async function() {
-            let proceed;
-
-            const binarySearch = async (pole, hodnota) => {
-                let min = 0;
-                let max = pole.length - 1;
-                let middle = Math.trunc((min + max) / 2);
-
-                this.lineHighlighter.highlight(1);
-                proceed = await this.timer.wait(500); if (!proceed) return;
-                this.lineHighlighter.clear();
-                this.visualArray.showRange();
-                this.lineHighlighter.highlight(2);
-                proceed = await this.timer.wait(500); if (!proceed) return;
-                this.lineHighlighter.clear();
-
-                this.visualArray.setPointerPos("array-pointer-1", middle);
-                this.visualArray.showPointer("array-pointer-1");
-                this.lineHighlighter.highlight(3);
-                proceed = await this.timer.wait(500); if (!proceed) return;
-                this.lineHighlighter.clear();
-
-                this.visualArray.show
-
-                while(pole[middle] !== hodnota && min <= max) {
-
-                    this.lineHighlighter.highlight(5);
-                    proceed = await this.timer.wait(500); if (!proceed) return;
-                    this.lineHighlighter.clear();
-
-                    this.lineHighlighter.highlight(8);
-                    proceed = await this.timer.wait(500); if (!proceed) return;
-                    this.lineHighlighter.clear();
-
-                    if (hodnota < pole[middle]) {
-                        max = middle - 1;
-                        this.lineHighlighter.highlight(9);
-                    }
-                    else {
-                        min = middle + 1;
-                        this.lineHighlighter.highlight(11);
-                    }
-
-                    this.visualArray.setRangeLeftPos(min);
-                    this.visualArray.setRangeRightPos(max);
-                    proceed = await this.timer.wait(500); if (!proceed) return;
-                    this.lineHighlighter.clear();
-
-                    middle = Math.trunc((min + max) / 2);
-
-                    this.visualArray.setPointerPos("array-pointer-1", middle);
-                    this.lineHighlighter.highlight(15);
-                    proceed = await this.timer.wait(500); if (!proceed) return;
-                    this.lineHighlighter.clear();
-                }
-
-                this.lineHighlighter.highlight(5);
-                proceed = await this.timer.wait(500); if (!proceed) return;
-                this.lineHighlighter.clear();
-
-                this.lineHighlighter.highlight(19);
-                proceed = await this.timer.wait(500); if (!proceed) return;
-                this.lineHighlighter.clear();
-
-                return pole[middle] === hodnota ? middle : -1;
-            }
-
-            this.lineHighlighter.highlight(22);
-            proceed = await this.timer.wait(500); if (!proceed) return;
-            this.lineHighlighter.clear();
-
-            const index = await binarySearch([2,5,6,9,13,15,28,30], 13);
-
-            if (!proceed) return;
-
-            this.lineHighlighter.highlight(22);
-            proceed = await this.timer.wait(500); if (!proceed) return;
-            this.lineHighlighter.clear();
-
-            this.console.log("Hledaná položka se nachází na indexu: " + index);
-
-            this.lineHighlighter.highlight(23);
-            proceed = await this.timer.wait(500); if (!proceed) return;
-            this.lineHighlighter.clear();
-
-            this.finish();
-        }
-    }
-];
-
-initExamples(config);
+function asyncGeneratorStep(gen,resolve,reject,_next,_throw,key,arg){try{var info=gen[key](arg);var value=info.value}catch(error){reject(error);return}if(info.done)resolve(value);else Promise.resolve(value).then(_next,_throw)}
+function _asyncToGenerator(fn){return function(){var self=this,args=arguments;return new Promise(function(resolve,reject){var gen=fn.apply(self,args);function _next(value){asyncGeneratorStep(gen,resolve,reject,_next,_throw,"next",value)}function _throw(err){asyncGeneratorStep(gen,resolve,reject,_next,_throw,"throw",err)}_next(undefined)})}}var Console=InteractiveExample.Console;var LineHighlighter=InteractiveExample.LineHighlighter;var Timer=InteractiveExample.Timer;var VisualArray=InteractiveExample.VisualArray;
+var initExamples=InteractiveExample.initExamples;
+var config=[{exampleId:1,console:new Console("console-1"),lineHighlighter:new LineHighlighter("code-1"),timer:new Timer,visualArray:new VisualArray("visual-array-1",8,true,true,[{id:"array-pointer-1",index:0,hide:true}]),code:function(){var _code=_asyncToGenerator(regeneratorRuntime.mark(function _callee2(){var _this=this;var proceed,binarySearch,index;return regeneratorRuntime.wrap(function _callee2$(_context2){while(1)switch(_context2.prev=_context2.next){case 0:binarySearch=function(){var _ref=
+_asyncToGenerator(regeneratorRuntime.mark(function _callee(pole,hodnota){var min,max,middle;return regeneratorRuntime.wrap(function _callee$(_context){while(1)switch(_context.prev=_context.next){case 0:min=0;max=pole.length-1;middle=Math.trunc((min+max)/2);_this.lineHighlighter.highlight(1);_context.next=6;return _this.timer.wait(500);case 6:proceed=_context.sent;if(proceed){_context.next=9;break}return _context.abrupt("return");case 9:_this.lineHighlighter.clear();_this.visualArray.showRange();_this.lineHighlighter.highlight(2);
+_context.next=14;return _this.timer.wait(500);case 14:proceed=_context.sent;if(proceed){_context.next=17;break}return _context.abrupt("return");case 17:_this.lineHighlighter.clear();_this.visualArray.setPointerPos("array-pointer-1",middle);_this.visualArray.showPointer("array-pointer-1");_this.lineHighlighter.highlight(3);_context.next=23;return _this.timer.wait(500);case 23:proceed=_context.sent;if(proceed){_context.next=26;break}return _context.abrupt("return");case 26:_this.lineHighlighter.clear();
+_this.visualArray.show;case 28:if(!(pole[middle]!==hodnota&&min<=max)){_context.next=63;break}_this.lineHighlighter.highlight(5);_context.next=32;return _this.timer.wait(500);case 32:proceed=_context.sent;if(proceed){_context.next=35;break}return _context.abrupt("return");case 35:_this.lineHighlighter.clear();_this.lineHighlighter.highlight(8);_context.next=39;return _this.timer.wait(500);case 39:proceed=_context.sent;if(proceed){_context.next=42;break}return _context.abrupt("return");case 42:_this.lineHighlighter.clear();
+if(hodnota<pole[middle]){max=middle-1;_this.lineHighlighter.highlight(9)}else{min=middle+1;_this.lineHighlighter.highlight(11)}_this.visualArray.setRangeLeftPos(min);_this.visualArray.setRangeRightPos(max);_context.next=48;return _this.timer.wait(500);case 48:proceed=_context.sent;if(proceed){_context.next=51;break}return _context.abrupt("return");case 51:_this.lineHighlighter.clear();middle=Math.trunc((min+max)/2);_this.visualArray.setPointerPos("array-pointer-1",middle);_this.lineHighlighter.highlight(15);
+_context.next=57;return _this.timer.wait(500);case 57:proceed=_context.sent;if(proceed){_context.next=60;break}return _context.abrupt("return");case 60:_this.lineHighlighter.clear();_context.next=28;break;case 63:_this.lineHighlighter.highlight(5);_context.next=66;return _this.timer.wait(500);case 66:proceed=_context.sent;if(proceed){_context.next=69;break}return _context.abrupt("return");case 69:_this.lineHighlighter.clear();_this.lineHighlighter.highlight(19);_context.next=73;return _this.timer.wait(500);
+case 73:proceed=_context.sent;if(proceed){_context.next=76;break}return _context.abrupt("return");case 76:_this.lineHighlighter.clear();return _context.abrupt("return",pole[middle]===hodnota?middle:-1);case 78:case "end":return _context.stop()}},_callee)}));return function binarySearch(_x,_x2){return _ref.apply(this,arguments)}}();this.lineHighlighter.highlight(22);_context2.next=4;return this.timer.wait(500);case 4:proceed=_context2.sent;if(proceed){_context2.next=7;break}return _context2.abrupt("return");
+case 7:this.lineHighlighter.clear();_context2.next=10;return binarySearch([2,5,6,9,13,15,28,30],13);case 10:index=_context2.sent;if(proceed){_context2.next=13;break}return _context2.abrupt("return");case 13:this.lineHighlighter.highlight(22);_context2.next=16;return this.timer.wait(500);case 16:proceed=_context2.sent;if(proceed){_context2.next=19;break}return _context2.abrupt("return");case 19:this.lineHighlighter.clear();this.console.log("Hledan\u00e1 polo\u017eka se nach\u00e1z\u00ed na indexu: "+
+index);this.lineHighlighter.highlight(23);_context2.next=24;return this.timer.wait(500);case 24:proceed=_context2.sent;if(proceed){_context2.next=27;break}return _context2.abrupt("return");case 27:this.lineHighlighter.clear();this.finish();case 29:case "end":return _context2.stop()}},_callee2,this)}));function code(){return _code.apply(this,arguments)}return code}()}];initExamples(config);
